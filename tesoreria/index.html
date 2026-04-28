@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>App-Tesoreria | Onyks-OS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" />
+    <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/96/console.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ["Inter", "sans-serif"],
+                        display: ["Space Grotesk", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"],
+                    },
+                    colors: {
+                        cyan: { 400: "#22d3ee", 500: "#06b6d4" },
+                        dark: { 900: "#050505", card: "#0a0a0a", border: "#262626" },
+                    },
+                },
+            },
+        };
+    </script>
+
+    <style>
+        body {
+            background-color: #050505;
+            background-image: linear-gradient(rgba(34, 211, 238, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 211, 238, 0.02) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: #e5e5e5;
+        }
+
+        .terminal-window {
+            background: #0a0a0a;
+            border: 1px solid #262626;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: #111;
+            padding: 8px 16px;
+            border-bottom: 1px solid #262626;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .terminal-label {
+            margin-left: auto;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 11px;
+            color: #4a4a4a;
+        }
+
+        .terminal-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .bg-mac-red {
+            background: #ff5f56;
+        }
+
+        .bg-mac-yellow {
+            background: #ffbd2e;
+        }
+
+        .bg-mac-green {
+            background: #27c93f;
+        }
+
+        .module-card {
+            border: 1px solid #262626;
+            transition: all 0.2s;
+        }
+
+        .module-card:hover {
+            border-color: #22d3ee;
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.07);
+        }
+
+        code.inline {
+            color: #22d3ee;
+            background: rgba(34, 211, 238, 0.08);
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            word-break: break-word;
+        }
+
+        .badge {
+            display: inline-block;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 3px;
+        }
+
+        .badge-green {
+            background: rgba(39, 201, 63, 0.12);
+            color: #27c93f;
+            border: 1px solid rgba(39, 201, 63, 0.3);
+        }
+
+        .badge-yellow {
+            background: rgba(255, 189, 46, 0.12);
+            color: #ffbd2e;
+            border: 1px solid rgba(255, 189, 46, 0.3);
+        }
+
+        .badge-red {
+            background: rgba(255, 95, 86, 0.12);
+            color: #ff5f56;
+            border: 1px solid rgba(255, 95, 86, 0.3);
+        }
+
+        .badge-cyan {
+            background: rgba(34, 211, 238, 0.08);
+            color: #22d3ee;
+            border: 1px solid rgba(34, 211, 238, 0.25);
+        }
+
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-divider .hex {
+            font-family: "JetBrains Mono", monospace;
+            color: #22d3ee;
+            font-size: 0.8rem;
+        }
+
+        .section-divider h2 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .section-divider .line {
+            flex-grow: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .note-box {
+            padding: 1rem 1.25rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            color: #d1d5db;
+            word-break: break-word;
+            border: 1px solid rgba(34, 211, 238, 0.25);
+            background: rgba(34, 211, 238, 0.04);
+        }
+
+        .note-box .label {
+            color: #22d3ee;
+            font-weight: 700;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 0.75rem;
+            margin-bottom: 4px;
+        }
+
+        #mobile-menu {
+            display: none;
+        }
+
+        @media (max-width: 1023px) {
+            #mobile-menu {
+                position: fixed;
+                top: 4rem;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: #050505;
+                border-top: 1px solid rgba(255, 255, 255, 0.05);
+                overflow-y: auto;
+                z-index: 40;
+                padding: 1.5rem;
+            }
+
+            #mobile-menu.open {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased min-h-screen flex flex-col">
+
+    <nav class="fixed w-full z-50 bg-dark-900/95 backdrop-blur border-b border-white/5 h-16 flex items-center">
+        <div class="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <a href="/" class="text-gray-400 hover:text-cyan-400 transition-colors">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <span class="font-display font-bold text-lg text-white">App<span
+                        class="text-cyan-400">-Tesoreria</span></span>
+                <span class="badge badge-green hidden sm:inline">STABLE</span>
+            </div>
+            <a href="https://github.com/onyks-os/App-Tesoreria" target="_blank"
+                class="font-mono text-sm text-cyan-400 border border-cyan-400/30 px-3 py-1.5 hover:bg-cyan-400/10 transition-colors hidden sm:flex items-center">
+                <i class="fab fa-github mr-2"></i>SOURCE
+            </a>
+            <button id="hamburger"
+                class="lg:hidden flex flex-col gap-1.5 p-2 text-gray-400 hover:text-cyan-400 transition-colors"
+                aria-label="Menu">
+                <span class="block w-5 h-0.5 bg-current transition-all" id="bar1"></span>
+                <span class="block w-5 h-0.5 bg-current transition-all" id="bar2"></span>
+                <span class="block w-5 h-0.5 bg-current transition-all" id="bar3"></span>
+            </button>
+        </div>
+    </nav>
+
+    <div id="mobile-menu">
+        <a href="https://github.com/onyks-os/App-Tesoreria" target="_blank"
+            class="font-mono text-sm text-cyan-400 border border-cyan-400/30 px-3 py-2 hover:bg-cyan-400/10 transition-colors flex items-center justify-center mt-2">
+            <i class="fab fa-github mr-2"></i>VIEW SOURCE
+        </a>
+    </div>
+
+    <div class="flex-grow pt-16 max-w-screen-2xl mx-auto w-full">
+        <main class="p-4 sm:p-6 lg:p-12 w-full overflow-hidden">
+            <div class="max-w-4xl mx-auto w-full">
+
+                <section class="mb-20">
+                    <div class="mb-3 flex flex-wrap items-center gap-3">
+                        <span class="badge badge-cyan">DESKTOP APP</span>
+                        <span class="badge badge-green">MIT LICENSE</span>
+                        <span class="badge badge-yellow">REACT + ELECTRON</span>
+                    </div>
+                    <h1 class="text-3xl md:text-5xl font-display font-bold text-white mb-5 leading-tight">
+                        App Tesoreria
+                    </h1>
+                    <p class="text-base md:text-lg text-gray-400 mb-8 leading-relaxed max-w-2xl">
+                        Il gestionale open-source per associazioni, collettivi e realtà no-profit.
+                        Sostituisce i complessi fogli Excel con un'<strong class="text-white">interfaccia moderna e
+                            intuitiva</strong>, progettata per gestire conti comuni, debiti dei soci e riconciliazione
+                        bancaria senza richiedere conoscenze contabili avanzate.
+                    </p>
+
+                    <div class="flex flex-wrap gap-3 mb-10">
+                        <a href="https://github.com/onyks-os/App-Tesoreria" target="_blank"
+                            class="font-mono text-sm text-cyan-400 border border-cyan-400/30 px-4 py-2 hover:bg-cyan-400/10 transition-colors flex items-center gap-2">
+                            <i class="fab fa-github"></i> VIEW SOURCE
+                        </a>
+                        <a href="https://github.com/onyks-os/App-Tesoreria/issues" target="_blank"
+                            class="font-mono text-sm text-gray-500 border border-white/10 px-4 py-2 hover:border-white/20 hover:text-gray-300 transition-colors flex items-center gap-2">
+                            <i class="fas fa-bug"></i> ISSUES
+                        </a>
+                    </div>
+
+                    <div class="terminal-window">
+                        <div class="terminal-header">
+                            <div class="terminal-dot bg-mac-red"></div>
+                            <div class="terminal-dot bg-mac-yellow"></div>
+                            <div class="terminal-dot bg-mac-green"></div>
+                            <span class="terminal-label">stack</span>
+                        </div>
+                        <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+                            <div><span class="text-cyan-400">core </span> <span class="text-gray-300">Electron — netta
+                                    separazione Main/Renderer process tramite IPC</span></div>
+                            <div><span class="text-cyan-400">frontend </span> <span class="text-gray-300">React 18 ·
+                                    TypeScript · TailwindCSS</span></div>
+                            <div><span class="text-cyan-400">backend </span> <span class="text-gray-300">Node.js ·
+                                    better-sqlite3 (SQLite con journaling WAL)</span></div>
+                            <div><span class="text-cyan-400">engine </span> <span class="text-gray-300">Vite — build e
+                                    HMR ultra-rapido</span></div>
+                            <div class="mt-2 text-gray-500"># pattern architetturale: Electron MVC-like</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-20">
+                    <div class="section-divider">
+                        <span class="hex">0x01</span>
+                        <h2>Funzionalità Principali</h2>
+                        <div class="line"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="module-card bg-[#0a0a0a] p-6 rounded-lg">
+                            <div class="font-mono text-xs text-cyan-400 mb-3">DASHBOARD INTELLIGENTE</div>
+                            <ul class="space-y-2 text-sm text-gray-400 leading-relaxed">
+                                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span> <strong
+                                        class="text-white">Cassa Reale vs Disponibile:</strong> Distingue tra fondi
+                                    fisici e liquidità spendibile.</li>
+                                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span> <strong
+                                        class="text-white">Analisi Vincolato:</strong> Dettaglio dei progetti in corso
+                                    che bloccano liquidità.</li>
+                                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span> Stato
+                                    finanziario calcolato in tempo reale dal backend.</li>
+                            </ul>
+                        </div>
+
+                        <div class="module-card bg-[#0a0a0a] p-6 rounded-lg">
+                            <div class="font-mono text-xs text-cyan-400 mb-3">GESTIONE SOCI E QUOTE</div>
+                            <ul class="space-y-2 text-sm text-gray-400 leading-relaxed">
+                                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span>
+                                    Anagrafica centralizzata con supporto Import/Export massivo da Excel.</li>
+                                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span>
+                                    Tracciamento esatto dei debiti individuali e liste morosi in un click.</li>
+                                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span> Calcolo
+                                    automatico delle quote pro-capite per gli acquisti condivisi.</li>
+                            </ul>
+                        </div>
+
+                        <div class="module-card bg-[#0a0a0a] p-6 rounded-lg md:col-span-2">
+                            <div class="font-mono text-xs text-cyan-400 mb-3">AFFIDABILITÀ & SICUREZZA</div>
+                            <ul
+                                class="space-y-2 text-sm text-gray-400 leading-relaxed grid grid-cols-1 md:grid-cols-2 gap-x-4">
+                                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span> <strong
+                                        class="text-white">Privacy First:</strong> Database interamente locale, i dati
+                                    non lasciano mai il tuo PC.</li>
+                                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span> <strong
+                                        class="text-white">Backup Automatici:</strong> Sistema rotativo integrato ad
+                                    ogni avvio.</li>
+                                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span> <strong
+                                        class="text-white">Modifiche Retroattive:</strong> Correggi errori passati e
+                                    ricalcola tutto in real-time.</li>
+                                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span> <strong
+                                        class="text-white">Reset Fabbrica:</strong> Funzioni di hard reset e pulizia
+                                    annuale in caso di necessità.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-20">
+                    <div class="section-divider">
+                        <span class="hex">0x02</span>
+                        <h2>Architettura & Database</h2>
+                        <div class="line"></div>
+                    </div>
+
+                    <p class="text-gray-400 leading-relaxed mb-6 text-sm max-w-2xl">
+                        Il sistema si basa su un'architettura <strong>Electron MVC-like</strong> per garantire sicurezza
+                        e persistenza offline. L'interfaccia React (<code class="inline">Renderer</code>) comunica con
+                        il database SQLite gestito in Node.js (<code class="inline">Main</code>) esclusivamente
+                        attraverso un bridge IPC sicuro.
+                    </p>
+
+                    <div class="note-box mb-8">
+                        <div class="label">ℹ DATA INTEGRITY</div>
+                        Better-SQLite3 sfrutta i prepared statements per prevenire injection. L'integrità referenziale è
+                        mantenuta tramite Foreign Keys e <em>soft-delete</em> dei membri per non corrompere lo storico
+                        contabile passato.
+                    </div>
+
+                    <div class="terminal-window">
+                        <div class="terminal-header">
+                            <div class="terminal-dot bg-mac-red"></div>
+                            <div class="terminal-dot bg-mac-yellow"></div>
+                            <div class="terminal-dot bg-mac-green"></div>
+                            <span class="terminal-label">schema.sql</span>
+                        </div>
+                        <div class="p-4 sm:p-5 font-mono text-xs leading-6 overflow-x-auto whitespace-nowrap">
+                            <div class="text-cyan-400"># Schema DB Relazionale (better-sqlite3)</div>
+                            <div class="mt-2 text-gray-300">📦 <span class="text-white font-bold">membri</span> <span
+                                    class="text-gray-500">// Anagrafica soci</span></div>
+                            <div class="text-gray-400"> ├─ id <span class="text-gray-500">(PK, Autoinc)</span></div>
+                            <div class="text-gray-400"> ├─ nome, cognome <span class="text-gray-500">(Text)</span></div>
+                            <div class="text-gray-400"> └─ deleted_at <span class="text-gray-500">(Soft delete)</span>
+                            </div>
+
+                            <div class="mt-3 text-gray-300">📦 <span class="text-white font-bold">acquisti</span> <span
+                                    class="text-gray-500">// Eventi finanziari</span></div>
+                            <div class="text-gray-400"> ├─ id <span class="text-gray-500">(PK)</span></div>
+                            <div class="text-gray-400"> ├─ tipo <span class="text-gray-500">(acquisto | raccolta_fondo |
+                                    movimento)</span></div>
+                            <div class="text-gray-400"> ├─ acconto_fornitore <span class="text-gray-500">(Spese
+                                    anticipate dal fondo)</span></div>
+                            <div class="text-gray-400"> └─ completato <span class="text-gray-500">(0: Aperto, 1:
+                                    Chiuso/Congelato)</span></div>
+
+                            <div class="mt-3 text-gray-300">📦 <span class="text-white font-bold">quote_membri</span>
+                                <span class="text-gray-500">// Tabella di giunzione (M:N)</span>
+                            </div>
+                            <div class="text-gray-400"> ├─ acquisto_id <span class="text-gray-500">(FK ->
+                                    acquisti)</span></div>
+                            <div class="text-gray-400"> ├─ membro_id <span class="text-gray-500">(FK -> membri)</span>
+                            </div>
+                            <div class="text-gray-400"> ├─ quantita <span class="text-gray-500">(Moltiplicatore
+                                    quota)</span></div>
+                            <div class="text-gray-400"> └─ importo_versato <span class="text-gray-500">(Pagamento
+                                    effettivo del membro)</span></div>
+
+                            <div class="mt-3 text-gray-300">📦 <span class="text-white font-bold">fondo_cassa</span>
+                                <span class="text-gray-500">// Registro movimentazioni extra</span>
+                            </div>
+                            <div class="text-gray-400"> ├─ importo <span class="text-gray-500">(Positivo o
+                                    Negativo)</span></div>
+                            <div class="text-gray-400"> └─ descrizione <span class="text-gray-500">(Causale
+                                    dell'operazione)</span></div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-20">
+                    <div class="section-divider">
+                        <span class="hex">0x03</span>
+                        <h2>Quick Start</h2>
+                        <div class="line"></div>
+                    </div>
+
+                    <div class="terminal-window">
+                        <div class="terminal-header">
+                            <div class="terminal-dot bg-mac-red"></div>
+                            <div class="terminal-dot bg-mac-yellow"></div>
+                            <div class="terminal-dot bg-mac-green"></div>
+                            <span class="terminal-label">bash</span>
+                        </div>
+                        <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+                            <div><span class="text-gray-500"># 1. Clona il repository ed entra nella directory</span>
+                            </div>
+                            <div><span class="text-cyan-400">$</span> <span class="text-gray-300">git clone
+                                    https://github.com/onyks-os/App-Tesoreria.git</span></div>
+                            <div><span class="text-cyan-400">$</span> <span class="text-gray-300">cd
+                                    App-Tesoreria/app</span></div>
+                            <div class="mt-2"><span class="text-gray-500"># 2. Installa le dipendenze (Node.js 18+
+                                    richiesto)</span></div>
+                            <div><span class="text-cyan-400">$</span> <span class="text-gray-300">npm install</span>
+                            </div>
+                            <div class="mt-2"><span class="text-gray-500"># 3. Avvia in modalità sviluppo o compila
+                                    l'eseguibile</span></div>
+                            <div><span class="text-cyan-400">$</span> <span class="text-gray-300">npm run dev</span>
+                            </div>
+                            <div><span class="text-cyan-400">$</span> <span class="text-gray-300">npm run build</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <footer class="border-t border-white/5 bg-black py-10">
+        <div
+            class="max-w-screen-2xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <div class="flex flex-col sm:flex-row items-center gap-3">
+                <span class="font-display font-bold text-white">App<span class="text-cyan-400">-Tesoreria</span></span>
+                <span class="text-gray-600 font-mono text-xs">MIT License — Electron/React</span>
+            </div>
+            <div class="flex flex-wrap justify-center gap-6">
+                <a href="/" class="font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors">←
+                    BACK</a>
+                <a href="https://github.com/onyks-os/App-Tesoreria" target="_blank"
+                    class="font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors">
+                    <i class="fab fa-github mr-1"></i>SOURCE
+                </a>
+                <a href="https://github.com/onyks-os/App-Tesoreria/issues" target="_blank"
+                    class="font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors">ISSUES</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const bar1 = document.getElementById('bar1');
+        const bar2 = document.getElementById('bar2');
+        const bar3 = document.getElementById('bar3');
+
+        hamburger.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.toggle('open');
+            bar1.style.transform = isOpen ? 'translateY(8px) rotate(45deg)' : '';
+            bar2.style.opacity = isOpen ? '0' : '1';
+            bar3.style.transform = isOpen ? 'translateY(-8px) rotate(-45deg)' : '';
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+    </script>
+
+</body>
+
+</html>
