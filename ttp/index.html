@@ -1,0 +1,1951 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TTP Documentation | Onyks-OS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script data-goatcounter="https://onyks.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/96/console.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            display: ["Space Grotesk", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"],
+          },
+          colors: {
+            cyan: { 400: "#22d3ee", 500: "#06b6d4" },
+            dark: { 900: "#050505", card: "#0a0a0a", border: "#262626" },
+          },
+        },
+      },
+    };
+  </script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        mermaid.initialize({ startOnLoad: true });
+      });
+    </script> -->
+
+  <style>
+    body {
+      background-color: #050505;
+      background-image:
+        linear-gradient(rgba(34, 211, 238, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 211, 238, 0.02) 1px, transparent 1px);
+      background-size: 30px 30px;
+      color: #e5e5e5;
+    }
+
+    .terminal-window {
+      background: #0a0a0a;
+      border: 1px solid #262626;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .terminal-header {
+      background: #111;
+      padding: 8px 16px;
+      border-bottom: 1px solid #262626;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .terminal-label {
+      margin-left: auto;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      color: #4a4a4a;
+    }
+
+    .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .bg-mac-red {
+      background: #ff5f56;
+    }
+
+    .bg-mac-yellow {
+      background: #ffbd2e;
+    }
+
+    .bg-mac-green {
+      background: #27c93f;
+    }
+
+    .nav-link.active {
+      color: #22d3ee;
+      border-left-color: #22d3ee;
+      background: rgba(34, 211, 238, 0.05);
+    }
+
+    .module-card {
+      border: 1px solid #262626;
+      transition: all 0.2s;
+    }
+
+    .module-card:hover {
+      border-color: #22d3ee;
+      transform: translateY(-2px);
+      box-shadow: 0 0 15px rgba(34, 211, 238, 0.07);
+    }
+
+    .flow-step {
+      position: relative;
+    }
+
+    .flow-dot-filled {
+      position: absolute;
+      left: -29px;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      background: #22d3ee;
+      border-radius: 50%;
+    }
+
+    .flow-dot-empty {
+      position: absolute;
+      left: -29px;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      background: #050505;
+      border: 2px solid #22d3ee;
+      border-radius: 50%;
+    }
+
+    .rule-line {
+      display: flex;
+      gap: 1rem;
+      font-size: 13px;
+    }
+
+    .rule-num {
+      color: #4a4a4a;
+      user-select: none;
+      min-width: 1.5rem;
+      text-align: right;
+    }
+
+    .rule-comment {
+      color: #4a7a4a;
+    }
+
+    .rule-keyword {
+      color: #22d3ee;
+    }
+
+    .rule-value {
+      color: #e5c07b;
+    }
+
+    .rule-action {
+      color: #c678dd;
+    }
+
+    code.inline {
+      color: #22d3ee;
+      background: rgba(34, 211, 238, 0.08);
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 0.85em;
+      word-break: break-word;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+
+    .badge-green {
+      background: rgba(39, 201, 63, 0.12);
+      color: #27c93f;
+      border: 1px solid rgba(39, 201, 63, 0.3);
+    }
+
+    .badge-yellow {
+      background: rgba(255, 189, 46, 0.12);
+      color: #ffbd2e;
+      border: 1px solid rgba(255, 189, 46, 0.3);
+    }
+
+    .badge-red {
+      background: rgba(255, 95, 86, 0.12);
+      color: #ff5f56;
+      border: 1px solid rgba(255, 95, 86, 0.3);
+    }
+
+    .badge-cyan {
+      background: rgba(34, 211, 238, 0.08);
+      color: #22d3ee;
+      border: 1px solid rgba(34, 211, 238, 0.25);
+    }
+
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-divider .hex {
+      font-family: "JetBrains Mono", monospace;
+      color: #22d3ee;
+      font-size: 0.8rem;
+    }
+
+    .section-divider h2 {
+      font-size: 1.875rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .section-divider .line {
+      flex-grow: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    table.doc-table {
+      width: 100%;
+      min-width: 600px;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    table.doc-table thead {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    table.doc-table th {
+      padding: 12px 16px;
+      text-align: left;
+      font-family: "JetBrains Mono", monospace;
+      color: #22d3ee;
+      font-weight: 400;
+      font-size: 0.8rem;
+    }
+
+    table.doc-table td {
+      padding: 12px 16px;
+      color: #9ca3af;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      vertical-align: top;
+    }
+
+    table.doc-table td:first-child {
+      font-family: "JetBrains Mono", monospace;
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    .caution-box,
+    .note-box,
+    .warn-box {
+      padding: 1rem 1.25rem;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      color: #d1d5db;
+      word-break: break-word;
+    }
+
+    .caution-box {
+      border: 1px solid rgba(255, 95, 86, 0.35);
+      background: rgba(255, 95, 86, 0.06);
+    }
+
+    .caution-box .label {
+      color: #ff5f56;
+      font-weight: 700;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.75rem;
+      margin-bottom: 4px;
+    }
+
+    .note-box {
+      border: 1px solid rgba(34, 211, 238, 0.25);
+      background: rgba(34, 211, 238, 0.04);
+    }
+
+    .note-box .label {
+      color: #22d3ee;
+      font-weight: 700;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.75rem;
+      margin-bottom: 4px;
+    }
+
+    .warn-box {
+      border: 1px solid rgba(255, 189, 46, 0.3);
+      background: rgba(255, 189, 46, 0.05);
+    }
+
+    .warn-box .label {
+      color: #ffbd2e;
+      font-weight: 700;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.75rem;
+      margin-bottom: 4px;
+    }
+
+    /* Mobile Menu - Hidden by default */
+    #mobile-menu {
+      display: none;
+    }
+
+    @media (max-width: 1023px) {
+      #mobile-menu {
+        position: fixed;
+        top: 4rem;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #050505;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        overflow-y: auto;
+        z-index: 40;
+        padding: 1.5rem;
+      }
+
+      #mobile-menu.open {
+        display: block;
+      }
+    }
+  </style>
+</head>
+
+<body class="antialiased min-h-screen flex flex-col">
+  <nav class="fixed w-full z-50 bg-dark-900/95 backdrop-blur border-b border-white/5 h-16 flex items-center">
+    <div class="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <a href="/" class="text-gray-400 hover:text-cyan-400 transition-colors">
+          <i class="fas fa-chevron-left"></i>
+        </a>
+        <span class="font-display font-bold text-lg text-white">TTP<span class="text-cyan-400">_DOCS</span></span>
+        <span class="badge badge-cyan hidden sm:inline">v0.1.1</span>
+      </div>
+      <a href="https://github.com/onyks-os/TransparentTorProxy" target="_blank"
+        class="font-mono text-sm text-cyan-400 border border-cyan-400/30 px-3 py-1.5 hover:bg-cyan-400/10 transition-colors hidden sm:flex items-center">
+        <i class="fab fa-github mr-2"></i>SOURCE
+      </a>
+      <button id="hamburger"
+        class="lg:hidden flex flex-col gap-1.5 p-2 text-gray-400 hover:text-cyan-400 transition-colors"
+        aria-label="Menu">
+        <span class="block w-5 h-0.5 bg-current transition-all" id="bar1"></span>
+        <span class="block w-5 h-0.5 bg-current transition-all" id="bar2"></span>
+        <span class="block w-5 h-0.5 bg-current transition-all" id="bar3"></span>
+      </button>
+    </div>
+  </nav>
+
+  <div id="mobile-menu">
+    <p class="font-mono text-xs text-gray-600 uppercase tracking-widest mb-3">
+      Contents
+    </p>
+    <ul class="space-y-0.5 font-mono text-sm">
+      <li>
+        <a href="#overview" class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">1.
+          Overview</a>
+      </li>
+      <li>
+        <a href="#installation" class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">2.
+          Installation</a>
+      </li>
+      <li>
+        <a href="#architecture" class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">3.
+          Architecture</a>
+      </li>
+      <li>
+        <a href="#execution" class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">4.
+          Execution Flow</a>
+      </li>
+      <li>
+        <a href="#firewall" class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">5.
+          Firewall Rules</a>
+      </li>
+      <li>
+        <a href="#dns" class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">6. DNS
+          Handling</a>
+      </li>
+      <li>
+        <a href="#cli" class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">7. CLI
+          Reference</a>
+      </li>
+      <li>
+        <a href="#safety" class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">8. Crash
+          Recovery</a>
+      </li>
+      <li>
+        <a href="#distros" class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">9.
+          Distro Support</a>
+      </li>
+      <li>
+        <a href="#dev" class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">10.
+          Development</a>
+      </li>
+      <li>
+        <a href="#limitations" class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">11.
+          Limitations</a>
+      </li>
+      <li>
+        <a href="#uninstallation"
+          class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">12. Uninstallation</a>
+      </li>
+    </ul>
+    <a href="https://github.com/onyks-os/TransparentTorProxy" target="_blank"
+      class="font-mono text-sm text-cyan-400 border border-cyan-400/30 px-3 py-2 hover:bg-cyan-400/10 transition-colors flex items-center justify-center mt-6">
+      <i class="fab fa-github mr-2"></i>VIEW SOURCE
+    </a>
+  </div>
+
+  <div class="flex-grow pt-16 flex max-w-screen-2xl mx-auto w-full">
+    <aside
+      class="hidden lg:block w-64 shrink-0 border-r border-white/5 fixed h-[calc(100vh-4rem)] overflow-y-auto py-8">
+      <div class="px-6 mb-6">
+        <p class="font-mono text-xs text-gray-600 uppercase tracking-widest mb-3">
+          Contents
+        </p>
+        <ul class="space-y-0.5 font-mono text-sm" id="spy-nav">
+          <li>
+            <a href="#overview"
+              class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">1.
+              Overview</a>
+          </li>
+          <li>
+            <a href="#installation"
+              class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">2.
+              Installation</a>
+          </li>
+          <li>
+            <a href="#architecture"
+              class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">3.
+              Architecture</a>
+          </li>
+          <li>
+            <a href="#execution"
+              class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">4.
+              Execution Flow</a>
+          </li>
+          <li>
+            <a href="#firewall"
+              class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">5.
+              Firewall Rules</a>
+          </li>
+          <li>
+            <a href="#dns"
+              class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">6.
+              DNS Handling</a>
+          </li>
+          <li>
+            <a href="#cli"
+              class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">7.
+              CLI Reference</a>
+          </li>
+          <li>
+            <a href="#safety"
+              class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">8.
+              Crash Recovery</a>
+          </li>
+          <li>
+            <a href="#distros"
+              class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">9.
+              Distro Support</a>
+          </li>
+          <li>
+            <a href="#dev"
+              class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">10.
+              Development</a>
+          </li>
+          <li>
+            <a href="#limitations"
+              class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">11.
+              Limitations</a>
+          </li>
+          <li>
+            <a href="#uninstallation"
+              class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">12.
+              Uninstallation</a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="flex-grow lg:pl-64 p-4 sm:p-6 lg:p-12 w-full overflow-hidden">
+      <div class="max-w-4xl mx-auto w-full">
+        <section id="overview" class="mb-20 scroll-mt-24">
+          <div class="mb-3 flex flex-wrap items-center gap-3">
+            <span class="badge badge-cyan">CLI TOOL</span>
+            <span class="badge badge-green">MIT LICENSE</span>
+            <span class="badge badge-yellow">PYTHON 3.10+</span>
+            <span class="badge badge-red">KILL-SWITCH</span>
+          </div>
+          <h1 class="text-3xl md:text-5xl font-display font-bold text-white mb-5 leading-tight">
+            Transparent Tor Proxy
+          </h1>
+          <p class="text-base md:text-lg text-gray-400 mb-8 leading-relaxed max-w-2xl">
+            TTP is a Linux CLI tool that intercepts
+            <strong class="text-white">all outgoing network traffic</strong>
+            and forces it through the Tor network using
+            <code class="inline">nftables</code>, without requiring
+            per-application configuration. It uses modern Linux primitives,
+            loads firewall rules atomically, and is designed to always restore
+            your network, even after a crash or power outage.
+          </p>
+
+          <div class="terminal-window mb-8">
+            <div class="terminal-header">
+              <div class="terminal-dot bg-mac-red"></div>
+              <div class="terminal-dot bg-mac-yellow"></div>
+              <div class="terminal-dot bg-mac-green"></div>
+              <span class="terminal-label">bash</span>
+            </div>
+            <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+              <div>
+                <span class="text-cyan-400">$</span>
+                <span class="text-gray-300">git clone
+                  https://github.com/onyks-os/TransparentTorProxy.git</span>
+              </div>
+              <div>
+                <span class="text-cyan-400">$</span>
+                <span class="text-gray-300">cd TransparentTorProxy && pipx install .</span>
+              </div>
+              <div>
+                <span class="text-cyan-400">$</span>
+                <span class="text-gray-300">sudo ttp start</span>
+              </div>
+              <div class="mt-2 text-gray-500">
+                [TTP] Detecting Tor... found (v0.4.9.6), service active (user:
+                debian-tor).
+              </div>
+              <div class="text-gray-500">
+                [TTP] Stateless nftables rules applied (Table: inet ttp).
+              </div>
+              <div class="text-gray-500">
+                [TTP] DNS set via resolvectl on interface ens3.
+              </div>
+              <div class="text-gray-500">
+                [TTP] Waiting for Tor to bootstrap...
+                <span class="text-green-400">100%</span>
+              </div>
+              <div class="text-green-400">
+                [TTP] ✅ Session active. Exit IP: 109.70.100.11
+              </div>
+            </div>
+          </div>
+
+          <div class="caution-box">
+            <div class="label">⚠ SECURITY NOTICE</div>
+            TTP routes traffic through Tor but does not guarantee anonymity.
+            Your safety also depends on your behavior (signing into accounts,
+            browser fingerprinting, etc.). For high-risk activities use
+            <a href="https://tails.net/" target="_blank" class="text-cyan-400 hover:underline">Tails</a>
+            or
+            <a href="https://www.torproject.org/" target="_blank" class="text-cyan-400 hover:underline">Tor Browser</a>
+            directly.
+          </div>
+        </section>
+
+        <section id="installation" class="mb-20 scroll-mt-24">
+          <div class="section-divider">
+            <span class="hex">0x02</span>
+            <h2>Installation</h2>
+            <div class="line"></div>
+          </div>
+
+          <h3 class="text-white font-bold mb-3">Requirements</h3>
+          <div class="overflow-x-auto mb-8 border border-white/5 rounded">
+            <table class="doc-table w-full min-w-[600px]">
+              <thead>
+                <tr>
+                  <th>Requirement</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Linux with systemd</td>
+                  <td>
+                    Tested on Debian 12+, Ubuntu 22.04+, Fedora 40+, Arch
+                    Linux
+                  </td>
+                </tr>
+                <tr>
+                  <td>Python 3.10+</td>
+                  <td>
+                    Required for union type hints and modern stdlib features
+                  </td>
+                </tr>
+                <tr>
+                  <td>nftables</td>
+                  <td>
+                    Pre-installed on Debian 12+, Fedora 33+, Arch. Replaces
+                    iptables as firewall backend.
+                  </td>
+                </tr>
+                <tr>
+                  <td>Root privileges</td>
+                  <td>
+                    Required for firewall and DNS modifications, and all
+                    commands must be run with <code class="inline">sudo</code>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="text-white font-bold mb-3">
+            1. Native Packages (Recommended)
+          </h3>
+          <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+            Installing via native packages ensures that all system
+            dependencies (<code class="inline">tor</code>,
+            <code class="inline">nftables</code>) and kernel-level
+            optimizations (SELinux) are managed by your OS package manager.
+          </p>
+          <div class="terminal-window mb-8">
+            <div class="terminal-header">
+              <div class="terminal-dot bg-mac-red"></div>
+              <div class="terminal-dot bg-mac-yellow"></div>
+              <div class="terminal-dot bg-mac-green"></div>
+              <span class="terminal-label">bash</span>
+            </div>
+            <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+              <div class="mb-2">
+                <span class="text-gray-500"># Debian / Ubuntu</span><br />
+                <span class="text-cyan-400">$</span>
+                <span class="text-gray-300">sudo apt install ./packaging/*.deb</span>
+              </div>
+              <div class="mb-2">
+                <span class="text-gray-500"># Fedora / RHEL</span><br />
+                <span class="text-cyan-400">$</span>
+                <span class="text-gray-300">sudo dnf install ./packaging/*.rpm</span>
+              </div>
+              <div>
+                <span class="text-gray-500"># Arch Linux</span><br />
+                <span class="text-cyan-400">$</span>
+                <span class="text-gray-300">cd packaging && makepkg -si</span>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-white font-bold mb-3">
+            2. Universal Source Script (Developer)
+          </h3>
+          <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+            If you want to install from the repository, use the "intelligent"
+            installer. It handles SELinux optimization on Fedora by compiling
+            a custom policy module on the fly.
+          </p>
+          <div class="terminal-window mb-8">
+            <div class="terminal-header">
+              <div class="terminal-dot bg-mac-red"></div>
+              <div class="terminal-dot bg-mac-yellow"></div>
+              <div class="terminal-dot bg-mac-green"></div>
+              <span class="terminal-label">bash</span>
+            </div>
+            <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+              <div>
+                <span class="text-cyan-400">$</span>
+                <span class="text-gray-300">git clone
+                  https://github.com/onyks-os/TransparentTorProxy.git</span>
+              </div>
+              <div>
+                <span class="text-cyan-400">$</span>
+                <span class="text-gray-300">cd TransparentTorProxy</span>
+              </div>
+              <div>
+                <span class="text-cyan-400">$</span>
+                <span class="text-gray-300">sudo ./scripts/install.sh</span>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-white font-bold mb-3">
+            3. Fallback: pipx / venv (PEP 668)
+          </h3>
+          <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+            Modern Linux distributions prevent global
+            <code class="inline">pip install</code>. Using these methods will
+            bypass kernel-level optimizations (SELinux) and won't handle
+            system dependencies automatically.
+          </p>
+          <div class="terminal-window mb-6">
+            <div class="terminal-header">
+              <div class="terminal-dot bg-mac-red"></div>
+              <div class="terminal-dot bg-mac-yellow"></div>
+              <div class="terminal-dot bg-mac-green"></div>
+              <span class="terminal-label">bash</span>
+            </div>
+            <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+              <div>
+                <span class="text-gray-500"># Option A: pipx (Recommended)</span><br />
+                <span class="text-cyan-400">$</span>
+                <span class="text-gray-300">pipx install transparent-tor-proxy</span>
+              </div>
+              <div class="mt-3">
+                <span class="text-gray-500"># Option B: Local source with pip</span><br />
+                <span class="text-cyan-400">$</span>
+                <span class="text-gray-300">pip install .</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="note-box mb-4">
+            <div class="label">ℹ NOTE</div>
+            After installation, the <code class="inline">ttp</code> command is
+            registered system-wide via the
+            <code class="inline">pyproject.toml</code> entry point
+            <code class="inline">ttp = "ttp.cli:app"</code>. Tor itself does
+            not need to be pre-installed, as TTP detects its absence and
+            installs it automatically using the system's package manager.
+          </div>
+
+          <h3 class="text-white font-bold mb-3 mt-6">Python dependencies</h3>
+          <div class="overflow-x-auto border border-white/5 rounded">
+            <table class="doc-table w-full min-w-[600px]">
+              <thead>
+                <tr>
+                  <th>Package</th>
+                  <th>Source</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>stem</td>
+                  <td>PyPI</td>
+                  <td>
+                    Official Python library from the Tor Project. Used to
+                    connect to Tor's Control Port/Socket, monitor bootstrap
+                    progress, and send
+                    <code class="inline">NEWNYM</code> signals.
+                  </td>
+                </tr>
+                <tr>
+                  <td>typer</td>
+                  <td>PyPI</td>
+                  <td>
+                    Modern CLI framework. Provides argument parsing,
+                    <code class="inline">--help</code> generation, and clean
+                    command routing.
+                  </td>
+                </tr>
+                <tr>
+                  <td>rich</td>
+                  <td>PyPI</td>
+                  <td>
+                    Terminal output formatting: panels, progress bars, colored
+                    text.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="architecture" class="mb-20 scroll-mt-24">
+          <div class="section-divider">
+            <span class="hex">0x03</span>
+            <h2>Architecture</h2>
+            <div class="line"></div>
+          </div>
+
+          <p class="text-gray-400 mb-8 leading-relaxed">
+            TTP is structured as a set of independent Python modules, each
+            with a single responsibility. No module imports from
+            <code class="inline">cli.py</code>. UI logic (<code class="inline">rich</code>, <code
+              class="inline">typer</code>) is confined exclusively to
+            <code class="inline">cli.py</code> while all other modules return
+            plain data.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="module-card p-5 bg-dark-card">
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-cyan-400 font-bold font-mono">tor_detect.py</span>
+                <i class="fas fa-search text-gray-600"></i>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">
+                Read-only module. Checks if Tor is installed (<code class="inline">shutil.which</code>), running (<code
+                  class="inline">systemctl is-active</code> +
+                <code class="inline">pgrep</code>), and correctly configured
+                (<code class="inline">TransPort 9040</code>,
+                <code class="inline">DNSPort 9053</code>,
+                <code class="inline">ControlPort 9051</code> in torrc).
+                Dynamically detects the Tor system user and SELinux
+                enforcement state. Returns a structured dictionary, but never
+                modifies anything.
+              </p>
+            </div>
+
+            <div class="module-card p-5 bg-dark-card">
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-cyan-400 font-bold font-mono">tor_install.py</span>
+                <i class="fas fa-box text-gray-600"></i>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">
+                Invoked only when
+                <code class="inline">tor_detect</code> reports Tor is missing
+                or misconfigured. Detects the system package manager (<code class="inline">apt-get</code>, <code
+                  class="inline">pacman</code>,
+                <code class="inline">dnf</code>,
+                <code class="inline">zypper</code>) and installs Tor. Performs
+                SELinux optimization on Fedora/RHEL, sanitizes
+                <code class="inline">/etc/tor/torrc</code>, validates with
+                <code class="inline">tor --verify-config</code>, then restarts
+                the correct systemd unit.
+              </p>
+            </div>
+
+            <div class="module-card p-5 bg-dark-card">
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-cyan-400 font-bold font-mono">firewall.py</span>
+                <i class="fas fa-shield-alt text-gray-600"></i>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">
+                Implements a multi-chain, "Safe-Release" architecture.
+                Generates a stateless ruleset with three chains:
+                <code class="inline">prerouting</code>,
+                <code class="inline">output</code> (NAT), and
+                <code class="inline">filter_out</code> (Filter). The latter
+                acts as a dedicated <strong>Kill-Switch</strong>. Applied
+                atomically via <code class="inline">nft -f</code>.
+              </p>
+            </div>
+
+            <div class="module-card p-5 bg-dark-card">
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-cyan-400 font-bold font-mono">dns.py</span>
+                <i class="fas fa-globe text-gray-600"></i>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">
+                Manages DNS redirection to
+                <code class="inline">127.0.0.1</code>.
+                <strong class="text-white">Mode 1</strong> uses
+                <code class="inline">resolvectl</code> to set DNS and the
+                global routing domain (<code class="inline">~.</code>) when
+                active. <strong class="text-white">Mode 2</strong> overwrites
+                <code class="inline">/etc/resolv.conf</code>. Uses a
+                <strong>Hard-Reset strategy</strong> (revert → restart → flush
+                caches) for robust restoration.
+              </p>
+            </div>
+
+            <div class="module-card p-5 bg-dark-card">
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-cyan-400 font-bold font-mono">state.py</span>
+                <i class="fas fa-memory text-gray-600"></i>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">
+                Writes and reads a JSON lock file at
+                <code class="inline">/var/lib/ttp/ttp.lock</code> containing:
+                <code class="inline">pid</code>,
+                <code class="inline">timestamp</code>,
+                <code class="inline">dns_backup</code>, and
+                <code class="inline">dns_mode</code>. On startup, checks if
+                the lock's PID is still alive. A dead PID means an orphaned
+                session, exposing
+                <code class="inline">attempt_recovery()</code> to
+                auto-restore.
+              </p>
+            </div>
+
+            <div class="module-card p-5 bg-dark-card">
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-cyan-400 font-bold font-mono">tor_control.py</span>
+                <i class="fas fa-satellite-dish text-gray-600"></i>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">
+                Encapsulates all Stem library usage. Connects to Tor's control
+                interface, monitors bootstrap progress via
+                <code class="inline">status/bootstrap-phase</code>, sends
+                <code class="inline">NEWNYM</code> to rotate circuits, and
+                verifies actual Tor routing via
+                <code class="inline">check.torproject.org/api/ip</code>.
+              </p>
+            </div>
+
+            <div class="module-card p-5 bg-dark-card md:col-span-2">
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-cyan-400 font-bold font-mono">system_info.py</span>
+                <i class="fas fa-stethoscope text-gray-600"></i>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">
+                Pure data-gathering module used by
+                <code class="inline">ttp diagnose</code>. Collects OS info,
+                Tor service status, active torrc settings, nftables ruleset,
+                DNS state, and Tor control interface status. Returns a flat
+                <code class="inline">dict[str, str]</code>. Every subprocess
+                call is wrapped in a try/except so a single failure never
+                aborts the full diagnostic.
+              </p>
+            </div>
+
+            <div class="module-card p-5 bg-dark-card md:col-span-2">
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-cyan-400 font-bold font-mono">exceptions.py</span>
+                <i class="fas fa-exclamation-triangle text-gray-600"></i>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">
+                Defines a custom exception hierarchy for the project. Includes
+                <code class="inline">TTPError</code> (base) and specialized
+                classes: <code class="inline">FirewallError</code>,
+                <code class="inline">DNSError</code>,
+                <code class="inline">StateError</code>, and
+                <code class="inline">TorError</code>. Used to distinguish
+                between fatal issues and recoverable states.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="execution" class="mb-20 scroll-mt-24">
+          <div class="section-divider">
+            <span class="hex">0x04</span>
+            <h2>Execution Flow</h2>
+            <div class="line"></div>
+          </div>
+
+          <h3 class="text-white font-bold mb-5">ttp start</h3>
+          <div class="relative pl-6 border-l border-white/10 space-y-7 text-gray-400 mb-12">
+            <div class="flow-step">
+              <div class="flow-dot-filled"></div>
+              <h4 class="text-white font-semibold mb-1">
+                1. Root check, Signal registration &amp; SELinux
+              </h4>
+              <p class="text-sm leading-relaxed">
+                Verifies <code class="inline">os.geteuid() == 0</code>.
+                Registers <code class="inline">SIGINT</code> and
+                <code class="inline">SIGTERM</code> handlers. On Fedora/RHEL,
+                ensures the TTP SELinux policy module is installed to allow
+                Tor port binding.
+              </p>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot-empty"></div>
+              <h4 class="text-white font-semibold mb-1">
+                2. Orphan detection
+              </h4>
+              <p class="text-sm leading-relaxed">
+                Reads <code class="inline">/var/lib/ttp/ttp.lock</code>. If
+                the lock exists and its PID is dead, the session is orphaned.
+                <code class="inline">state.attempt_recovery()</code> is called
+                automatically to restore firewall and DNS.
+              </p>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot-empty"></div>
+              <h4 class="text-white font-semibold mb-1">
+                3. Tor detection &amp; auto-install
+              </h4>
+              <p class="text-sm leading-relaxed">
+                <code class="inline">tor_install.ensure_tor_ready()</code>
+                orchestrates detection → install → torrc configuration →
+                service restart. The torrc is always validated before
+                restarting.
+              </p>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot-empty"></div>
+              <h4 class="text-white font-semibold mb-1">
+                4. Stateless multi-chain firewall application
+              </h4>
+              <p class="text-sm leading-relaxed">
+                A stateless ruleset is written to
+                <code class="inline">/var/lib/ttp/ttp.rules</code> and loaded
+                atomically via <code class="inline">nft -f</code>. This
+                includes NAT redirection and a filter-based
+                <strong>Kill-Switch</strong> to prevent leaks during bootstrap
+                or unexpected process failure.
+              </p>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot-empty"></div>
+              <h4 class="text-white font-semibold mb-1">
+                5. DNS redirection
+              </h4>
+              <p class="text-sm leading-relaxed">
+                The active network interface is auto-detected. DNS is
+                redirected to <code class="inline">127.0.0.1</code> using
+                <code class="inline">resolvectl</code> or by overwriting
+                <code class="inline">/etc/resolv.conf</code>.
+              </p>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot-empty"></div>
+              <h4 class="text-white font-semibold mb-1">
+                6. Lock file write
+              </h4>
+              <p class="text-sm leading-relaxed">
+                A JSON lock file is written to
+                <code class="inline">/var/lib/ttp/ttp.lock</code> containing
+                DNS backup info and PID. This is the only persistent record of
+                the active session.
+              </p>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot-empty"></div>
+              <h4 class="text-white font-semibold mb-1">
+                7. Bootstrap wait &amp; verification
+              </h4>
+              <p class="text-sm leading-relaxed">
+                Connects to Tor's control interface and polls
+                <code class="inline">status/bootstrap-phase</code>. Once at
+                100%, waits 2 seconds for circuits to settle, then verifies
+                routing against multiple endpoints (e.g.,
+                <code class="inline">check.torproject.org</code>).
+              </p>
+            </div>
+          </div>
+
+          <h3 class="text-white font-bold mb-5">ttp stop</h3>
+          <div class="relative pl-6 border-l border-white/10 space-y-7 text-gray-400 mb-4">
+            <div class="flow-step">
+              <div class="flow-dot-filled"></div>
+              <h4 class="text-white font-semibold mb-1">Restore firewall</h4>
+              <p class="text-sm">
+                Removes the TTP rules by destroying the table:
+                <code class="inline">nft destroy table inet ttp</code>.
+              </p>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot-empty"></div>
+              <h4 class="text-white font-semibold mb-1">Restore DNS</h4>
+              <p class="text-sm">
+                Reads DNS mode and backup from lock. Performs a Hard-Reset
+                (<code class="inline">resolvectl revert</code>, restart
+                service, flush caches) or rewrites
+                <code class="inline">/etc/resolv.conf</code>.
+              </p>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot-empty"></div>
+              <h4 class="text-white font-semibold mb-1">Delete lock</h4>
+              <p class="text-sm">
+                Removes <code class="inline">/var/lib/ttp/ttp.lock</code>.
+                Session is terminated.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="firewall" class="mb-20 scroll-mt-24">
+          <div class="section-divider">
+            <span class="hex">0x05</span>
+            <h2>Firewall Rules</h2>
+            <div class="line"></div>
+          </div>
+
+          <p class="text-gray-400 mb-6 leading-relaxed">
+            TTP generates a single nftables table. The ruleset is written to a
+            temporary file and loaded with a single
+            <code class="inline">nft -f</code> call, meaning all rules apply
+            atomically, or none do.
+          </p>
+
+          <div class="terminal-window mb-6">
+            <div class="terminal-header">
+              <div class="terminal-dot bg-mac-red"></div>
+              <div class="terminal-dot bg-mac-yellow"></div>
+              <div class="terminal-dot bg-mac-green"></div>
+              <span class="terminal-label">nftables</span>
+            </div>
+            <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+              <div class="rule-line">
+                <span class="rule-comment"># TTP - Transparent Tor Proxy rules</span>
+              </div>
+              <div class="rule-line">
+                <span class="rule-comment"># Applied atomically via nft -f</span>
+              </div>
+              <div class="mt-2"></div>
+              <div class="rule-line">
+                <span class="rule-keyword">table inet ttp</span>
+                <span class="text-gray-500">{</span>
+              </div>
+              <div class="rule-line">
+                <span class="text-gray-500 ml-4">chain</span>
+                <span class="rule-keyword">prerouting</span>
+                <span class="text-gray-500">{</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-500">type nat hook prerouting priority dstnat; policy
+                  accept;</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-300">udp dport 53</span>
+                <span class="rule-action">dnat ip to</span>
+                <span class="rule-value">127.0.0.1:9053</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-300">tcp dport 53</span>
+                <span class="rule-action">dnat ip to</span>
+                <span class="rule-value">127.0.0.1:9053</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-300">ip protocol tcp</span>
+                <span class="rule-action">dnat ip to</span>
+                <span class="rule-value">127.0.0.1:9040</span>
+              </div>
+              <div class="rule-line">
+                <span class="text-gray-500 ml-4">}</span>
+              </div>
+              <div class="mt-2"></div>
+              <div class="rule-line">
+                <span class="text-gray-500 ml-4">chain</span>
+                <span class="rule-keyword">output</span>
+                <span class="text-gray-500">{</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-500">type nat hook output priority -150; policy accept;</span>
+              </div>
+              <div class="mt-1"></div>
+              <div class="rule-line">
+                <span class="rule-comment ml-8"># 1. Tor user EXEMPTION (Allow daemon to reach net)</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-300">meta skuid</span>
+                <span class="rule-value">114</span>
+                <span class="rule-action">accept</span>
+              </div>
+              <div class="mt-1"></div>
+              <div class="rule-line">
+                <span class="rule-comment ml-8"># 2. DNS Redirection: Force queries to Tor's DNSPort</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-300">udp dport 53</span>
+                <span class="rule-action">dnat ip to</span>
+                <span class="rule-value">127.0.0.1:9053</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-300">tcp dport 53</span>
+                <span class="rule-action">dnat ip to</span>
+                <span class="rule-value">127.0.0.1:9053</span>
+              </div>
+              <div class="mt-1"></div>
+              <div class="rule-line">
+                <span class="rule-comment ml-8"># 3. Exempt local traffic (Required for NATed
+                  packets)</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-300">ip daddr 127.0.0.0/8</span>
+                <span class="rule-action">accept</span>
+              </div>
+              <div class="mt-1"></div>
+              <div class="rule-line">
+                <span class="rule-comment ml-8"># 4. Redirect all other TCP traffic to Tor's
+                  TransPort</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-300">ip protocol tcp</span>
+                <span class="rule-action">dnat ip to</span>
+                <span class="rule-value">127.0.0.1:9040</span>
+              </div>
+              <div class="rule-line">
+                <span class="text-gray-500 ml-4">}</span>
+              </div>
+              <div class="mt-2"></div>
+              <div class="rule-line">
+                <span class="text-gray-500 ml-4">chain</span>
+                <span class="rule-keyword">filter_out</span>
+                <span class="text-gray-500">{</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-500">type filter hook output priority filter; policy
+                  accept;</span>
+              </div>
+              <div class="mt-1"></div>
+              <div class="rule-line">
+                <span class="rule-comment ml-8"># Kill-switch: Ensure only Tor and Local traffic
+                  leaves</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-300">meta skuid</span>
+                <span class="rule-value">114</span>
+                <span class="rule-action">accept</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-300">meta skuid</span>
+                <span class="rule-value">0</span>
+                <span class="rule-action">accept</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-300">ip daddr 127.0.0.0/8</span>
+                <span class="rule-action">accept</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-300">meta nfproto ipv6</span>
+                <span class="rule-action">drop</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-300">reject</span>
+              </div>
+              <div class="rule-line">
+                <span class="text-gray-500 ml-4">}</span>
+              </div>
+              <div class="rule-line">
+                <span class="text-gray-500">}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="warn-box mb-4">
+            <div class="label">⚠ RULE ORDERING: DNS BEFORE LOOPBACK</div>
+            The DNS redirect (<code class="inline">udp dport 53 dnat ip to 127.0.0.1:9053</code>) must appear
+            <strong>before</strong> the loopback accept rule in
+            the <code class="inline">output</code> chain. When
+            <code class="inline">resolv.conf</code> points to
+            <code class="inline">127.0.0.1</code>, DNS queries are addressed
+            to the loopback interface. If the loopback accept rule fires
+            first, the packet is accepted without redirection, causing silent
+            DNS leak.
+          </div>
+
+          <div class="note-box">
+            <div class="label">ℹ KILL SWITCH</div>
+            TTP implements a dedicated
+            <code class="inline">filter_out</code> chain that acts as a global
+            <strong>Kill-Switch</strong>. It explicitly allows Tor, root, and
+            local traffic while rejecting everything else. This ensures that
+            no cleartext traffic can bypass the NAT redirection, covering edge
+            cases like pre-existing connections or processes failing to be
+            intercepted.
+          </div>
+        </section>
+
+        <section id="dns" class="mb-20 scroll-mt-24">
+          <div class="section-divider">
+            <span class="hex">0x06</span>
+            <h2>DNS Handling</h2>
+            <div class="line"></div>
+          </div>
+
+          <p class="text-gray-400 mb-6 leading-relaxed">
+            DNS leak prevention is critical for anonymity. TTP redirects all
+            DNS (UDP port 53) to Tor's <code class="inline">DNSPort</code> at
+            <code class="inline">127.0.0.1:9053</code> via the nftables NAT
+            rule, and additionally redirects the system resolver to
+            <code class="inline">127.0.0.1</code>.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="module-card p-5 bg-dark-card">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="badge badge-green">PREFERRED</span>
+                <span class="text-white font-bold font-mono text-sm">resolvectl</span>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">
+                Used when <code class="inline">systemd-resolved</code> is
+                active. Runs:
+                <code class="inline">resolvectl dns &lt;iface&gt; 127.0.0.1</code>. Integrates cleanly with the resolver
+                daemon, no file
+                overwrite.
+              </p>
+            </div>
+            <div class="module-card p-5 bg-dark-card">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="badge badge-yellow">FALLBACK</span>
+                <span class="text-white font-bold font-mono text-sm">resolv.conf</span>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">
+                Used when <code class="inline">systemd-resolved</code> is not
+                active. Saves the original content of
+                <code class="inline">/etc/resolv.conf</code>, then overwrites
+                it. Never used on systems where
+                <code class="inline">systemd-resolved</code> is running.
+              </p>
+            </div>
+          </div>
+
+          <div class="note-box">
+            <div class="label">ℹ DOUBLE PROTECTION</div>
+            DNS leak prevention works on two levels simultaneously: the
+            nftables NAT rule intercepts all UDP port 53 traffic at the kernel
+            level, and the system resolver configuration ensures glibc lookups
+            go through Tor's DNSPort.
+          </div>
+        </section>
+
+        <section id="cli" class="mb-20 scroll-mt-24">
+          <div class="section-divider">
+            <span class="hex">0x07</span>
+            <h2>CLI Reference</h2>
+            <div class="line"></div>
+          </div>
+
+          <p class="text-gray-400 mb-6 text-sm">
+            All commands require <code class="inline">sudo</code>. Global
+            flags <code class="inline">--verbose</code> /
+            <code class="inline">-v</code> and
+            <code class="inline">--quiet</code> /
+            <code class="inline">-q</code> are available on all commands.
+          </p>
+
+          <div class="space-y-6">
+            <div class="border border-white/5 rounded overflow-hidden">
+              <div
+                class="bg-white/3 px-5 py-3 flex items-center justify-between border-b border-white/5 overflow-x-auto whitespace-nowrap">
+                <span class="font-mono text-white font-bold text-sm sm:text-base">sudo ttp start [--interface/-i
+                  &lt;iface&gt;]</span>
+              </div>
+              <div class="p-5 text-gray-400 text-sm leading-relaxed space-y-3">
+                <p>
+                  Starts the transparent proxy session. Orchestrates the full
+                  startup sequence.
+                </p>
+                <div class="terminal-window mt-3">
+                  <div class="terminal-header">
+                    <div class="terminal-dot bg-mac-red"></div>
+                    <div class="terminal-dot bg-mac-yellow"></div>
+                    <div class="terminal-dot bg-mac-green"></div>
+                    <span class="terminal-label">output</span>
+                  </div>
+                  <div class="p-4 font-mono text-xs leading-6 text-gray-400 overflow-x-auto whitespace-nowrap">
+                    <div>
+                      [TTP] Detecting Tor... found (v0.4.9.6), service active
+                      (user: debian-tor).
+                    </div>
+                    <div>
+                      [TTP] Stateless nftables rules applied (Table: inet
+                      ttp).
+                    </div>
+                    <div>[TTP] DNS set via resolvectl on interface ens3.</div>
+                    <div>
+                      [TTP] Waiting for Tor to bootstrap...
+                      <span class="text-green-400">100%</span>
+                    </div>
+                    <div>[TTP] Tor is 100% bootstrapped.</div>
+                    <div>[TTP] Verifying Tor routing...</div>
+                    <div class="text-green-400">
+                      [TTP] ✅ Session active. Exit IP: 109.70.100.11
+                    </div>
+                    <div>
+                      [TTP] Use 'ttp stop' to terminate. 'ttp refresh' to
+                      change IP.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="border border-white/5 rounded overflow-hidden">
+              <div
+                class="bg-white/3 px-5 py-3 flex items-center justify-between border-b border-white/5 overflow-x-auto whitespace-nowrap">
+                <span class="font-mono text-white font-bold text-sm sm:text-base">sudo ttp stop</span>
+              </div>
+              <div class="p-5 text-gray-400 text-sm leading-relaxed space-y-3">
+                <p>
+                  Stops the session and restores the network to its original
+                  state.
+                </p>
+                <div class="terminal-window mt-3">
+                  <div class="terminal-header">
+                    <div class="terminal-dot bg-mac-red"></div>
+                    <div class="terminal-dot bg-mac-yellow"></div>
+                    <div class="terminal-dot bg-mac-green"></div>
+                    <span class="terminal-label">output</span>
+                  </div>
+                  <div class="p-4 font-mono text-xs leading-6 text-gray-400 overflow-x-auto whitespace-nowrap">
+                    <div>[TTP] Removing nftables rules...</div>
+                    <div>[TTP] Restoring DNS...</div>
+                    <div class="text-red-400">
+                      [TTP] 🔴 Session terminated. Traffic in cleartext.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="border border-white/5 rounded overflow-hidden">
+              <div
+                class="bg-white/3 px-5 py-3 flex items-center justify-between border-b border-white/5 overflow-x-auto whitespace-nowrap">
+                <span class="font-mono text-white font-bold text-sm sm:text-base">sudo ttp refresh</span>
+              </div>
+              <div class="p-5 text-gray-400 text-sm leading-relaxed space-y-3">
+                <p>
+                  Requests a new Tor circuit without stopping the session.
+                  Traffic continues to flow through Tor uninterrupted while
+                  the circuit rotates.
+                </p>
+              </div>
+            </div>
+
+            <div class="border border-white/5 rounded overflow-hidden">
+              <div
+                class="bg-white/3 px-5 py-3 flex items-center justify-between border-b border-white/5 overflow-x-auto whitespace-nowrap">
+                <span class="font-mono text-white font-bold text-sm sm:text-base">sudo ttp status</span>
+              </div>
+              <div class="p-5 text-gray-400 text-sm leading-relaxed space-y-3">
+                <p>
+                  Shows the current session status. Reads the lock file and
+                  fetches the current exit IP.
+                </p>
+                <div class="terminal-window mt-3">
+                  <div class="terminal-header">
+                    <div class="terminal-dot bg-mac-red"></div>
+                    <div class="terminal-dot bg-mac-yellow"></div>
+                    <div class="terminal-dot bg-mac-green"></div>
+                    <span class="terminal-label">output</span>
+                  </div>
+                  <div class="p-4 font-mono text-xs leading-6 text-gray-400 overflow-x-auto whitespace-nowrap">
+                    <div>
+                      <span class="text-green-400">[TTP] Status: ACTIVE</span>
+                    </div>
+                    <div>[TTP] Exit IP: 185.181.61.201</div>
+                    <div>
+                      [TTP] Session started: 2026-04-19T01:07:33.384801+00:00
+                    </div>
+                    <div>[TTP] Process PID: 3392</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="border border-white/5 rounded overflow-hidden">
+              <div
+                class="bg-white/3 px-5 py-3 flex items-center justify-between border-b border-white/5 overflow-x-auto whitespace-nowrap">
+                <span class="font-mono text-white font-bold text-sm sm:text-base">sudo ttp diagnose</span>
+              </div>
+              <div class="p-5 text-gray-400 text-sm leading-relaxed space-y-3">
+                <p>
+                  Runs a comprehensive system diagnostic and prints a detailed
+                  report. Checks Tor service status, torrc configuration,
+                  active nftables rules, and DNS settings.
+                </p>
+              </div>
+            </div>
+
+            <div class="border border-white/5 rounded overflow-hidden">
+              <div
+                class="bg-white/3 px-5 py-3 flex items-center justify-between border-b border-white/5 overflow-x-auto whitespace-nowrap">
+                <span class="font-mono text-white font-bold text-sm sm:text-base">sudo ttp uninstall</span>
+              </div>
+              <div class="p-5 text-gray-400 text-sm leading-relaxed space-y-3">
+                <p>
+                  Performs a deep cleanup of the TTP state. Stops any active
+                  session, removes the SELinux policy module, and deletes log
+                  files. Note: This does not remove the
+                  <code class="inline">ttp</code> binary itself; for that, use
+                  <code class="inline">scripts/uninstall.sh</code>.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="safety" class="mb-20 scroll-mt-24">
+          <div class="section-divider">
+            <span class="hex">0x08</span>
+            <h2>Crash Recovery</h2>
+            <div class="line"></div>
+          </div>
+
+          <p class="text-gray-400 mb-8 leading-relaxed">
+            TTP is designed around the assumption that any process can die at
+            any time. The lock file at
+            <code class="inline">/var/lib/ttp/ttp.lock</code> contains all
+            information needed to undo changes.
+          </p>
+
+          <div class="space-y-4 mb-8">
+            <div class="flex items-start gap-4 p-4 bg-dark-card border border-white/5 rounded flex-col sm:flex-row">
+              <span class="badge badge-green mt-0.5 shrink-0">NORMAL</span>
+              <div>
+                <div class="font-mono text-white text-sm mb-1">ttp stop</div>
+                <p class="text-gray-400 text-sm">
+                  Reads lock → restores firewall via backup file → restores
+                  DNS via saved content → deletes lock. Clean exit.
+                </p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 p-4 bg-dark-card border border-white/5 rounded flex-col sm:flex-row">
+              <span class="badge badge-yellow mt-0.5 shrink-0">HANDLED</span>
+              <div>
+                <div class="font-mono text-white text-sm mb-1">
+                  Ctrl+C &nbsp;/&nbsp; kill (SIGINT, SIGTERM)
+                </div>
+                <p class="text-gray-400 text-sm">
+                  Signal handlers registered at startup intercept the signal
+                  and call the same cleanup routine as
+                  <code class="inline">ttp stop</code> before exiting.
+                </p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 p-4 bg-red-900/10 border border-red-500/20 rounded flex-col sm:flex-row">
+              <span class="badge badge-red mt-0.5 shrink-0">RECOVERED</span>
+              <div>
+                <div class="font-mono text-white text-sm mb-1">
+                  kill -9 &nbsp;/&nbsp; power outage
+                </div>
+                <p class="text-gray-400 text-sm">
+                  The lock file survives. On the next
+                  <code class="inline">ttp start</code>, if the process is
+                  dead, the lock is orphaned and
+                  <code class="inline">state.attempt_recovery()</code> is
+                  called automatically to restore firewall and DNS.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="warn-box">
+            <div class="label">⚠ MANUAL RECOVERY</div>
+            If for any reason automatic recovery does not run, you can restore
+            the network manually:
+            <div class="terminal-window mt-3">
+              <div class="terminal-header">
+                <div class="terminal-dot bg-mac-red"></div>
+                <div class="terminal-dot bg-mac-yellow"></div>
+                <div class="terminal-dot bg-mac-green"></div>
+              </div>
+              <div class="p-4 font-mono text-xs leading-6 text-gray-400 overflow-x-auto whitespace-nowrap">
+                <div>
+                  <span class="text-cyan-400"># Destroy TTP firewall rules</span>
+                </div>
+                <div>
+                  <span class="text-cyan-400">$</span> sudo nft destroy table
+                  inet ttp
+                </div>
+                <div class="mt-2">
+                  <span class="text-cyan-400"># Restore DNS (resolvectl mode)</span>
+                </div>
+                <div>
+                  <span class="text-cyan-400">$</span> sudo resolvectl revert
+                  &lt;interface&gt;
+                </div>
+                <div class="mt-2">
+                  <span class="text-cyan-400"># Remove stale lock</span>
+                </div>
+                <div>
+                  <span class="text-cyan-400">$</span> sudo rm
+                  /var/lib/ttp/ttp.lock
+                </div>
+              </div>
+            </div>
+            <p class="mt-3 text-sm">
+              Or use the nuclear option:
+              <code class="inline">sudo ./scripts/restore-network.sh</code>
+            </p>
+          </div>
+        </section>
+
+        <section id="distros" class="mb-20 scroll-mt-24">
+          <div class="section-divider">
+            <span class="hex">0x09</span>
+            <h2>Distro Support</h2>
+            <div class="line"></div>
+          </div>
+
+          <p class="text-gray-400 mb-6 leading-relaxed">
+            TTP handles the main differences between distributions
+            automatically.
+          </p>
+
+          <div class="overflow-x-auto mb-6 border border-white/5 rounded">
+            <table class="doc-table w-full min-w-[600px]">
+              <thead>
+                <tr>
+                  <th>Distribution</th>
+                  <th>Service Unit</th>
+                  <th>Tor User</th>
+                  <th>Package Manager</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Debian 12+</td>
+                  <td><code class="inline">tor@default</code></td>
+                  <td><code class="inline">debian-tor</code></td>
+                  <td><code class="inline">apt-get</code></td>
+                  <td><span class="badge badge-green">Validated</span></td>
+                </tr>
+                <tr>
+                  <td>Ubuntu 22.04+</td>
+                  <td><code class="inline">tor@default</code></td>
+                  <td><code class="inline">debian-tor</code></td>
+                  <td><code class="inline">apt-get</code></td>
+                  <td><span class="badge badge-green">Validated</span></td>
+                </tr>
+                <tr>
+                  <td>Fedora 40+</td>
+                  <td><code class="inline">tor</code></td>
+                  <td><code class="inline">toranon</code></td>
+                  <td><code class="inline">dnf</code></td>
+                  <td>
+                    <span class="badge badge-green">Validated</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Arch Linux</td>
+                  <td><code class="inline">tor</code></td>
+                  <td><code class="inline">tor</code></td>
+                  <td><code class="inline">pacman</code></td>
+                  <td>
+                    <span class="badge badge-green">Tested (Docker)</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="note-box">
+            <div class="label">ℹ DEBIAN SERVICE UNIT</div>
+            On Debian, <code class="inline">tor.service</code> is a
+            multi-instance master that reports <em>active (exited)</em> even
+            when no daemon is actually running. The real daemon lives in
+            <code class="inline">tor@default.service</code>. TTP detects this
+            safely.
+          </div>
+        </section>
+
+        <section id="dev" class="mb-20 scroll-mt-24">
+          <div class="section-divider">
+            <span class="hex">0x0A</span>
+            <h2>Development</h2>
+            <div class="line"></div>
+          </div>
+
+          <h3 class="text-white font-bold mb-4">Running unit tests</h3>
+          <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+            Unit tests are fully mocked, no root, no network, no system
+            modifications.
+          </p>
+          <div class="terminal-window mb-8">
+            <div class="terminal-header">
+              <div class="terminal-dot bg-mac-red"></div>
+              <div class="terminal-dot bg-mac-yellow"></div>
+              <div class="terminal-dot bg-mac-green"></div>
+              <span class="terminal-label">bash</span>
+            </div>
+            <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+              <div>
+                <span class="text-cyan-400">$</span>
+                <span class="text-gray-300">pip install -e ".[dev]"</span>
+              </div>
+              <div>
+                <span class="text-cyan-400">$</span>
+                <span class="text-gray-300">make test</span>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-white font-bold mb-4">VM integration tests</h3>
+          <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+            Integration tests require root and a real Tor daemon. They run
+            inside a QEMU VM (Debian 13) or Docker containers.
+          </p>
+          <div class="terminal-window mb-8">
+            <div class="terminal-header">
+              <div class="terminal-dot bg-mac-red"></div>
+              <div class="terminal-dot bg-mac-yellow"></div>
+              <div class="terminal-dot bg-mac-green"></div>
+              <span class="terminal-label">bash</span>
+            </div>
+            <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+              <div>
+                <span class="text-cyan-400"># Docker integration tests</span>
+              </div>
+              <div>
+                <span class="text-cyan-400">$</span>
+                <span class="text-gray-300">make integration-debian</span>
+              </div>
+              <div>
+                <span class="text-cyan-400">$</span>
+                <span class="text-gray-300">make integration-all</span>
+              </div>
+              <div class="mt-2">
+                <span class="text-cyan-400"># The mandatory pre-commit pipeline</span>
+              </div>
+              <div>
+                <span class="text-cyan-400">$</span>
+                <span class="text-gray-300">make verify</span>
+              </div>
+              <div class="mt-4">
+                <span class="text-cyan-400"># QEMU VM workflow (scripts/vm/)</span>
+              </div>
+              <div>
+                <span class="text-cyan-400">$</span>
+                <span class="text-gray-300">./scripts/vm/start.sh arch</span>
+              </div>
+              <div>
+                <span class="text-cyan-400">$</span>
+                <span class="text-gray-300">./scripts/vm/send.sh</span>
+              </div>
+              <div>
+                <span class="text-cyan-400">$</span>
+                <span class="text-gray-300">ssh -p 2222 debian@localhost</span>
+              </div>
+              <div>
+                <span class="text-cyan-400"># If network breaks:</span>
+              </div>
+              <div>
+                <span class="text-cyan-400">$</span>
+                <span class="text-gray-300">./scripts/vm/snapshot.sh load pre-test</span>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-white font-bold mb-4">Project structure</h3>
+          <div class="terminal-window">
+            <div class="terminal-header">
+              <div class="terminal-dot bg-mac-red"></div>
+              <div class="terminal-dot bg-mac-yellow"></div>
+              <div class="terminal-dot bg-mac-green"></div>
+              <span class="terminal-label">tree</span>
+            </div>
+            <div class="p-4 sm:p-5 font-mono text-xs leading-6 text-gray-400 overflow-x-auto whitespace-nowrap">
+              <div>
+                ├── <span class="text-white">pyproject.toml</span>
+                <span class="text-gray-600"># Package metadata and dependencies</span>
+              </div>
+              <div>
+                ├── <span class="text-white">Makefile</span>
+                <span class="text-gray-600"># Automation entry point</span>
+              </div>
+              <div>├── <span class="text-white">README.md</span></div>
+              <div>├── <span class="text-white">CONTRIBUTING.md</span></div>
+              <div>├── <span class="text-white">SECURITY.md</span></div>
+              <div>├── <span class="text-white">CHANGELOG.md</span></div>
+              <div>
+                ├── <span class="text-white">scripts/</span>
+                <span class="text-gray-600"># System-wide scripts</span>
+              </div>
+              <div>│ ├── install.sh</div>
+              <div>│ ├── uninstall.sh</div>
+              <div>│ ├── restore-network.sh</div>
+              <div>
+                │ └── vm/ <span class="text-gray-600"># QEMU management</span>
+              </div>
+              <div>
+                ├── <span class="text-white">packaging/</span>
+                <span class="text-gray-600"># Native packaging (.deb, .rpm, Arch)</span>
+              </div>
+              <div>│ ├── build_deb.sh</div>
+              <div>│ ├── build_rpm.sh</div>
+              <div>│ ├── ttp.spec</div>
+              <div>│ └── PKGBUILD</div>
+              <div>
+                ├── <span class="text-white">ttp/</span>
+                <span class="text-gray-600"># Source code</span>
+              </div>
+              <div>
+                │ ├── <span class="text-white">resources/</span>
+                <span class="text-gray-600"># Internal resources</span>
+              </div>
+              <div>
+                │ │ └── <span class="text-white">selinux/</span>
+                <span class="text-gray-600"># Policy source (.te)</span>
+              </div>
+              <div>│ ├── cli.py</div>
+              <div>│ ├── firewall.py</div>
+              <div>│ └── ...</div>
+              <div>
+                ├── <span class="text-white">tests/</span>
+                <span class="text-gray-600"># Unit tests (mocked)</span>
+              </div>
+              <div>└── <span class="text-white">docs/</span></div>
+              <div>└── architecture.md</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="limitations" class="mb-20 scroll-mt-24">
+          <div class="section-divider">
+            <span class="hex">0x0B</span>
+            <h2>Known Limitations</h2>
+            <div class="line"></div>
+          </div>
+
+          <div class="space-y-4">
+            <div class="warn-box">
+              <div class="label">⚠ TOR BROWSER / EXPLICIT SOCKS5 PROXY</div>
+              Applications that configure an explicit SOCKS5 proxy (e.g. Tor
+              Browser, some curl invocations) will create a double Tor hop -
+              their traffic goes through Tor once via TTP's transparent
+              redirect and a second time via their own SOCKS5 connection. This
+              is not a security issue but adds latency. Use a regular browser
+              while TTP is active.
+            </div>
+
+            <div class="warn-box">
+              <div class="label">⚠ IPv6 BLOCKED</div>
+              All outgoing IPv6 traffic is dropped while TTP is active. Some
+              ISPs force IPv6 and applications may fail to connect if they
+              don't fall back to IPv4. Routing IPv6 transparently through Tor
+              requires additional configuration complexity; this is deferred
+              to a future version.
+            </div>
+
+            <div class="warn-box">
+              <div class="label">⚠ UDP (NON-DNS) NOT PROXIED</div>
+              Only TCP traffic and DNS (UDP port 53) are handled. Other UDP
+              traffic (e.g. VoIP, some games, QUIC/HTTP3) is blocked by the
+              kill switch, not proxied through Tor. Tor's
+              <code class="inline">TransPort</code> only supports TCP.
+            </div>
+
+            <div class="warn-box">
+              <div class="label">⚠ EXIT IP VARIATION ON ttp status</div>
+              Different connections may show different exit IPs due to Tor's
+              stream isolation. The IP shown by
+              <code class="inline">ttp status</code> reflects the circuit used
+              to reach <code class="inline">check.torproject.org</code>, which
+              may differ from the circuit used by other applications.
+            </div>
+
+            <div class="note-box">
+              <div class="label">ℹ torrc OVERWRITE</div>
+              When TTP installs and configures Tor, it modifies
+              <code class="inline">/etc/tor/torrc</code> to add required
+              directives. The original file is backed up to
+              <code class="inline">torrc.bak</code>
+              before any changes. Custom configurations are preserved where
+              possible.
+            </div>
+          </div>
+        </section>
+
+        <section id="uninstallation" class="mb-20 scroll-mt-24">
+          <div class="section-divider">
+            <span class="hex">0x0C</span>
+            <h2>Uninstallation</h2>
+            <div class="line"></div>
+          </div>
+
+          <p class="text-gray-400 mb-6 leading-relaxed">
+            TTP provides two levels of removal depending on how you installed
+            it.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="module-card p-5 bg-dark-card">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="badge badge-cyan">CLI COMMAND</span>
+                <span class="text-white font-bold font-mono text-sm">ttp uninstall</span>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">
+                Use this to clean up the system state while keeping the TTP
+                binary. It stops any active session, removes the SELinux
+                policy module, and clears log files.
+              </p>
+            </div>
+            <div class="module-card p-5 bg-dark-card">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="badge badge-red">SHELL SCRIPT</span>
+                <span class="text-white font-bold font-mono text-sm">./scripts/uninstall.sh</span>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">
+                A complete system removal. If you used
+                <code class="inline">scripts/install.sh</code>, this script
+                will remove <code class="inline">/opt/ttp</code>, the symlink
+                in <code class="inline">/usr/local/bin</code>, and perform all
+                the cleanups of the CLI command.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <footer class="border-t border-white/5 bg-black py-10">
+    <div
+      class="max-w-screen-2xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+      <div class="flex flex-col sm:flex-row items-center gap-3">
+        <span class="font-display font-bold text-white">TTP<span class="text-cyan-400">_DOCS</span></span>
+        <span class="text-gray-600 font-mono text-xs">v0.1.1 - MIT License</span>
+      </div>
+      <div class="flex flex-wrap justify-center gap-6">
+        <a href="/" class="font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors">← BACK</a>
+        <a href="https://github.com/onyks-os/TransparentTorProxy" target="_blank"
+          class="font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors"><i
+            class="fab fa-github mr-1"></i>SOURCE</a>
+        <a href="https://github.com/onyks-os/TransparentTorProxy/issues" target="_blank"
+          class="font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors">ISSUES</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById("hamburger");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const bar1 = document.getElementById("bar1");
+    const bar2 = document.getElementById("bar2");
+    const bar3 = document.getElementById("bar3");
+
+    hamburger.addEventListener("click", () => {
+      const isOpen = mobileMenu.classList.toggle("open");
+      bar1.style.transform = isOpen ? "translateY(8px) rotate(45deg)" : "";
+      bar2.style.opacity = isOpen ? "0" : "1";
+      bar3.style.transform = isOpen ? "translateY(-8px) rotate(-45deg)" : "";
+      document.body.style.overflow = isOpen ? "hidden" : ""; // Prevent body scroll when menu is open
+    });
+
+    document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("open");
+        bar1.style.transform = "";
+        bar2.style.opacity = "1";
+        bar3.style.transform = "";
+        document.body.style.overflow = "";
+      });
+    });
+
+    const sections = document.querySelectorAll("section[id]");
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute("id");
+            navLinks.forEach((link) => {
+              link.classList.remove("active");
+              if (link.getAttribute("href") === `#${id}`) {
+                link.classList.add("active");
+              }
+            });
+          }
+        });
+      },
+      { rootMargin: "-20% 0px -70% 0px" },
+    );
+
+    sections.forEach((s) => observer.observe(s));
+
+    // Ensure the last section is highlighted when scrolled to the bottom
+    window.addEventListener("scroll", () => {
+      if (
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - 50
+      ) {
+        navLinks.forEach((link) => link.classList.remove("active"));
+        if (navLinks.length > 0) {
+          navLinks[navLinks.length - 1].classList.add("active");
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Onyks | System Online</title>
+  <meta name="description" content="Portfolio of Onyks. Software Developer." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script data-goatcounter="https://onyks.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap"
+    rel="stylesheet" />
+  <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/96/console.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            display: ["Space Grotesk", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"],
+          },
+          colors: {
+            cyan: { 400: "#22d3ee", 500: "#06b6d4", 900: "#164e63" },
+            dark: { 900: "#050505", card: "#0a0a0a", border: "#262626" },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    body {
+      background-color: #050505;
+      background-image: linear-gradient(rgba(34, 211, 238, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 211, 238, 0.03) 1px, transparent 1px);
+      background-size: 30px 30px;
+      color: #e5e5e5;
+    }
+
+    .tech-card {
+      position: relative;
+      transition: transform 0.2s ease, border-color 0.3s ease;
+      border: 1px solid #262626;
+    }
+
+    .tech-card:hover {
+      border-color: #22d3ee;
+      transform: translateY(-2px);
+      box-shadow: 0 0 15px rgba(34, 211, 238, 0.1);
+    }
+
+    .corner-accent {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 0 10px 10px;
+      border-color: transparent transparent #22d3ee transparent;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .tech-card:hover .corner-accent {
+      opacity: 1;
+    }
+
+    .hacker-text {
+      cursor: default;
+    }
+  </style>
+</head>
+
+<body class="antialiased min-h-screen flex flex-col selection:bg-cyan-900 selection:text-white">
+  <nav class="fixed w-full z-50 bg-dark-900/90 backdrop-blur-md border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 bg-cyan-400 animate-pulse"></span>
+          <span class="font-mono font-bold text-lg tracking-tighter text-white">ONYKS-OS</span>
+        </div>
+        <div class="flex space-x-6">
+          <a href="https://github.com/onyks-os" target="_blank"
+            class="text-gray-400 hover:text-cyan-400 transition-colors font-mono text-sm">
+            <i class="fab fa-github"></i> ::GITHUB_PROFILE
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div id="app-content">
+    <main class="relative z-10 pt-36 pb-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl">
+          <div
+            class="inline-flex items-center px-3 py-1 border-l-2 border-cyan-500 bg-cyan-900/10 text-cyan-400 text-xs font-mono mb-8">
+            <span class="mr-2">ROOT@ONYKS-OS:~$ EXECUTE_PORTFOLIO.SH</span>
+          </div>
+
+          <h1 class="text-5xl md:text-7xl font-display font-bold tracking-tight text-white mb-6 leading-tight">
+            <span class="hacker-text block" data-value="ONYKS">ONYKS</span>
+            <span class="text-gray-500 text-2xl md:text-4xl mt-2 block hacker-text font-mono"
+              data-value=">> CS Student @ Unibo">&gt;&gt; CS Student @ Unibo</span>
+          </h1>
+
+          <p class="text-xl text-gray-400 max-w-2xl leading-relaxed mb-10 pl-6 border-l border-white/10">
+            I build things to learn how they work. Passionate about software architecture and security.
+            <br /><span class="text-cyan-400 text-sm font-mono mt-2 block">// Specializing in OpSec tools and
+              practices</span>
+          </p>
+
+          <div class="flex gap-4">
+            <a href="#projects"
+              class="px-8 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold font-mono text-sm transition-all shadow-[0_0_20px_rgba(6,182,212,0.3)]">
+              INITIALIZE_VIEW()
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <section id="projects" class="py-24 border-t border-white/5 bg-dark-900">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-end justify-between mb-16">
+          <div>
+            <h2 class="text-3xl font-display font-bold text-white hacker-text mb-2" data-value="DEPLOYED_MODULES">
+              DEPLOYED_MODULES
+            </h2>
+            <p class="font-mono text-xs text-cyan-400">
+              /usr/bin/projects -fetch --origin github
+            </p>
+          </div>
+          <div id="loader" class="text-cyan-400 font-mono text-sm animate-pulse">
+            [FETCHING_DATA...]
+          </div>
+        </div>
+
+        <div id="repo-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    async function fetchRepos() {
+      const grid = document.getElementById('repo-grid');
+      const loader = document.getElementById('loader');
+
+      try {
+        const res = await fetch('https://api.github.com/users/onyks-os/repos?sort=updated');
+        if (!res.ok) throw new Error('API Rate Limit o errore di rete');
+
+        let repos = await res.json();
+
+        // Filtri di esclusione
+        const exclude = ['onyks-os', 'onyks-os.github.io'];
+        repos = repos.filter(r => !exclude.includes(r.name) && !r.fork);
+
+        grid.innerHTML = repos.map(repo => {
+          // Routing logico: se esiste una pagina dedicata, usa quella. Altrimenti GitHub.
+          const internalPages = {
+            'TransparentTorProxy': '/ttp',
+            'Lavanderia-Galvani': '/lavanderia',
+            'App-Tesoreria': '/tesoreria',
+          };
+          const isInternal = !!internalPages[repo.name];
+          const targetLink = isInternal ? internalPages[repo.name] : repo.html_url;
+          const targetAttr = isInternal ? '' : 'target="_blank"';
+          const icon = isInternal ? 'fa-book-open' : 'fa-external-link-alt';
+          const actionText = isInternal ? 'VIEW_DOCS' : 'VIEW_SOURCE';
+          const lang = repo.language || 'System';
+          const topic = (repo.topics && repo.topics.length > 0) ? repo.topics[0].toUpperCase() : 'MODULE';
+
+          return `
+              <article class="tech-card bg-dark-card p-6 flex flex-col h-full group relative">
+                <a href="${targetLink}" ${targetAttr} class="absolute inset-0 z-10" aria-label="View ${repo.name}"></a>
+                <div class="flex justify-between items-start mb-6">
+                  <div class="p-2 bg-white/5 text-cyan-400 font-mono text-xs">
+                    [ ${lang} ]
+                  </div>
+                  <i class="fas ${icon} text-gray-600 group-hover:text-cyan-400 transition-colors"></i>
+                </div>
+                <h3 class="text-2xl font-display font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">
+                  ${repo.name}
+                </h3>
+                <p class="text-gray-400 text-sm mb-6 flex-grow leading-relaxed">
+                  ${repo.description || 'Nessuna descrizione fornita. Modulo in attesa di classificazione.'}
+                </p>
+                <div class="mt-auto pt-4 border-t border-white/5 flex justify-between items-center">
+                  <span class="font-mono text-xs text-gray-500">${topic}</span>
+                  <span class="font-mono text-xs text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                    [ ${actionText} ]
+                  </span>
+                </div>
+                <div class="corner-accent"></div>
+              </article>
+            `;
+        }).join('');
+      } catch (error) {
+        grid.innerHTML = `<div class="col-span-full border border-red-500/30 bg-red-500/10 p-4 text-red-400 font-mono text-sm">[ERROR] ${error.message}. Fallback offline necessario.</div>`;
+      } finally {
+        loader.style.display = 'none';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchRepos);
+  </script>
+</body>
+
+</html>
+</div>
+
+<footer class="border-t border-white/5 bg-black py-12 relative z-10">
+  <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
+    <p class="text-gray-600 text-xs font-mono">© 2026 ONYKS. SYSTEM_READY.</p>
+    <div class="flex gap-8">
+      <a href="mailto:github.tgwp7@aleeas.com"
+        class="text-gray-400 hover:text-cyan-400 font-mono text-sm transition-colors">[ SEND_PACKET::EMAIL ]</a>
+      <a href="https://github.com/onyks-os" target="_blank"
+        class="text-gray-400 hover:text-cyan-400 font-mono text-sm transition-colors">[ OPEN_SOCKET::GITHUB ]</a>
+    </div>
+  </div>
+</footer>
+</body>
+
+</html>
