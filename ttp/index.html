@@ -362,7 +362,7 @@
           <span class="font-display font-bold text-lg text-white"
             >TTP<span class="text-cyan-400">_DOCS</span></span
           >
-          <span class="badge badge-cyan hidden sm:inline">v0.2.0</span>
+          <span class="badge badge-cyan hidden sm:inline">v0.3.0</span>
         </div>
         <div class="hidden sm:flex items-center gap-3">
           <a
@@ -615,7 +615,7 @@
           <section id="overview" class="mb-20 scroll-mt-24">
             <div class="mb-3 flex flex-wrap items-center gap-3">
               <span class="badge badge-cyan">CLI TOOL</span>
-              <span class="badge badge-green">MIT LICENSE</span>
+              <span class="badge badge-green">VOLATILE CORE</span>
               <span class="badge badge-yellow">PYTHON 3.10+</span>
               <span class="badge badge-red">KILL-SWITCH</span>
             </div>
@@ -664,14 +664,19 @@
                   <span class="text-gray-300">sudo ttp start</span>
                 </div>
                 <div class="mt-2 text-gray-500">
-                  [TTP] Detecting Tor... found (v0.4.9.6), service active (user:
-                  debian-tor).
+                  [TTP] Detecting Tor... found (v0.4.9.6), managed via system service (user: debian-tor).
+                </div>
+                <div class="text-gray-500">
+                  [TTP] Initializing volatile runtime in /run/ttp...
+                </div>
+                <div class="text-gray-500">
+                  [TTP] Restarting TTP Tor service...
                 </div>
                 <div class="text-gray-500">
                   [TTP] Stateless nftables rules applied (Table: inet ttp).
                 </div>
                 <div class="text-gray-500">
-                  [TTP] DNS set via resolvectl on interface ens3.
+                  [TTP] DNS set via overlay on interface ens3.
                 </div>
                 <div class="text-gray-500">
                   [TTP] Waiting for Tor to bootstrap...
@@ -956,9 +961,9 @@
                     >shutil.which</code
                   >), running (<code class="inline">systemctl is-active</code> +
                   <code class="inline">pgrep</code>), and correctly configured
-                  (<code class="inline">TransPort 9040</code>,
-                  <code class="inline">DNSPort 9053</code>,
-                  <code class="inline">ControlPort 9051</code> in torrc).
+                  (<code class="inline">TransPort 9041</code>,
+                  <code class="inline">DNSPort 9054</code>,
+                  <code class="inline">ControlSocket /run/tor/ttp/control.sock</code> in torrc).
                   Dynamically detects the Tor system user, SELinux enforcement
                   state, and Firewalld presence. Returns a structured
                   dictionary, but never modifies anything.
@@ -973,19 +978,12 @@
                   <i class="fas fa-box text-gray-600"></i>
                 </div>
                 <p class="text-gray-400 text-sm leading-relaxed">
-                  Invoked only when
-                  <code class="inline">tor_detect</code> reports Tor is missing
-                  or misconfigured. Detects the system package manager (<code
-                    class="inline"
-                    >apt-get</code
-                  >, <code class="inline">pacman</code>,
-                  <code class="inline">dnf</code>,
-                  <code class="inline">zypper</code>) and installs Tor. Performs
-                  SELinux optimization on Fedora/RHEL by compiling a custom
-                  policy module from source, sanitizes
-                  <code class="inline">/etc/tor/torrc</code>, validates with
-                  <code class="inline">tor --verify-config</code>, then restarts
-                  the correct systemd unit.
+                  Orchestrates Tor detection and auto-installation. Generates a dynamic
+                  volatile <code class="inline">torrc</code> in
+                  <code class="inline">/run/tor/ttp/torrc</code>, compiles a custom
+                  SELinux policy from source on Fedora/RHEL, writes a dedicated volatile
+                  service unit file to <code class="inline">/run/systemd/system/ttp-tor.service</code>,
+                  and restarts it using native service control.
                 </p>
               </div>
 
@@ -1013,15 +1011,12 @@
                   <i class="fas fa-globe text-gray-600"></i>
                 </div>
                 <p class="text-gray-400 text-sm leading-relaxed">
-                  Manages DNS redirection to
-                  <code class="inline">127.0.0.1</code>.
-                  <strong class="text-white">Mode 1</strong> uses
-                  <code class="inline">resolvectl</code> to set DNS and the
-                  global routing domain (<code class="inline">~.</code>) when
-                  active. <strong class="text-white">Mode 2</strong> overwrites
-                  <code class="inline">/etc/resolv.conf</code>. Uses a
-                  <strong>Hard-Reset strategy</strong> (revert → restart → flush
-                  caches) for robust restoration.
+                  Stateless Kernel-level DNS redirection. Writes the Tor resolver to
+                  <code class="inline">/run/ttp/resolv.conf</code> and overlays it on
+                  <code class="inline">/etc/resolv.conf</code> using <code class="inline">mount --bind</code>.
+                  Resolves absolute symlink paths automatically, employs Mount Stacking
+                  Prevention (iterative stale mount cleanup), and unmounts cleanly with a
+                  <code class="inline">umount -l</code> (lazy) fallback.
                 </p>
               </div>
 
@@ -1033,16 +1028,12 @@
                   <i class="fas fa-memory text-gray-600"></i>
                 </div>
                 <p class="text-gray-400 text-sm leading-relaxed">
-                  Writes and reads a JSON lock file at
-                  <code class="inline">/var/lib/ttp/ttp.lock</code> containing:
-                  <code class="inline">pid</code>,
-                  <code class="inline">timestamp</code>,
-                  <code class="inline">dns_backup</code>, and
-                  <code class="inline">dns_mode</code>. On startup, checks if
-                  the lock's PID is still alive. A dead PID means an orphaned
-                  session, exposing
-                  <code class="inline">attempt_recovery()</code> to
-                  auto-restore.
+                  Volatile session locking. Reads and writes a JSON lock file at
+                  <code class="inline">/run/ttp/ttp.lock</code> (tmpfs) containing:
+                  <code class="inline">pid</code>, <code class="inline">timestamp</code>,
+                  and <code class="inline">dns_backup</code>. On startup, verifies PID
+                  validity to auto-recover orphaned sessions, and handles the **tmpfs
+                  pre-flight safety check** to ensure sufficient RAM is free.
                 </p>
               </div>
 
@@ -1054,12 +1045,12 @@
                   <i class="fas fa-satellite-dish text-gray-600"></i>
                 </div>
                 <p class="text-gray-400 text-sm leading-relaxed">
-                  Encapsulates all Stem library usage. Connects to Tor's control
-                  interface, monitors bootstrap progress via
-                  <code class="inline">status/bootstrap-phase</code>, sends
-                  <code class="inline">NEWNYM</code> to rotate circuits, and
-                  verifies actual Tor routing via
-                  <code class="inline">check.torproject.org/api/ip</code>.
+                  Handles Tor control Socket interactions. Connects to Tor's dedicated
+                  private socket at <code class="inline">/run/tor/ttp/control.sock</code>,
+                  monitors bootstrap progress via <code class="inline">status/bootstrap-phase</code>,
+                  rotates circuits with <code class="inline">NEWNYM</code>, verifies
+                  Tor routing, and performs a graceful cryptographical
+                  <code class="inline">SHUTDOWN</code> teardown.
                 </p>
               </div>
 
@@ -1104,11 +1095,11 @@
               <div class="label">
                 <i class="fas fa-info-circle mr-2"></i>LOG MANAGEMENT & ROTATION
               </div>
-              TTP maintains its own log file at
-              <code class="inline">/var/log/ttp.log</code>. Starting with
-              v0.2.0, it employs a
+              TTP maintains its own log file in a volatile ramdisk at
+              <code class="inline">/run/ttp/ttp.log</code>. Starting with
+              v0.3.0, it employs a
               <code class="inline">RotatingFileHandler</code>
-              with a 5MB limit to prevent disk saturation.
+              with a 1MB limit to prevent memory exhaustion in the RAM disk.
             </div>
           </section>
 
@@ -1126,15 +1117,13 @@
               <div class="flow-step">
                 <div class="flow-dot-filled"></div>
                 <h4 class="text-white font-semibold mb-1">
-                  1. Root check, Signal registration &amp; SELinux
+                  1. Pre-flight check, Signal registration &amp; SELinux
                 </h4>
                 <p class="text-sm leading-relaxed">
-                  Verifies <code class="inline">os.geteuid() == 0</code>.
-                  Registers <code class="inline">SIGINT</code> and
-                  <code class="inline">SIGTERM</code> handlers. Detects if
-                  <code class="inline">firewalld</code> is active to prevent
-                  conflicts. On Fedora/RHEL, ensures the TTP SELinux policy is
-                  compiled from source.
+                  Verifies root privileges (<code class="inline">os.geteuid() == 0</code>), registers signal handlers,
+                  and executes a **Pre-flight safety check** verifying that <code class="inline">/run/ttp</code> (tmpfs)
+                  has at least 5MB of free space to prevent out-of-memory crashes. On Fedora/RHEL, ensures the custom
+                  SELinux policy is compiled.
                 </p>
               </div>
               <div class="flow-step">
@@ -1143,22 +1132,23 @@
                   2. Orphan detection
                 </h4>
                 <p class="text-sm leading-relaxed">
-                  Reads <code class="inline">/var/lib/ttp/ttp.lock</code>. If
-                  the lock exists and its PID is dead, the session is orphaned.
-                  <code class="inline">state.attempt_recovery()</code> is called
-                  automatically to restore firewall and DNS.
+                  Inspects the volatile lock file at <code class="inline">/run/ttp/ttp.lock</code>. If
+                  the lock exists but its PID is no longer running, it automatically triggers
+                  <code class="inline">state.attempt_recovery()</code> to safely restore firewall rules and DNS
+                  from the orphan session before initiating the new startup.
                 </p>
               </div>
               <div class="flow-step">
                 <div class="flow-dot-empty"></div>
                 <h4 class="text-white font-semibold mb-1">
-                  3. Tor detection &amp; auto-install
+                  3. Volatile Tor service setup
                 </h4>
                 <p class="text-sm leading-relaxed">
-                  <code class="inline">tor_install.ensure_tor_ready()</code>
-                  orchestrates detection → install → torrc configuration →
-                  service restart. The torrc is always validated before
-                  restarting.
+                  <code class="inline">tor_install.ensure_tor_ready()</code> generates a volatile, sandboxed
+                  <code class="inline">torrc</code> in <code class="inline">/run/tor/ttp/torrc</code> and writes
+                  a dedicated service unit file directly to the systemd path at
+                  <code class="inline">/run/systemd/system/ttp-tor.service</code>. It then reloads systemd and
+                  starts this isolated Tor instance.
                 </p>
               </div>
               <div class="flow-step">
@@ -1167,36 +1157,33 @@
                   4. Stateless multi-chain firewall application
                 </h4>
                 <p class="text-sm leading-relaxed">
-                  A stateless ruleset is written to
-                  <code class="inline">/var/lib/ttp/ttp.rules</code> and loaded
-                  atomically via <code class="inline">nft -f</code>. This
-                  includes NAT redirection and a filter-based
-                  <strong>Kill-Switch</strong> to prevent leaks during bootstrap
-                  or unexpected process failure.
+                  Applies a stateless ruleset atomically via <code class="inline">nft -f</code>.
+                  This redirects system TCP and DNS traffic to Tor's dedicated ports while
+                  enabling a strict filter-based <strong>Kill-Switch</strong> to reject all non-Tor cleartext traffic
+                  and IPv6 leaks immediately.
                 </p>
               </div>
               <div class="flow-step">
                 <div class="flow-dot-empty"></div>
                 <h4 class="text-white font-semibold mb-1">
-                  5. DNS redirection
+                  5. Stateless DNS overlay
                 </h4>
                 <p class="text-sm leading-relaxed">
-                  The active network interface is auto-detected. DNS is
-                  redirected to <code class="inline">127.0.0.1</code> using
-                  <code class="inline">resolvectl</code> or by overwriting
-                  <code class="inline">/etc/resolv.conf</code>.
+                  DNS is redirected at the Kernel level. The module writes <code class="inline">nameserver 127.0.0.1</code>
+                  to <code class="inline">/run/ttp/resolv.conf</code> and binds it directly over
+                  <code class="inline">/etc/resolv.conf</code> using <code class="inline">mount --bind</code>.
+                  This achieves clean redirection without altering physical disk configuration.
                 </p>
               </div>
               <div class="flow-step">
                 <div class="flow-dot-empty"></div>
                 <h4 class="text-white font-semibold mb-1">
-                  6. Lock file write
+                  6. Volatile lock file write
                 </h4>
                 <p class="text-sm leading-relaxed">
-                  A JSON lock file is written to
-                  <code class="inline">/var/lib/ttp/ttp.lock</code> containing
-                  DNS backup info and PID. This is the only persistent record of
-                  the active session.
+                  Writes a JSON session lock file to <code class="inline">/run/ttp/ttp.lock</code> containing the active
+                  process PID, timestamps, and DNS backup parameters (<code class="inline">mount_target</code>). This file
+                  resides entirely in `tmpfs` and evaporates automatically if the host loses power.
                 </p>
               </div>
               <div class="flow-step">
@@ -1205,12 +1192,9 @@
                   7. Bootstrap wait &amp; verification
                 </h4>
                 <p class="text-sm leading-relaxed">
-                  Connects to Tor's control interface and polls
-                  <code class="inline">status/bootstrap-phase</code>. Once at
-                  100%, waits 2 seconds for circuits to settle, then verifies
-                  routing against multiple endpoints. A configurable
-                  <code class="inline">--bootstrap-timeout</code> (default 180s)
-                  prevents infinite hangs on slow networks.
+                  Monitors bootstrap progress up to 100% via the private Unix ControlSocket
+                  <code class="inline">/run/tor/ttp/control.sock</code>. After a brief settling delay, verifies Tor routing
+                  via multiple public lookup APIs to confirm that all network traffic is properly tunneled.
                 </p>
               </div>
             </div>
@@ -1221,30 +1205,43 @@
             >
               <div class="flow-step">
                 <div class="flow-dot-filled"></div>
+                <h4 class="text-white font-semibold mb-1">Graceful circuit teardown</h4>
+                <p class="text-sm mb-1">
+                  TTP sends a cryptographic <code class="inline">SHUTDOWN</code> signal to Tor through the Unix socket.
+                  This closes active Tor circuits cleanly before the firewall changes, preventing cleartext
+                  <code class="inline">RST</code> packet leakage on exit.
+                </p>
+              </div>
+              <div class="flow-step">
+                <div class="flow-dot-empty"></div>
+                <h4 class="text-white font-semibold mb-1">Stop Tor service</h4>
+                <p class="text-sm mb-1">
+                  Stops the dedicated TTP Tor service, unlinks the volatile unit file at
+                  <code class="inline">/run/systemd/system/ttp-tor.service</code>, and triggers a systemd daemon-reload.
+                </p>
+              </div>
+              <div class="flow-step">
+                <div class="flow-dot-empty"></div>
                 <h4 class="text-white font-semibold mb-1">Restore firewall</h4>
-                <p class="text-sm">
-                  Removes the TTP rules by destroying the table:
-                  <code class="inline">nft destroy table inet ttp</code>. The
-                  <code class="inline">--restore-only</code> flag can be used to
-                  force this cleanup even if a session lock is missing.
+                <p class="text-sm mb-1">
+                  Atomically flushes and removes the entire TTP ruleset table by executing:
+                  <code class="inline">nft destroy table inet ttp</code>.
                 </p>
               </div>
               <div class="flow-step">
                 <div class="flow-dot-empty"></div>
                 <h4 class="text-white font-semibold mb-1">Restore DNS</h4>
-                <p class="text-sm">
-                  Reads DNS mode and backup from lock. Performs a Hard-Reset
-                  (<code class="inline">resolvectl revert</code>, restart
-                  service, flush caches) or rewrites
-                  <code class="inline">/etc/resolv.conf</code>.
+                <p class="text-sm mb-1">
+                  Dismantles the resolver bind-mount using <code class="inline">umount -l</code> (lazy unmount)
+                  to ensure the overlay is detached instantly even if system resources are temporarily busy, then cleans up
+                  the volatile <code class="inline">resolv.conf</code> from the RAM disk.
                 </p>
               </div>
               <div class="flow-step">
                 <div class="flow-dot-empty"></div>
                 <h4 class="text-white font-semibold mb-1">Delete lock</h4>
                 <p class="text-sm">
-                  Removes <code class="inline">/var/lib/ttp/ttp.lock</code>.
-                  Session is terminated.
+                  Removes <code class="inline">/run/ttp/ttp.lock</code>. Cleartext networking is restored.
                 </p>
               </div>
             </div>
@@ -1303,17 +1300,17 @@
                 <div class="rule-line">
                   <span class="ml-8 text-gray-300">udp dport 53</span>
                   <span class="rule-action">dnat ip to</span>
-                  <span class="rule-value">127.0.0.1:9053</span>
+                  <span class="rule-value">127.0.0.1:9054</span>
                 </div>
                 <div class="rule-line">
                   <span class="ml-8 text-gray-300">tcp dport 53</span>
                   <span class="rule-action">dnat ip to</span>
-                  <span class="rule-value">127.0.0.1:9053</span>
+                  <span class="rule-value">127.0.0.1:9054</span>
                 </div>
                 <div class="rule-line">
                   <span class="ml-8 text-gray-300">ip protocol tcp</span>
                   <span class="rule-action">dnat ip to</span>
-                  <span class="rule-value">127.0.0.1:9040</span>
+                  <span class="rule-value">127.0.0.1:9041</span>
                 </div>
                 <div class="rule-line">
                   <span class="text-gray-500 ml-4">}</span>
@@ -1349,12 +1346,12 @@
                 <div class="rule-line">
                   <span class="ml-8 text-gray-300">udp dport 53</span>
                   <span class="rule-action">dnat ip to</span>
-                  <span class="rule-value">127.0.0.1:9053</span>
+                  <span class="rule-value">127.0.0.1:9054</span>
                 </div>
                 <div class="rule-line">
                   <span class="ml-8 text-gray-300">tcp dport 53</span>
                   <span class="rule-action">dnat ip to</span>
-                  <span class="rule-value">127.0.0.1:9053</span>
+                  <span class="rule-value">127.0.0.1:9054</span>
                 </div>
                 <div class="mt-1"></div>
                 <div class="rule-line">
@@ -1377,7 +1374,7 @@
                 <div class="rule-line">
                   <span class="ml-8 text-gray-300">ip protocol tcp</span>
                   <span class="rule-action">dnat ip to</span>
-                  <span class="rule-value">127.0.0.1:9040</span>
+                  <span class="rule-value">127.0.0.1:9041</span>
                 </div>
                 <div class="rule-line">
                   <span class="text-gray-500 ml-4">}</span>
@@ -1437,7 +1434,7 @@
                 DNS BEFORE LOOPBACK
               </div>
               The DNS redirect (<code class="inline"
-                >udp dport 53 dnat ip to 127.0.0.1:9053</code
+                >udp dport 53 dnat ip to 127.0.0.1:9054</code
               >) must appear <strong>before</strong> the loopback accept rule in
               the <code class="inline">output</code> chain. When
               <code class="inline">resolv.conf</code> points to
@@ -1469,43 +1466,45 @@
             </div>
 
             <p class="text-gray-400 mb-6 leading-relaxed">
-              DNS leak prevention is critical for anonymity. TTP redirects all
-              DNS (UDP port 53) to Tor's <code class="inline">DNSPort</code> at
-              <code class="inline">127.0.0.1:9053</code> via the nftables NAT
-              rule, and additionally redirects the system resolver to
-              <code class="inline">127.0.0.1</code>.
+              DNS leak prevention is critical for anonymity. TTP employs a robust, 
+              <strong>stateless kernel-level overlay</strong> to safely redirect all system DNS traffic 
+              to Tor's <code class="inline">DNSPort</code> at <code class="inline">127.0.0.1:9054</code>.
+              This strategy eliminates the legacy dependency on <code class="inline">systemd-resolved</code> / <code class="inline">resolvectl</code>, 
+              ensuring universal compatibility and absolute reliability without modifying permanent system configuration files.
             </p>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <div class="module-card p-5 bg-dark-card">
                 <div class="flex items-center gap-2 mb-3">
-                  <span class="badge badge-green">PREFERRED</span>
+                  <span class="badge badge-green">KERNEL OVERLAY</span>
                   <span class="text-white font-bold font-mono text-sm"
-                    >resolvectl</span
+                    >mount --bind</span
                   >
                 </div>
                 <p class="text-gray-400 text-sm leading-relaxed">
-                  Used when <code class="inline">systemd-resolved</code> is
-                  active. Runs:
-                  <code class="inline"
-                    >resolvectl dns &lt;iface&gt; 127.0.0.1</code
-                  >. Integrates cleanly with the resolver daemon, no file
-                  overwrite.
+                  TTP generates a volatile resolv configuration at <code class="inline">/run/ttp/resolv.conf</code> containing only <code class="inline">nameserver 127.0.0.1</code>, and bind-mounts it directly over the system's resolver configuration. This stateless overlay is instantly visible to all processes and disappears completely on unmount.
                 </p>
               </div>
               <div class="module-card p-5 bg-dark-card">
                 <div class="flex items-center gap-2 mb-3">
-                  <span class="badge badge-yellow">FALLBACK</span>
+                  <span class="badge badge-blue">SYMLINK RESOLUTION</span>
                   <span class="text-white font-bold font-mono text-sm"
-                    >resolv.conf</span
+                    >Realpath Target</span
                   >
                 </div>
                 <p class="text-gray-400 text-sm leading-relaxed">
-                  Used when <code class="inline">systemd-resolved</code> is not
-                  active. Saves the original content of
-                  <code class="inline">/etc/resolv.conf</code>, then overwrites
-                  it. Never used on systems where
-                  <code class="inline">systemd-resolved</code> is running.
+                  If <code class="inline">/etc/resolv.conf</code> is a symlink (e.g., pointing to systemd-resolved's stub file), TTP resolves its absolute physical path via <code class="inline">realpath</code> and applies the bind-mount onto the target file. This preserves symlink integrity and ensures sandboxed apps see the redirected DNS.
+                </p>
+              </div>
+              <div class="module-card p-5 bg-dark-card">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="badge badge-yellow">PREVENTION</span>
+                  <span class="text-white font-bold font-mono text-sm"
+                    >Mount Stacking</span
+                  >
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                  In case of unclean shutdowns, multiple mount layers could stack on the resolver file. During pre-flight checks, TTP inspects <code class="inline">/proc/mounts</code> and iteratively clears stale overlays by running a loop of lazy unmounts (<code class="inline">umount -l</code>, up to 10 times) before applying the fresh layer.
                 </p>
               </div>
             </div>
@@ -1514,10 +1513,7 @@
               <div class="label">
                 <i class="fas fa-info-circle mr-2"></i>DOUBLE PROTECTION
               </div>
-              DNS leak prevention works on two levels simultaneously: the
-              nftables NAT rule intercepts all UDP port 53 traffic at the kernel
-              level, and the system resolver configuration ensures glibc lookups
-              go through Tor's DNSPort.
+              Anonymity is secured via a dual-layer defense: the <strong>nftables ruleset</strong> intercepts all outbound UDP/TCP port 53 traffic at the network level, forcing it to Tor's <code class="inline">DNSPort</code> (<code class="inline">127.0.0.1:9054</code>), while the <strong>DNS Overlay</strong> makes sure local glibc resolver queries are explicitly addressed to <code class="inline">127.0.0.1</code>.
             </div>
           </section>
 
@@ -1564,15 +1560,13 @@
                     <div
                       class="p-4 font-mono text-xs leading-6 text-gray-400 overflow-x-auto whitespace-nowrap"
                     >
+                      <div>[TTP] Pre-flight: volatile space on /run/ttp is sufficient.</div>
+                      <div>[TTP] Initializing volatile runtime on /run/ttp...</div>
+                      <div>[TTP] Dedicated Tor service 'ttp-tor.service' created and started.</div>
                       <div>
-                        [TTP] Detecting Tor... found (v0.4.9.6), service active
-                        (user: debian-tor).
+                        [TTP] Stateless nftables rules applied (Table: inet ttp).
                       </div>
-                      <div>
-                        [TTP] Stateless nftables rules applied (Table: inet
-                        ttp).
-                      </div>
-                      <div>[TTP] DNS set via resolvectl on interface ens3.</div>
+                      <div>[TTP] DNS set via kernel overlay bind-mount on /etc/resolv.conf.</div>
                       <div>
                         [TTP] Waiting for Tor to bootstrap...
                         <span class="text-green-400">100%</span>
@@ -1583,8 +1577,7 @@
                         [TTP] Session active. Exit IP: 109.70.100.11
                       </div>
                       <div>
-                        [TTP] Use 'ttp stop' to terminate. 'ttp refresh' to
-                        change IP.
+                        [TTP] Use 'ttp stop' to terminate. 'ttp refresh' to change IP.
                       </div>
                     </div>
                   </div>
@@ -1617,8 +1610,10 @@
                     <div
                       class="p-4 font-mono text-xs leading-6 text-gray-400 overflow-x-auto whitespace-nowrap"
                     >
+                      <div>[TTP] Graceful circuit teardown initiated... done.</div>
                       <div>[TTP] Removing nftables rules...</div>
-                      <div>[TTP] Restoring DNS...</div>
+                      <div>[TTP] Removing volatile DNS overlay...</div>
+                      <div>[TTP] Volatile Tor service 'ttp-tor.service' stopped and unloaded.</div>
                       <div class="text-red-400">
                         [TTP] Network restored. Traffic in cleartext.
                       </div>
@@ -1759,9 +1754,9 @@
                   class="p-5 text-gray-400 text-sm leading-relaxed space-y-3"
                 >
                   <p>
-                    Streams real-time logs from the Tor daemon using
-                    <code class="inline">journalctl</code>. Automatically
-                    identifies the correct service instance.
+                    Displays logs from the volatile TTP log file at
+                    <code class="inline">/run/ttp/ttp.log</code>. Automatically
+                    shows startup events, connection states, and Tor daemon feedback.
                   </p>
                 </div>
               </div>
@@ -1818,8 +1813,8 @@
             <p class="text-gray-400 mb-8 leading-relaxed">
               TTP is designed around the assumption that any process can die at
               any time. The lock file at
-              <code class="inline">/var/lib/ttp/ttp.lock</code> contains all
-              information needed to undo changes.
+              <code class="inline">/run/ttp/ttp.lock</code> maintains active session states,
+              enabling immediate recovery and clean slate verification.
             </p>
 
             <div class="space-y-4 mb-8">
@@ -1830,8 +1825,8 @@
                 <div>
                   <div class="font-mono text-white text-sm mb-1">ttp stop</div>
                   <p class="text-gray-400 text-sm">
-                    Reads lock → restores firewall via backup file → restores
-                    DNS via saved content → deletes lock. Clean exit.
+                    Reads lock → destroys isolated nftables table → unmounts DNS overlay
+                    → unloads volatile Tor service → deletes lock. Clean exit.
                   </p>
                 </div>
               </div>
@@ -1859,11 +1854,11 @@
                     kill -9 &nbsp;/&nbsp; power outage
                   </div>
                   <p class="text-gray-400 text-sm">
-                    The lock file survives. On the next
+                    The lock file survives in tmpfs. On the next
                     <code class="inline">ttp start</code>, if the process is
-                    dead, the lock is orphaned and
-                    <code class="inline">state.attempt_recovery()</code> is
-                    called automatically to restore firewall and DNS.
+                    dead, the lock is orphaned, and TTP runs pre-flight recovery:
+                    cleaning stacked mounts, destroying the stale nftables table, and
+                    clearing the orphan lock.
                   </p>
                 </div>
               </div>
@@ -1895,19 +1890,18 @@
                   </div>
                   <div class="mt-2">
                     <span class="text-cyan-400"
-                      ># Restore DNS (resolvectl mode)</span
+                      ># Restore DNS (Unmount the overlay)</span
                     >
                   </div>
                   <div>
-                    <span class="text-cyan-400">$</span> sudo resolvectl revert
-                    &lt;interface&gt;
+                    <span class="text-cyan-400">$</span> sudo umount -l /etc/resolv.conf
                   </div>
                   <div class="mt-2">
                     <span class="text-cyan-400"># Remove stale lock</span>
                   </div>
                   <div>
                     <span class="text-cyan-400">$</span> sudo rm
-                    /var/lib/ttp/ttp.lock
+                    /run/ttp/ttp.lock
                   </div>
                 </div>
               </div>
@@ -2291,7 +2285,7 @@
             >TTP<span class="text-cyan-400">_DOCS</span></span
           >
           <span class="text-gray-600 font-mono text-xs"
-            >v0.2.0 - MIT License</span
+            >v0.3.0 - MIT License</span
           >
         </div>
         <div class="flex flex-wrap justify-center gap-6">
