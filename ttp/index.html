@@ -362,7 +362,7 @@
           <span class="font-display font-bold text-lg text-white"
             >TTP<span class="text-cyan-400">_DOCS</span></span
           >
-          <span class="badge badge-cyan hidden sm:inline">v0.3.0</span>
+          <span class="badge badge-cyan hidden sm:inline">v0.3.5</span>
         </div>
         <div class="hidden sm:flex items-center gap-3">
           <a
@@ -618,6 +618,7 @@
               <span class="badge badge-green">VOLATILE CORE</span>
               <span class="badge badge-yellow">PYTHON 3.10+</span>
               <span class="badge badge-red">KILL-SWITCH</span>
+              <span class="badge badge-cyan">WATCHDOG</span>
             </div>
             <h1
               class="text-3xl md:text-5xl font-display font-bold text-white mb-5 leading-tight"
@@ -661,7 +662,7 @@
                 </div>
                 <div>
                   <span class="text-cyan-400">$</span>
-                  <span class="text-gray-300">sudo ttp start</span>
+                  <span class="text-gray-300">sudo ttp start --watchdog</span>
                 </div>
                 <div class="mt-2 text-gray-500">
                   [TTP] Detecting Tor... found (v0.4.9.6), managed via system service (user: debian-tor).
@@ -684,6 +685,12 @@
                 </div>
                 <div class="text-green-400">
                   [TTP] Session active. Exit IP: 109.70.100.11
+                </div>
+                <div class="text-gray-500">
+                  [TTP] Starting session watchdog daemon...
+                </div>
+                <div class="text-gray-500">
+                  [TTP] Watchdog daemon started successfully (PID: 3410).
                 </div>
               </div>
             </div>
@@ -1000,8 +1007,7 @@
                   <code class="inline">prerouting</code>,
                   <code class="inline">output</code> (NAT), and
                   <code class="inline">filter_out</code> (Filter). The latter
-                  acts as a dedicated <strong>Kill-Switch</strong>. Applied
-                  atomically via <code class="inline">nft -f</code>.
+                  acts as a dedicated <strong>Kill-Switch</strong>. Supports **Selective Root Routing** (sudo/root routed by default), automatic **LAN Bypass** (local RFC 1918 subnets), and **DoT Prevention** (port 853 reject). Applied atomically via <code class="inline">nft -f</code>.
                 </p>
               </div>
 
@@ -1014,9 +1020,7 @@
                   Stateless Kernel-level DNS redirection. Writes the Tor resolver to
                   <code class="inline">/run/ttp/resolv.conf</code> and overlays it on
                   <code class="inline">/etc/resolv.conf</code> using <code class="inline">mount --bind</code>.
-                  Resolves absolute symlink paths automatically, employs Mount Stacking
-                  Prevention (iterative stale mount cleanup), and unmounts cleanly with a
-                  <code class="inline">umount -l</code> (lazy) fallback.
+                  Implements **DoH/DoT Leak Mitigation** (intercepting browser-level DoH by mapping Mozilla's canary domain <code class="inline">use-application-dns.net</code> to <code class="inline">0.0.0.0</code> in the Tor configuration), resolves symlinks, and uses a lazy <code class="inline">umount -l</code> fallback.
                 </p>
               </div>
 
@@ -1029,11 +1033,7 @@
                 </div>
                 <p class="text-gray-400 text-sm leading-relaxed">
                   Volatile session locking. Reads and writes a JSON lock file at
-                  <code class="inline">/run/ttp/ttp.lock</code> (tmpfs) containing:
-                  <code class="inline">pid</code>, <code class="inline">timestamp</code>,
-                  and <code class="inline">dns_backup</code>. On startup, verifies PID
-                  validity to auto-recover orphaned sessions, and handles the **tmpfs
-                  pre-flight safety check** to ensure sufficient RAM is free.
+                  <code class="inline">/run/ttp/ttp.lock</code> (tmpfs) containing session PID, ports, timestamp, and watchdog status keys (<code class="inline">watchdog_active</code>, <code class="inline">watchdog_pid</code>). Verifies PID validity to auto-recover orphaned sessions, and runs the pre-flight safety check to ensure sufficient tmpfs RAM.
                 </p>
               </div>
 
@@ -1051,6 +1051,18 @@
                   rotates circuits with <code class="inline">NEWNYM</code>, verifies
                   Tor routing, and performs a graceful cryptographical
                   <code class="inline">SHUTDOWN</code> teardown.
+                </p>
+              </div>
+
+              <div class="module-card p-5 bg-dark-card md:col-span-2">
+                <div class="flex justify-between items-center mb-3">
+                  <span class="text-cyan-400 font-bold font-mono"
+                    >watchdog.py</span
+                  >
+                  <i class="fas fa-eye text-gray-600"></i>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                  Integrity and auto-healing monitor. Spawns and manages the TTP session background watchdog daemon service (<code class="inline">ttp-watchdog.service</code>). Periodically monitors firewall table rules, the DNS overlay mount, and Tor daemon connectivity. Handles <strong>Auto-Healing (First Strike)</strong> and triggers the <strong>Emergency Killswitch (Second Strike)</strong> if recovery fails, completely locking network interfaces and broadcasting system alerts.
                 </p>
               </div>
 
@@ -1197,6 +1209,15 @@
                   via multiple public lookup APIs to confirm that all network traffic is properly tunneled.
                 </p>
               </div>
+              <div class="flow-step">
+                <div class="flow-dot-empty"></div>
+                <h4 class="text-white font-semibold mb-1">
+                  8. Watchdog service daemon activation
+                </h4>
+                <p class="text-sm leading-relaxed">
+                  If the watchdog monitor is enabled (via <code class="inline">--watchdog</code> or <code class="inline">-w</code>), the CLI automatically writes the volatile systemd service unit file <code class="inline">/run/systemd/system/ttp-watchdog.service</code> and starts it to monitor the session's health proactively.
+                </p>
+              </div>
             </div>
 
             <h3 class="text-white font-bold mb-5">ttp stop</h3>
@@ -1205,11 +1226,9 @@
             >
               <div class="flow-step">
                 <div class="flow-dot-filled"></div>
-                <h4 class="text-white font-semibold mb-1">Graceful circuit teardown</h4>
+                <h4 class="text-white font-semibold mb-1">Preventive Watchdog Stop &amp; Graceful Teardown</h4>
                 <p class="text-sm mb-1">
-                  TTP sends a cryptographic <code class="inline">SHUTDOWN</code> signal to Tor through the Unix socket.
-                  This closes active Tor circuits cleanly before the firewall changes, preventing cleartext
-                  <code class="inline">RST</code> packet leakage on exit.
+                  Stops the background watchdog service daemon immediately to prevent triggering the emergency killswitch during teardown. Then sends a cryptographic <code class="inline">SHUTDOWN</code> signal to Tor to close active circuits cleanly before touching firewall rules, eliminating cleartext <code class="inline">RST</code> leaks.
                 </p>
               </div>
               <div class="flow-step">
@@ -1293,9 +1312,12 @@
                 </div>
                 <div class="rule-line">
                   <span class="ml-8 text-gray-500"
-                    >type nat hook prerouting priority dstnat; policy
-                    accept;</span
+                    >type nat hook prerouting priority dstnat; policy accept;</span
                   >
+                </div>
+                <div class="rule-line">
+                  <span class="ml-8 text-gray-300">ip daddr { 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, 169.254.0.0/16 }</span>
+                  <span class="rule-action">accept</span>
                 </div>
                 <div class="rule-line">
                   <span class="ml-8 text-gray-300">udp dport 53</span>
@@ -1340,7 +1362,17 @@
                 <div class="mt-1"></div>
                 <div class="rule-line">
                   <span class="rule-comment ml-8"
-                    ># 2. DNS Redirection: Force queries to Tor's DNSPort</span
+                    ># 2. LAN Bypass: Exempt local subnet communication</span
+                  >
+                </div>
+                <div class="rule-line">
+                  <span class="ml-8 text-gray-300">ip daddr { 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, 169.254.0.0/16 }</span>
+                  <span class="rule-action">accept</span>
+                </div>
+                <div class="mt-1"></div>
+                <div class="rule-line">
+                  <span class="rule-comment ml-8"
+                    ># 3. DNS Redirection: Force queries to Tor's DNSPort</span
                   >
                 </div>
                 <div class="rule-line">
@@ -1356,8 +1388,7 @@
                 <div class="mt-1"></div>
                 <div class="rule-line">
                   <span class="rule-comment ml-8"
-                    ># 3. Exempt local traffic (Required for NATed
-                    packets)</span
+                    ># 4. Exempt local traffic (Required for NATed packets)</span
                   >
                 </div>
                 <div class="rule-line">
@@ -1367,8 +1398,7 @@
                 <div class="mt-1"></div>
                 <div class="rule-line">
                   <span class="rule-comment ml-8"
-                    ># 4. Redirect all other TCP traffic to Tor's
-                    TransPort</span
+                    ># 5. Redirect all other TCP traffic to Tor's TransPort</span
                   >
                 </div>
                 <div class="rule-line">
@@ -1387,15 +1417,13 @@
                 </div>
                 <div class="rule-line">
                   <span class="ml-8 text-gray-500"
-                    >type filter hook output priority filter; policy
-                    accept;</span
+                    >type filter hook output priority filter; policy accept;</span
                   >
                 </div>
                 <div class="mt-1"></div>
                 <div class="rule-line">
                   <span class="rule-comment ml-8"
-                    ># Kill-switch: Ensure only Tor and Local traffic
-                    leaves</span
+                    ># Kill-switch: Ensure only Tor and Local traffic leaves</span
                   >
                 </div>
                 <div class="rule-line">
@@ -1404,8 +1432,22 @@
                   <span class="rule-action">accept</span>
                 </div>
                 <div class="rule-line">
+                  <span class="rule-comment ml-8"
+                    ># Allow root processes if explicitly requested via --allow-root</span
+                  >
+                </div>
+                <div class="rule-line">
                   <span class="ml-8 text-gray-300">meta skuid</span>
                   <span class="rule-value">0</span>
+                  <span class="rule-action">accept</span>
+                </div>
+                <div class="rule-line">
+                  <span class="rule-comment ml-8"
+                    ># LAN Bypass: Allow local subnet communication</span
+                  >
+                </div>
+                <div class="rule-line">
+                  <span class="ml-8 text-gray-300">ip daddr { 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, 169.254.0.0/16 }</span>
                   <span class="rule-action">accept</span>
                 </div>
                 <div class="rule-line">
@@ -1413,8 +1455,27 @@
                   <span class="rule-action">accept</span>
                 </div>
                 <div class="rule-line">
+                  <span class="rule-comment ml-8"
+                    ># DoT (DNS-over-TLS) Leak Prevention</span
+                  >
+                </div>
+                <div class="rule-line">
+                  <span class="ml-8 text-gray-300">tcp dport 853</span>
+                  <span class="rule-action">reject</span>
+                </div>
+                <div class="rule-line">
+                  <span class="rule-comment ml-8"
+                    ># IPv6 Leak Prevention (TTP is IPv4-only)</span
+                  >
+                </div>
+                <div class="rule-line">
                   <span class="ml-8 text-gray-300">meta nfproto ipv6</span>
                   <span class="rule-action">drop</span>
+                </div>
+                <div class="rule-line">
+                  <span class="rule-comment ml-8"
+                    ># Brutal Reject: Kill any cleartext traffic that bypassed NAT</span
+                  >
                 </div>
                 <div class="rule-line">
                   <span class="ml-8 text-gray-300">reject</span>
@@ -1455,6 +1516,36 @@
               no cleartext traffic can bypass the NAT redirection, covering edge
               cases like pre-existing connections or processes failing to be
               intercepted.
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 mb-6">
+              <div class="module-card p-5 bg-dark-card">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="badge badge-green">LAN BYPASS</span>
+                  <span class="text-white font-bold font-mono text-sm">RFC 1918 Exempt</span>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                  Allows local network communication by exempting RFC 1918 and Link-Local subnets (<code class="inline">10.0.0.0/8</code>, <code class="inline">172.16.0.0/12</code>, <code class="inline">192.168.0.0/16</code>, and <code class="inline">169.254.0.0/16</code>) from Tor redirection. Local services like SSH, NFS, and printing remain fully operational. Disabling is possible via <code class="inline">--no-lan-bypass</code>.
+                </p>
+              </div>
+              <div class="module-card p-5 bg-dark-card">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="badge badge-blue">ROOT ROUTING</span>
+                  <span class="text-white font-bold font-mono text-sm">UID 0 Interception</span>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                  Intercepts root process traffic (UID 0) by default to prevent leak vectors during package manager runs (<code class="inline">dnf</code>, <code class="inline">apt</code>) or background system tasks. For scenarios requiring administrative cleartext communication, the <code class="inline">--allow-root</code> flag exempts UID 0 from redirection.
+                </p>
+              </div>
+              <div class="module-card p-5 bg-dark-card">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="badge badge-red">DoT BLOCK</span>
+                  <span class="text-white font-bold font-mono text-sm">Port 853 Reject</span>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                  Explicitly rejects outbound TCP/UDP port 853 inside the <code class="inline">filter_out</code> chain. Blocking DNS-over-TLS (DoT) forces local stub resolvers and modern browsers to fall back to plain UDP/TCP port 53 DNS queries, which are then securely intercepted and routed through Tor's anonymous resolver.
+                </p>
+              </div>
             </div>
           </section>
 
@@ -1515,6 +1606,13 @@
               </div>
               Anonymity is secured via a dual-layer defense: the <strong>nftables ruleset</strong> intercepts all outbound UDP/TCP port 53 traffic at the network level, forcing it to Tor's <code class="inline">DNSPort</code> (<code class="inline">127.0.0.1:9054</code>), while the <strong>DNS Overlay</strong> makes sure local glibc resolver queries are explicitly addressed to <code class="inline">127.0.0.1</code>.
             </div>
+
+            <div class="warn-box mt-4">
+              <div class="label">
+                <i class="fas fa-shield-alt mr-2"></i>DNS-OVER-HTTPS (DOH) MITIGATION
+              </div>
+              Modern web browsers often bypass system DNS settings using encrypted <strong>DNS-over-HTTPS (DoH)</strong>. To block this leak vector, TTP injects a <code class="inline">MapAddress use-application-dns.net 0.0.0.0</code> directive into the generated <code class="inline">torrc</code>. Compliant browsers querying this Mozilla canary domain receive a null response, signaling them to disable DoH and fall back to the system resolver, which TTP then safely routes through Tor.
+            </div>
           </section>
 
           <section id="cli" class="mb-20 scroll-mt-24">
@@ -1539,17 +1637,20 @@
                 >
                   <span
                     class="font-mono text-white font-bold text-sm sm:text-base"
-                    >sudo ttp start [--interface/-i &lt;iface&gt;]
-                    [--bootstrap-timeout &lt;sec&gt;]</span
+                    >sudo ttp start [--interface/-i &lt;iface&gt;] [--bootstrap-timeout &lt;sec&gt;] [--allow-root] [--no-lan-bypass] [--watchdog/-w]</span
                   >
                 </div>
                 <div
                   class="p-5 text-gray-400 text-sm leading-relaxed space-y-3"
                 >
                   <p>
-                    Starts the transparent proxy session. Orchestrates the full
-                    startup sequence.
+                    Starts the transparent proxy session. Orchestrates the full startup sequence, establishing the volatile Tor daemon, loading network-level nftables intercepts, and mounting the DNS resolver overlay.
                   </p>
+                  <div class="text-xs text-gray-500 space-y-1 font-mono pl-4 border-l border-white/10 mb-2">
+                    <div>--allow-root       Exempt processes running as UID 0 (root) from redirection</div>
+                    <div>--no-lan-bypass    Disable automatic exemption of RFC 1918 and local networks</div>
+                    <div>--watchdog, -w     Enable background health monitoring and emergency killswitch</div>
+                  </div>
                   <div class="terminal-window mt-3">
                     <div class="terminal-header">
                       <div class="terminal-dot bg-mac-red"></div>
@@ -1576,6 +1677,7 @@
                       <div class="text-green-400">
                         [TTP] Session active. Exit IP: 109.70.100.11
                       </div>
+                      <div>[TTP] Background watchdog daemon 'ttp-watchdog.service' started.</div>
                       <div>
                         [TTP] Use 'ttp stop' to terminate. 'ttp refresh' to change IP.
                       </div>
@@ -1687,8 +1789,7 @@
                 >
                   <span
                     class="font-mono text-white font-bold text-sm sm:text-base"
-                    >sudo ttp restart [--interface/-i &lt;iface&gt;]
-                    [--bootstrap-timeout &lt;sec&gt;]</span
+                    >sudo ttp restart [--interface/-i &lt;iface&gt;] [--bootstrap-timeout &lt;sec&gt;] [--allow-root] [--no-lan-bypass] [--watchdog/-w]</span
                   >
                 </div>
                 <div
@@ -1697,8 +1798,57 @@
                   <p>
                     Quickly restarts the session. Shortcut for
                     <code class="inline">stop</code> followed by
-                    <code class="inline">start</code>.
+                    <code class="inline">start</code>, accepting the same startup arguments.
                   </p>
+                  <div class="text-xs text-gray-500 space-y-1 font-mono pl-4 border-l border-white/10">
+                    <div>--allow-root       Exempt processes running as UID 0 (root) from redirection</div>
+                    <div>--no-lan-bypass    Disable automatic exemption of RFC 1918 and local networks</div>
+                    <div>--watchdog, -w     Enable background health monitoring and emergency killswitch</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="border border-white/5 rounded overflow-hidden">
+                <div
+                  class="bg-white/3 px-5 py-3 flex items-center justify-between border-b border-white/5 overflow-x-auto whitespace-nowrap"
+                >
+                  <span
+                    class="font-mono text-white font-bold text-sm sm:text-base"
+                    >sudo ttp watchdog [start | stop | status]</span
+                  >
+                </div>
+                <div
+                  class="p-5 text-gray-400 text-sm leading-relaxed space-y-3"
+                >
+                  <p>
+                    Manages the background health monitoring daemon (<code class="inline">ttp-watchdog.service</code>). If spawned, the watchdog performs diagnostic checks every 15 seconds to ensure system integrity.
+                  </p>
+                  <div class="text-xs text-gray-500 space-y-1 font-mono pl-4 border-l border-white/10 mb-2">
+                    <div>start    Spawns and registers the systemd watchdog service</div>
+                    <div>stop     Terminates the watchdog service and gracefully unloads it</div>
+                    <div>status   Checks service state and prints the last watchdog runtime logs</div>
+                  </div>
+                  <div class="terminal-window mt-3">
+                    <div class="terminal-header">
+                      <div class="terminal-dot bg-mac-red"></div>
+                      <div class="terminal-dot bg-mac-yellow"></div>
+                      <div class="terminal-dot bg-mac-green"></div>
+                      <span class="terminal-label">watchdog status</span>
+                    </div>
+                    <div
+                      class="p-4 font-mono text-xs leading-6 text-gray-400 overflow-x-auto whitespace-nowrap"
+                    >
+                      <div><span class="text-green-400">● ttp-watchdog.service - TTP Volatile Health Watchdog Daemon</span></div>
+                      <div>   Loaded: loaded (/run/systemd/system/ttp-watchdog.service; transient)</div>
+                      <div>   Active: <span class="text-green-400">active (running)</span> since Fri 2026-05-22 16:05:00 UTC; 10min ago</div>
+                      <div>   Main PID: 4512 (python3)</div>
+                      <div class="text-gray-500 mt-2"># Diagnostic Logs:</div>
+                      <div>[WATCHDOG] Integrity check: DNS overlay active (OK)</div>
+                      <div>[WATCHDOG] Integrity check: nftables table 'inet ttp' loaded (OK)</div>
+                      <div>[WATCHDOG] Integrity check: Tor socks socket active on port 9041 (OK)</div>
+                      <div>[WATCHDOG] Status: Healthy. Sleeping for 15s...</div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -1861,6 +2011,44 @@
                     clearing the orphan lock.
                   </p>
                 </div>
+              </div>
+            </div>
+
+            <h3 class="text-white font-bold text-lg mb-3 mt-8 flex items-center gap-2">
+              <i class="fas fa-microchip text-cyan-400"></i> Proactive Health Watchdog Daemon
+            </h3>
+            <p class="text-gray-400 mb-6 leading-relaxed text-sm">
+              In version 0.3.5, TTP establishes a transient background monitoring unit (<code class="inline">ttp-watchdog.service</code>). Operating continuously during an active session, it runs integrity diagnostics every 15 seconds to ensure that no leakage vectors develop due to system service restarts, third-party interventions, or hardware anomalies. The watchdog operates under a strict two-strike escalation protocol:
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+              <div class="bg-dark-card border border-white/5 rounded-lg p-5">
+                <div class="flex items-center gap-3 mb-3">
+                  <div class="w-8 h-8 rounded bg-yellow-500/10 flex items-center justify-center text-yellow-500 shrink-0">
+                    <i class="fas fa-heartbeat text-sm"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-white font-bold font-mono text-xs">STRIKE 1: AUTO-HEALING</h4>
+                    <span class="text-[9px] text-yellow-500 font-bold uppercase tracking-wider">Non-Destructive Correction</span>
+                  </div>
+                </div>
+                <p class="text-gray-400 text-xs leading-relaxed">
+                  If the watchdog detects a minor anomaly (such as the DNS overlay being unmounted by a system update or a brief failure in resolving Tor status), it triggers an immediate, silent auto-healing attempt. It will clear stacked resolver mounts and re-apply structural configurations to restore the secure pipeline without interrupting your active internet connection or rotating your Tor circuit.
+                </p>
+              </div>
+              <div class="bg-dark-card border border-white/5 rounded-lg p-5">
+                <div class="flex items-center gap-3 mb-3">
+                  <div class="w-8 h-8 rounded bg-red-500/10 flex items-center justify-center text-red-500 shrink-0">
+                    <i class="fas fa-hand-paper text-sm"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-white font-bold font-mono text-xs">STRIKE 2: EMERGENCY LOCKDOWN</h4>
+                    <span class="text-[9px] text-red-500 font-bold uppercase tracking-wider">Emergency Killswitch</span>
+                  </div>
+                </div>
+                <p class="text-gray-400 text-xs leading-relaxed">
+                  If the anomaly persists on the second consecutive probe, or if a critical component is compromised (such as the complete deletion of the <code class="inline">inet ttp</code> nftables table), the watchdog engages a system-wide lockdown. It shuts down all outbound cleartext traffic, broadcasts an immediate warning across all active terminal consoles (<code class="inline">wall</code> alert), and sends an interactive desktop notification via <code class="inline">notify-send</code>.
+                </p>
               </div>
             </div>
 
@@ -2285,7 +2473,7 @@
             >TTP<span class="text-cyan-400">_DOCS</span></span
           >
           <span class="text-gray-600 font-mono text-xs"
-            >v0.3.0 - MIT License</span
+            >v0.3.5 - MIT License</span
           >
         </div>
         <div class="flex flex-wrap justify-center gap-6">
