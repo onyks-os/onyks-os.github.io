@@ -1,0 +1,1305 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Synapse Documentation | Onyks-OS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      data-goatcounter="https://onyks.goatcounter.com/count"
+      async
+      src="//gc.zgo.at/count.js"
+    ></script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://img.icons8.com/fluency/96/console.png"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              display: ["Space Grotesk", "sans-serif"],
+              mono: ["JetBrains Mono", "monospace"],
+            },
+            colors: {
+              cyan: { 400: "#22d3ee", 500: "#06b6d4" },
+              dark: { 900: "#050505", card: "#0a0a0a", border: "#262626" },
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        background-color: #050505;
+        background-image:
+          linear-gradient(rgba(34, 211, 238, 0.02) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(34, 211, 238, 0.02) 1px, transparent 1px);
+        background-size: 30px 30px;
+        color: #e5e5e5;
+      }
+
+      .terminal-window {
+        background: #0a0a0a;
+        border: 1px solid #262626;
+        border-radius: 6px;
+        overflow: hidden;
+      }
+
+      .terminal-header {
+        background: #111;
+        padding: 8px 16px;
+        border-bottom: 1px solid #262626;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .terminal-label {
+        margin-left: auto;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: #4a4a4a;
+      }
+
+      .terminal-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+
+      .bg-mac-red {
+        background: #ff5f56;
+      }
+
+      .bg-mac-yellow {
+        background: #ffbd2e;
+      }
+
+      .bg-mac-green {
+        background: #27c93f;
+      }
+
+      .nav-link.active {
+        color: #22d3ee;
+        border-left-color: #22d3ee;
+        background: rgba(34, 211, 238, 0.05);
+      }
+
+      .module-card {
+        border: 1px solid #262626;
+        transition: all 0.2s;
+      }
+
+      .module-card:hover {
+        border-color: #22d3ee;
+        transform: translateY(-2px);
+        box-shadow: 0 0 15px rgba(34, 211, 238, 0.07);
+      }
+
+      .flow-step {
+        position: relative;
+      }
+
+      .flow-dot-filled {
+        position: absolute;
+        left: -29px;
+        top: 4px;
+        width: 12px;
+        height: 12px;
+        background: #22d3ee;
+        border-radius: 50%;
+      }
+
+      .flow-dot-empty {
+        position: absolute;
+        left: -29px;
+        top: 4px;
+        width: 12px;
+        height: 12px;
+        background: #050505;
+        border: 2px solid #22d3ee;
+        border-radius: 50%;
+      }
+
+      .rule-line {
+        display: flex;
+        gap: 1rem;
+        font-size: 13px;
+      }
+
+      .rule-num {
+        color: #4a4a4a;
+        user-select: none;
+        min-width: 1.5rem;
+        text-align: right;
+      }
+
+      .rule-comment {
+        color: #4a7a4a;
+      }
+
+      .rule-keyword {
+        color: #22d3ee;
+      }
+
+      .rule-value {
+        color: #e5c07b;
+      }
+
+      .rule-action {
+        color: #c678dd;
+      }
+
+      code.inline {
+        color: #22d3ee;
+        background: rgba(34, 211, 238, 0.08);
+        padding: 1px 6px;
+        border-radius: 3px;
+        font-size: 0.85em;
+        word-break: break-word;
+      }
+
+      .badge {
+        display: inline-block;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        padding: 2px 8px;
+        border-radius: 3px;
+      }
+
+      .badge-green {
+        background: rgba(39, 201, 63, 0.12);
+        color: #27c93f;
+        border: 1px solid rgba(39, 201, 63, 0.3);
+      }
+
+      .badge-yellow {
+        background: rgba(255, 189, 46, 0.12);
+        color: #ffbd2e;
+        border: 1px solid rgba(255, 189, 46, 0.3);
+      }
+
+      .badge-red {
+        background: rgba(255, 95, 86, 0.12);
+        color: #ff5f56;
+        border: 1px solid rgba(255, 95, 86, 0.3);
+      }
+
+      .badge-cyan {
+        background: rgba(34, 211, 238, 0.08);
+        color: #22d3ee;
+        border: 1px solid rgba(34, 211, 238, 0.25);
+      }
+
+      .section-divider {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .section-divider .hex {
+        font-family: "JetBrains Mono", monospace;
+        color: #22d3ee;
+        font-size: 0.8rem;
+      }
+
+      .section-divider h2 {
+        font-size: 1.875rem;
+        font-weight: 700;
+        color: #fff;
+      }
+
+      .section-divider .line {
+        flex-grow: 1;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.07);
+      }
+
+      table.doc-table {
+        width: 100%;
+        min-width: 600px;
+        border-collapse: collapse;
+        font-size: 0.875rem;
+      }
+
+      table.doc-table thead {
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      table.doc-table th {
+        padding: 12px 16px;
+        text-align: left;
+        font-family: "JetBrains Mono", monospace;
+        color: #22d3ee;
+        font-weight: 400;
+        font-size: 0.8rem;
+      }
+
+      table.doc-table td {
+        padding: 12px 16px;
+        color: #9ca3af;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        vertical-align: top;
+      }
+
+      table.doc-table td:first-child {
+        font-family: "JetBrains Mono", monospace;
+        color: #fff;
+        white-space: nowrap;
+      }
+
+      .caution-box,
+      .note-box,
+      .warn-box {
+        padding: 1rem 1.25rem;
+        border-radius: 4px;
+        font-size: 0.875rem;
+        color: #d1d5db;
+        word-break: break-word;
+      }
+
+      .caution-box {
+        border: 1px solid rgba(255, 95, 86, 0.35);
+        background: rgba(255, 95, 86, 0.06);
+      }
+
+      .caution-box .label {
+        color: #ff5f56;
+        font-weight: 700;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.75rem;
+        margin-bottom: 4px;
+      }
+
+      .note-box {
+        border: 1px solid rgba(34, 211, 238, 0.25);
+        background: rgba(34, 211, 238, 0.04);
+      }
+
+      .note-box .label {
+        color: #22d3ee;
+        font-weight: 700;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.75rem;
+        margin-bottom: 4px;
+      }
+
+      .warn-box {
+        border: 1px solid rgba(255, 189, 46, 0.3);
+        background: rgba(255, 189, 46, 0.05);
+      }
+
+      .warn-box .label {
+        color: #ffbd2e;
+        font-weight: 700;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.75rem;
+        margin-bottom: 4px;
+      }
+
+      /* Mobile Menu - Hidden by default */
+      #mobile-menu {
+        display: none;
+      }
+
+      @media (max-width: 1023px) {
+        #mobile-menu {
+          position: fixed;
+          top: 4rem;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: #050505;
+          border-top: 1px solid rgba(255, 255, 255, 0.05);
+          overflow-y: auto;
+          z-index: 40;
+          padding: 1.5rem;
+        }
+
+        #mobile-menu.open {
+          display: block;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="antialiased min-h-screen flex flex-col">
+    <nav
+      class="fixed w-full z-50 bg-dark-900/95 backdrop-blur border-b border-white/5 h-16 flex items-center"
+    >
+      <div
+        class="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 flex justify-between items-center"
+      >
+        <div class="flex items-center gap-4">
+          <a
+            href="/"
+            class="text-gray-400 hover:text-cyan-400 transition-colors"
+          >
+            <i class="fas fa-chevron-left"></i>
+          </a>
+          <span class="font-display font-bold text-lg text-white"
+            >SYNAPSE<span class="text-cyan-400">_DOCS</span></span
+          >
+          <span class="badge badge-cyan hidden sm:inline">v0.2.0</span>
+        </div>
+        <div class="hidden sm:flex items-center gap-3">
+          <a
+            href="https://github.com/sponsors/onyks-os"
+            target="_blank"
+            class="font-mono text-sm text-[#ff69b4] border border-[#ff69b4]/30 px-3 py-1.5 hover:bg-[#ff69b4]/10 transition-colors flex items-center"
+          >
+            <i class="fas fa-heart mr-2"></i>SPONSOR
+          </a>
+          <a
+            href="https://github.com/onyks-os/Synapse"
+            target="_blank"
+            class="font-mono text-sm text-cyan-400 border border-cyan-400/30 px-3 py-1.5 hover:bg-cyan-400/10 transition-colors flex items-center"
+          >
+            <i class="fab fa-github mr-2"></i>SOURCE
+          </a>
+        </div>
+        <button
+          id="hamburger"
+          class="lg:hidden flex flex-col gap-1.5 p-2 text-gray-400 hover:text-cyan-400 transition-colors"
+          aria-label="Menu"
+        >
+          <span
+            class="block w-5 h-0.5 bg-current transition-all"
+            id="bar1"
+          ></span>
+          <span
+            class="block w-5 h-0.5 bg-current transition-all"
+            id="bar2"
+          ></span>
+          <span
+            class="block w-5 h-0.5 bg-current transition-all"
+            id="bar3"
+          ></span>
+        </button>
+      </div>
+    </nav>
+
+    <div id="mobile-menu">
+      <p class="font-mono text-xs text-gray-600 uppercase tracking-widest mb-3">
+        Contents
+      </p>
+      <ul class="space-y-0.5 font-mono text-sm">
+        <li>
+          <a
+            href="#overview"
+            class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400"
+            >1. Overview</a
+          >
+        </li>
+        <li>
+          <a
+            href="#quickstart"
+            class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400"
+            >2. Quickstart</a
+          >
+        </li>
+        <li>
+          <a
+            href="#architecture"
+            class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400"
+            >3. Architecture</a
+          >
+        </li>
+        <li>
+          <a
+            href="#formalism"
+            class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400"
+            >4. Mathematical Formalism</a
+          >
+        </li>
+        <li>
+          <a
+            href="#api"
+            class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400"
+            >5. API Reference</a
+          >
+        </li>
+        <li>
+          <a
+            href="#messaging"
+            class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400"
+            >6. Messaging Protocol</a
+          >
+        </li>
+        <li>
+          <a
+            href="#security"
+            class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400"
+            >7. Security & Encryption</a
+          >
+        </li>
+        <li>
+          <a
+            href="#development"
+            class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400"
+            >8. Development & Testing</a
+          >
+        </li>
+        <li>
+          <a
+            href="#resilience"
+            class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400"
+            >9. Chaos & Resilience</a
+          >
+        </li>
+        <li>
+          <a
+            href="#roadmap"
+            class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400"
+            >10. Roadmap & Future</a
+          >
+        </li>
+      </ul>
+      <div class="mt-6 flex flex-col gap-3">
+        <a
+          href="https://github.com/sponsors/onyks-os"
+          target="_blank"
+          class="font-mono text-sm text-[#ff69b4] border border-[#ff69b4]/30 px-3 py-2 hover:bg-[#ff69b4]/10 transition-colors flex items-center justify-center"
+        >
+          <i class="fas fa-heart mr-2"></i>SPONSOR
+        </a>
+        <a
+          href="https://github.com/onyks-os/Synapse"
+          target="_blank"
+          class="font-mono text-sm text-cyan-400 border border-cyan-400/30 px-3 py-2 hover:bg-cyan-400/10 transition-colors flex items-center justify-center"
+        >
+          <i class="fab fa-github mr-2"></i>VIEW SOURCE
+        </a>
+      </div>
+    </div>
+
+    <div class="flex-grow pt-16 flex max-w-screen-2xl mx-auto w-full">
+      <aside
+        class="hidden lg:block w-64 shrink-0 border-r border-white/5 fixed h-[calc(100vh-4rem)] overflow-y-auto py-8"
+      >
+        <div class="px-6 mb-6">
+          <p
+            class="font-mono text-xs text-gray-600 uppercase tracking-widest mb-3"
+          >
+            Contents
+          </p>
+          <ul class="space-y-0.5 font-mono text-sm" id="spy-nav">
+            <li>
+              <a
+                href="#overview"
+                class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors"
+                >1. Overview</a
+              >
+            </li>
+            <li>
+              <a
+                href="#quickstart"
+                class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors"
+                >2. Quickstart</a
+              >
+            </li>
+            <li>
+              <a
+                href="#architecture"
+                class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors"
+                >3. Architecture</a
+              >
+            </li>
+            <li>
+              <a
+                href="#formalism"
+                class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors"
+                >4. Mathematical Formalism</a
+              >
+            </li>
+            <li>
+              <a
+                href="#api"
+                class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors"
+                >5. API Reference</a
+              >
+            </li>
+            <li>
+              <a
+                href="#messaging"
+                class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors"
+                >6. Messaging Protocol</a
+              >
+            </li>
+            <li>
+              <a
+                href="#security"
+                class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors"
+                >7. Security & Encryption</a
+              >
+            </li>
+            <li>
+              <a
+                href="#development"
+                class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors"
+                >8. Development & Testing</a
+              >
+            </li>
+            <li>
+              <a
+                href="#resilience"
+                class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors"
+                >9. Chaos & Resilience</a
+              >
+            </li>
+            <li>
+              <a
+                href="#roadmap"
+                class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors"
+                >10. Roadmap & Future</a
+              >
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <main
+        class="flex-grow lg:pl-64 p-4 sm:p-6 lg:p-12 w-full overflow-hidden"
+      >
+        <div class="max-w-4xl mx-auto w-full">
+          <section id="overview" class="mb-20 scroll-mt-24">
+            <div class="mb-3 flex flex-wrap items-center gap-3">
+              <span class="badge badge-cyan">BROKERLESS IoT</span>
+              <span class="badge badge-green">H3 SPATIAL GRIDS</span>
+              <span class="badge badge-yellow">ZEROMQ</span>
+              <span class="badge badge-red">ANOMALY CORROBORATION</span>
+              <span class="badge badge-cyan">CHAOS MONKEY</span>
+            </div>
+            <h1
+              class="text-3xl md:text-5xl font-display font-bold text-white mb-5 leading-tight"
+            >
+              Synapse Ingestion Engine
+            </h1>
+            <p
+              class="text-base md:text-lg text-gray-400 mb-8 leading-relaxed max-w-2xl"
+            >
+              Synapse is a brokerless, edge-first IoT ingestion engine utilizing peer-to-peer validation via Uber's 
+              <strong class="text-white">H3 spatial index</strong> and local statistical corroboration. 
+              By replacing centralized message brokers like MQTT or Kafka with direct 
+              <code class="inline">ZeroMQ PUB/SUB</code> topologies, it removes central single points of failure, 
+              localizes anomaly detection, and ensures extreme performance under constrained edge computational footprints.
+            </p>
+
+            <div class="terminal-window mb-8">
+              <div class="terminal-header">
+                <div class="terminal-dot bg-mac-red"></div>
+                <div class="terminal-dot bg-mac-yellow"></div>
+                <div class="terminal-dot bg-mac-green"></div>
+                <span class="terminal-label">bash</span>
+              </div>
+              <div
+                class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap"
+              >
+                <div>
+                  <span class="text-cyan-400">$</span>
+                  <span class="text-gray-300"
+                    >git clone
+                    https://github.com/onyks-os/Synapse.git</span
+                  >
+                </div>
+                <div>
+                  <span class="text-cyan-400">$</span>
+                  <span class="text-gray-300"
+                    >cd Synapse && docker compose -f docker/docker-compose.yml up -d --scale sensor=5</span
+                  >
+                </div>
+                <div class="mt-2 text-gray-500">
+                  [Synapse] Recreating docker_monitor_1 ... <span class="text-green-400">done</span>
+                </div>
+                <div class="text-gray-500">
+                  [Synapse] Recreating docker_sensor_1  ... <span class="text-green-400">done</span>
+                </div>
+                <div class="text-gray-500">
+                  [Synapse] Scaling sensors ... 5 instances active.
+                </div>
+                <div class="text-gray-500">
+                  [Synapse] Bootstrapping spatial index: resolution 7 H3 grids activated.
+                </div>
+                <div class="text-gray-500">
+                  [Synapse] ZmqListener bound to tcp://0.0.0.0:5555. Subscribing to all topics.
+                </div>
+                <div class="text-gray-500">
+                  [Synapse] Spatial corroboration loaded: median absolute deviation (MAD).
+                </div>
+                <div class="text-green-400">
+                  [Synapse] Dashboard started. URL: http://localhost:8080
+                </div>
+              </div>
+            </div>
+
+            <div class="note-box">
+              <div class="label">
+                <i class="fas fa-microchip mr-2"></i>EDGE INGESTION PRINCIPLE
+              </div>
+              Synapse operates on the principle that geographic proximity is fundamental to validating edge sensor integrity. Instead of analyzing anomaly signals in isolation or forwarding massive raw datasets to a remote cloud datacenter, data is corroborated locally against immediate geographic neighbors using a pluggable robust estimator.
+            </div>
+          </section>
+
+          <section id="quickstart" class="mb-20 scroll-mt-24">
+            <div class="section-divider">
+              <span class="hex">0x02</span>
+              <h2>Quickstart</h2>
+              <div class="line"></div>
+            </div>
+
+            <h3 class="text-white font-bold mb-3">1. Local Deployment (Docker Compose)</h3>
+            <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+              The easiest way to execute a full multi-sensor simulation is to spin up the containerized network:
+            </p>
+            <div class="terminal-window mb-8">
+              <div class="terminal-header">
+                <div class="terminal-dot bg-mac-red"></div>
+                <div class="terminal-dot bg-mac-yellow"></div>
+                <div class="terminal-dot bg-mac-green"></div>
+                <span class="terminal-label">bash</span>
+              </div>
+              <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+                <div><span class="text-cyan-400">$</span> <span class="text-gray-300">docker compose -f docker/docker-compose.yml up -d --build --scale sensor=10</span></div>
+                <div><span class="text-cyan-400">$</span> <span class="text-gray-300">docker ps</span></div>
+                <div class="text-gray-500 mt-2">
+                  CONTAINER ID   IMAGE            COMMAND                  STATUS          PORTS
+                </div>
+                <div class="text-gray-400">
+                  f38e9102c912   synapse-monitor  "python src/main_mon…"   Up 12 seconds   0.0.0.0:8080->8080/tcp, 0.0.0.0:5555->5555/tcp
+                </div>
+                <div class="text-gray-400">
+                  a1281bf0528c   synapse-sensor   "python src/main_sen…"   Up 10 seconds   
+                </div>
+                <div class="text-gray-500">
+                  ... (9 more sensor replicas running)
+                </div>
+              </div>
+            </div>
+
+            <h3 class="text-white font-bold mb-3">2. Manual Development Setup</h3>
+            <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+              If running directly in Python, set up the virtual environment and install the development dependencies:
+            </p>
+            <div class="terminal-window mb-8">
+              <div class="terminal-header">
+                <div class="terminal-dot bg-mac-red"></div>
+                <div class="terminal-dot bg-mac-yellow"></div>
+                <div class="terminal-dot bg-mac-green"></div>
+                <span class="terminal-label">bash</span>
+              </div>
+              <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+                <div><span class="text-cyan-400">$</span> <span class="text-gray-300">python3 -m venv .venv</span></div>
+                <div><span class="text-cyan-400">$</span> <span class="text-gray-300">source .venv/bin/activate</span></div>
+                <div><span class="text-cyan-400">$</span> <span class="text-gray-300">pip install -e ".[dev]"</span></div>
+                <div class="mt-4"><span class="text-cyan-400"># Start Monitor in terminal 1</span></div>
+                <div><span class="text-cyan-400">$</span> <span class="text-gray-300">python src/main_monitor.py</span></div>
+                <div class="mt-4"><span class="text-cyan-400"># Start one or more Sensors in terminal 2+</span></div>
+                <div><span class="text-cyan-400">$</span> <span class="text-gray-300">python src/main_sensor.py</span></div>
+              </div>
+            </div>
+
+            <h3 class="text-white font-bold mb-3">3. Navigating the Dashboard</h3>
+            <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+              Open your browser and navigate to <code class="inline">http://localhost:8080</code>. You will be greeted with an interactive geographic visualization rendering hexagonal H3 cells.
+            </p>
+            <ul class="list-disc pl-6 space-y-2 text-sm text-gray-400 mb-6 leading-relaxed">
+              <li><strong class="text-white">Green Hexagons:</strong> All active sensor nodes inside this spatial cell are healthy and report congruent values.</li>
+              <li><strong class="text-white">Yellow/Orange Hexagons:</strong> The cell contains anomalous (<code class="inline">FAULTY</code>) or silent (<code class="inline">DEAD</code>) sensors.</li>
+              <li><strong class="text-white">Red Hexagons:</strong> The majority of the sensors in this coordinate cell have failed local verification.</li>
+            </ul>
+          </section>
+
+          <section id="architecture" class="mb-20 scroll-mt-24">
+            <div class="section-divider">
+              <span class="hex">0x03</span>
+              <h2>System Architecture</h2>
+              <div class="line"></div>
+            </div>
+
+            <p class="text-gray-400 mb-6 leading-relaxed">
+              Unlike traditional centralized IoT systems that rely on a large queueing middleware cluster, Synapse decouples ingestion completely into point-to-point zero-overhead networks.
+            </p>
+
+            <div class="overflow-x-auto mb-8 border border-white/5 rounded">
+              <table class="doc-table w-full min-w-[600px]">
+                <thead>
+                  <tr>
+                    <th>Feature</th>
+                    <th>Traditional Architectures</th>
+                    <th>Synapse Architecture</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Ingestion Topology</td>
+                    <td>Hub-and-Spoke (Centralized Cloud Broker)</td>
+                    <td>Direct ZeroMQ PUB/SUB links</td>
+                  </tr>
+                  <tr>
+                    <td>Anomaly Detection</td>
+                    <td>Cloud Data lake / Offline stream analytics</td>
+                    <td>Local / Edge spatial corroboration</td>
+                  </tr>
+                  <tr>
+                    <td>Resilience & SPOF</td>
+                    <td>Single point of failure at the broker clustering layer</td>
+                    <td>Dynamic autonomous sockets with multi-path recovery</td>
+                  </tr>
+                  <tr>
+                    <td>Computing Footprint</td>
+                    <td>High (JVM heavy brokers, databases, microservices)</td>
+                    <td>Ultra-lightweight Python/ZeroMQ runtime</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 class="text-white font-bold mb-4">Core Architectural Components</h3>
+            <div class="space-y-4">
+              <div class="module-card p-5 bg-dark-card rounded">
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="badge badge-cyan">DATA EMITTER</span>
+                  <span class="text-white font-bold font-mono text-sm">Sensor Node (main_sensor.py)</span>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                  A daemon executing directly on the physical IoT hardware or microcontrollers. It generates unique identifiers, extracts local data readings, maps coordinates to H3 spatial indices (typically resolution 7), and publishes heartbeats over its ZeroMQ PUB socket at periodic intervals.
+                </p>
+              </div>
+
+              <div class="module-card p-5 bg-dark-card rounded">
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="badge badge-green">STATE ENGINE</span>
+                  <span class="text-white font-bold font-mono text-sm">Monitor (main_monitor.py)</span>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                  An async central daemon acting as the spatial ingestion target. It houses the following:
+                </p>
+                <ul class="list-disc pl-6 mt-2 space-y-1 text-xs text-gray-400">
+                  <li><strong class="text-white">ZmqListener:</strong> A high-throughput async SUB socket that acts as the ingestion boundary.</li>
+                  <li><strong class="text-white">NodeRegistry:</strong> An in-memory concurrent state tracker that groups nodes by H3 cell and holds the authoritative state.</li>
+                  <li><strong class="text-white">GarbageCollector:</strong> A background loop cleaning up silent (<code class="inline">DEAD</code>) sensors after timeout limits are crossed.</li>
+                  <li><strong class="text-white">DashboardServer:</strong> A Flask REST API and web application displaying the geographical state map.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section id="formalism" class="mb-20 scroll-mt-24">
+            <div class="section-divider">
+              <span class="hex">0x04</span>
+              <h2>Mathematical Formalism</h2>
+              <div class="line"></div>
+            </div>
+
+            <h3 class="text-white font-bold mb-3">1. Geospatial Mesh via H3 Grid</h3>
+            <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+              Geographic coordinates are transformed into a single 64-bit integer H3 cell representing a hexagonal region. The default resolution of <code class="inline">7</code> covers an average area of 4.3 square kilometers with an edge length of approximately 1.2 kilometers. Peers are defined strictly as nodes occupying the same cell.
+            </p>
+
+            <h3 class="text-white font-bold mb-3">2. Pluggable Outlier Detection (Spatial Corroboration)</h3>
+            <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+              When a sensor publishes a telemetry ping, the Monitor triggers a Leave-One-Out (LOO) test. For node <code class="inline">n</code> reporting value <code class="inline">x_n</code> inside cell <code class="inline">C</code>, the peer comparison set is defined as:
+            </p>
+            <div class="bg-dark-card border border-white/5 p-4 rounded font-mono text-xs text-center text-cyan-400 mb-6">
+              P_n = { x_i | i ∈ C, i ≠ n, status(i) == ALIVE }
+            </div>
+
+            <h4 class="text-white font-bold mb-2">Classic Z-Score (Method: zscore)</h4>
+            <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+              Uses sample mean (μ) and sample standard deviation (σ) computed over the peer set <code class="inline">P_n</code>:
+            </p>
+            <div class="bg-dark-card border border-white/5 p-4 rounded font-mono text-xs text-center text-cyan-400 mb-6">
+              Z = |x_n - μ| / σ
+            </div>
+            <p class="text-gray-400 text-xs mb-6">
+              <strong class="text-yellow-500">Limitation:</strong> Non-robust estimators. A single high-variance faulty peer in <code class="inline">P_n</code> heavily distorts μ and σ, triggering false negatives or masking other outliers.
+            </p>
+
+            <h4 class="text-white font-bold mb-2">Modified Z-Score via Median Absolute Deviation (Method: mad - Default)</h4>
+            <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+              Uses the median (m) and the Median Absolute Deviation (MAD) of the peer set, providing a robust estimator unaffected by up to 50% compromised sensors:
+            </p>
+            <div class="bg-dark-card border border-white/5 p-4 rounded font-mono text-xs text-center text-cyan-400 mb-6">
+              MAD = median( { |p - m| for p ∈ P_n } )<br/>
+              Modified Z = 0.6745 × |x_n - m| / MAD
+            </div>
+            <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+              The constant <code class="inline">0.6745</code> scales the denominator such that the modified Z-score is mathematically equivalent to standard Z-scores when data is normally distributed. If the modified Z exceeds the configured threshold (default <code class="inline">3.5</code>), the node status changes to <code class="inline">FAULTY</code>.
+            </p>
+          </section>
+
+          <section id="api" class="mb-20 scroll-mt-24">
+            <div class="section-divider">
+              <span class="hex">0x05</span>
+              <h2>API Reference</h2>
+              <div class="line"></div>
+            </div>
+
+            <p class="text-gray-400 mb-6 leading-relaxed">
+              The monitor exposes a versioned JSON REST API at <code class="inline">http://localhost:8080/api/v1/</code> to query network topology and metrics.
+            </p>
+
+            <div class="overflow-x-auto mb-8 border border-white/5 rounded">
+              <table class="doc-table w-full min-w-[600px]">
+                <thead>
+                  <tr>
+                    <th>Endpoint</th>
+                    <th>Method</th>
+                    <th>Response</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>/api/v1/nodes</td>
+                    <td>GET</td>
+                    <td>Array of Node Objects</td>
+                    <td>List all registered nodes, their coordinates, values, and status.</td>
+                  </tr>
+                  <tr>
+                    <td>/api/v1/cells</td>
+                    <td>GET</td>
+                    <td>Dictionary of H3 Cells</td>
+                    <td>Cell summary mapping with alive/faulty/dead counts and centroids.</td>
+                  </tr>
+                  <tr>
+                    <td>/metrics</td>
+                    <td>GET</td>
+                    <td>Prometheus Text Data</td>
+                    <td>Scrapable metrics on rate limits, invalid payloads, and node counts.</td>
+                  </tr>
+                  <tr>
+                    <td>/live</td>
+                    <td>GET</td>
+                    <td>{"status":"ok"}</td>
+                    <td>Liveness probe.</td>
+                  </tr>
+                  <tr>
+                    <td>/ready</td>
+                    <td>GET</td>
+                    <td>JSON Status Object</td>
+                    <td>Readiness probe indicating connection counts.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 class="text-white font-bold mb-3">Example API Node Response</h3>
+            <div class="terminal-window">
+              <div class="terminal-header">
+                <div class="terminal-dot bg-mac-red"></div>
+                <div class="terminal-dot bg-mac-yellow"></div>
+                <div class="terminal-dot bg-mac-green"></div>
+                <span class="terminal-label">JSON</span>
+              </div>
+              <div class="p-4 sm:p-5 font-mono text-xs leading-6 text-gray-400 overflow-x-auto">
+                <pre>{
+  "node_id": "sensor_42",
+  "type": "mock",
+  "status": <span class="text-cyan-400">"ALIVE"</span>,
+  "last_seen": 1709894982.5,
+  "h3_cell": "871fb4670ffffff",
+  "lat": 45.4642,
+  "lon": 9.1895,
+  "last_value": 24.5
+}</pre>
+              </div>
+            </div>
+          </section>
+
+          <section id="messaging" class="mb-20 scroll-mt-24">
+            <div class="section-divider">
+              <span class="hex">0x06</span>
+              <h2>Messaging Protocol</h2>
+              <div class="line"></div>
+            </div>
+
+            <p class="text-gray-400 mb-6 leading-relaxed">
+              ZeroMQ transmits structured non-blocking telemetry messages using lightweight framing. Sockets connect via the TCP boundary, delivering JSON telemetry payloads.
+            </p>
+
+            <h3 class="text-white font-bold mb-3">Payload Structure Schema (PING)</h3>
+            <div class="terminal-window mb-8">
+              <div class="terminal-header">
+                <div class="terminal-dot bg-mac-red"></div>
+                <div class="terminal-dot bg-mac-yellow"></div>
+                <div class="terminal-dot bg-mac-green"></div>
+                <span class="terminal-label">JSON Schema</span>
+              </div>
+              <div class="p-4 sm:p-5 font-mono text-xs leading-6 text-gray-400 overflow-x-auto">
+                <pre>{
+  "schema_version": 1,
+  "node_id": "sensor_0001",
+  "type": "mock",
+  "timestamp": 1709894981.12,
+  "status": "PING",
+  "h3_cell": "871fb4670ffffff",
+  "payload": {
+    "value": 22.45,
+    "lat": 45.4642,
+    "lon": 9.1895
+  }
+}</pre>
+              </div>
+            </div>
+
+            <div class="warn-box">
+              <div class="label">
+                <i class="fas fa-exclamation-triangle mr-2"></i>SCHEMALESS FILTERS
+              </div>
+              The monitor runs rapid schema validation. PING packets lacking mandatory fields (<code class="inline">node_id</code>, <code class="inline">h3_cell</code>, <code class="inline">payload.value</code>) are silently dropped at the ZmqListener loop, triggering the <code class="inline">Synapse_invalid_payload_total</code> Prometheus metric to alert operations.
+            </div>
+          </section>
+
+          <section id="security" class="mb-20 scroll-mt-24">
+            <div class="section-divider">
+              <span class="hex">0x07</span>
+              <h2>Security & Encryption</h2>
+              <div class="line"></div>
+            </div>
+
+            <p class="text-gray-400 mb-6 leading-relaxed">
+              In adversarial environments, edge telemetry must be protected against eavesdropping and injection attacks. Synapse utilizes <strong>CurveZMQ</strong> (Elliptic Curve Cryptography based on curve25519) to encrypt the transport layer.
+            </p>
+
+            <h3 class="text-white font-bold mb-3">Key generation & Environment Setup</h3>
+            <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+              Generate Curve keys and container-specific environment configurations automatically:
+            </p>
+            <div class="terminal-window mb-8">
+              <div class="terminal-header">
+                <div class="terminal-dot bg-mac-red"></div>
+                <div class="terminal-dot bg-mac-yellow"></div>
+                <div class="terminal-dot bg-mac-green"></div>
+                <span class="terminal-label">bash</span>
+              </div>
+              <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+                <div><span class="text-cyan-400">$</span> <span class="text-gray-300">python tools/generate_curve_setup.py --count 5 --out-dir .curve-setup</span></div>
+                <div class="text-gray-500 mt-2">
+                  [Curve] Generating keys...
+                </div>
+                <div class="text-gray-500">
+                  [Curve] Created server.env with server key pair
+                </div>
+                <div class="text-gray-500">
+                  [Curve] Exported allowlist containing 5 authorized client public keys
+                </div>
+                <div class="text-gray-500">
+                  [Curve] Created 5 sensor-specific environment config files in .curve-setup/sensor-envs/
+                </div>
+              </div>
+            </div>
+
+            <div class="caution-box mb-8">
+              <div class="label">
+                <i class="fas fa-shield-alt mr-2"></i>SECURE AUTHENTICATION (ZAP)
+              </div>
+              ZeroMQ's Zero Access Protocol (ZAP) is executed on the Monitor's SUB socket. When Curve is enabled, unauthenticated connections or clients possessing keys not listed inside the <code class="inline">allowed_client_publickeys.txt</code> file are rejected at the TCP handshake phase, protecting the ingestion pool.
+            </div>
+
+            <h3 class="text-white font-bold mb-3">Rate Limiting via Token-Bucket</h3>
+            <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+              To mitigate denial-of-service attempts by faulty or flooded nodes, the registry enforces an optional <strong>token-bucket rate limiter</strong> on a per-node basis:
+            </p>
+            <ul class="list-disc pl-6 space-y-1 text-sm text-gray-400 leading-relaxed">
+              <li><strong class="text-white">Bucket Capacity:</strong> Maximum burst allowance (default 10 tokens).</li>
+              <li><strong class="text-white">Replenish Rate:</strong> Rate of token restoration per second (default 1.0).</li>
+              <li><strong class="text-white">Action:</strong> Telemetry packets that deplete the node's bucket are dropped.</li>
+            </ul>
+          </section>
+
+          <section id="development" class="mb-20 scroll-mt-24">
+            <div class="section-divider">
+              <span class="hex">0x08</span>
+              <h2>Development & Testing</h2>
+              <div class="line"></div>
+            </div>
+
+            <p class="text-gray-400 mb-6 leading-relaxed">
+              Synapse was built following strict test-driven development (TDD) protocols. The entire codebase is heavily verified with deterministic, offline unit tests.
+            </p>
+
+            <h3 class="text-white font-bold mb-3">Running the Test Suite</h3>
+            <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+              To verify the registry state engine, rate limiters, and corroboration statistics:
+            </p>
+            <div class="terminal-window mb-8">
+              <div class="terminal-header">
+                <div class="terminal-dot bg-mac-red"></div>
+                <div class="terminal-dot bg-mac-yellow"></div>
+                <div class="terminal-dot bg-mac-green"></div>
+                <span class="terminal-label">bash</span>
+              </div>
+              <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+                <div><span class="text-cyan-400">$</span> <span class="text-gray-300">pytest</span></div>
+                <div class="text-gray-500 mt-2">
+                  ============================= test session starts ==============================
+                </div>
+                <div class="text-gray-500">
+                  platform linux -- Python 3.11.4, pytest-7.4.2
+                </div>
+                <div class="text-gray-500">
+                  collected 42 items
+                </div>
+                <div class="text-gray-400 mt-2">
+                  tests/test_registry.py <span class="text-green-400">PASSED [ 23%]</span><br/>
+                  tests/test_corroboration.py <span class="text-green-400">PASSED [ 52%]</span><br/>
+                  tests/test_rate_limiter.py <span class="text-green-400">PASSED [ 78%]</span><br/>
+                  tests/test_http_api.py <span class="text-green-400">PASSED [100%]</span>
+                </div>
+                <div class="text-green-400 mt-2 font-bold">
+                  ========================== 42 passed in 1.48 seconds ===========================
+                </div>
+              </div>
+            </div>
+
+            <h3 class="text-white font-bold mb-3">Linter & Quality Standards</h3>
+            <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+              We leverage <code class="inline">ruff</code> and <code class="inline">mypy</code> for absolute code quality and strict typing checks:
+            </p>
+            <div class="terminal-window">
+              <div class="terminal-header">
+                <div class="terminal-dot bg-mac-red"></div>
+                <div class="terminal-dot bg-mac-yellow"></div>
+                <div class="terminal-dot bg-mac-green"></div>
+                <span class="terminal-label">bash</span>
+              </div>
+              <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+                <div><span class="text-cyan-400">$</span> <span class="text-gray-300">ruff check src/</span></div>
+                <div class="text-green-400">All checks passed.</div>
+                <div class="mt-2"><span class="text-cyan-400">$</span> <span class="text-gray-300">mypy src/</span></div>
+                <div class="text-green-400">Success: no issues found in 18 source files.</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="resilience" class="mb-20 scroll-mt-24">
+            <div class="section-divider">
+              <span class="hex">0x09</span>
+              <h2>Chaos & Resilience</h2>
+              <div class="line"></div>
+            </div>
+
+            <p class="text-gray-400 mb-6 leading-relaxed">
+              To validate system behavior under adversarial or chaotic network conditions, Synapse ships with an automated <strong>Chaos Monkey</strong> agent (<code class="inline">tools/chaos_monkey.py</code>).
+            </p>
+
+            <h3 class="text-white font-bold mb-3">Failure Simulation Modes</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+              <div class="bg-dark-card border border-white/5 rounded-lg p-5">
+                <div class="flex items-center gap-3 mb-3">
+                  <div class="w-8 h-8 rounded bg-red-500/10 flex items-center justify-center text-red-500 shrink-0">
+                    <i class="fas fa-skull text-sm"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-white font-bold font-mono text-xs">KILL MODE</h4>
+                  </div>
+                </div>
+                <p class="text-gray-400 text-xs leading-relaxed">
+                  Randomly terminates running Docker sensor containers (<code class="inline">SIGKILL</code>). Validates that the Monitor shifts their status to <code class="inline">DEAD</code> upon crossing the timeout threshold.
+                </p>
+              </div>
+
+              <div class="bg-dark-card border border-white/5 rounded-lg p-5">
+                <div class="flex items-center gap-3 mb-3">
+                  <div class="w-8 h-8 rounded bg-yellow-500/10 flex items-center justify-center text-yellow-500 shrink-0">
+                    <i class="fas fa-exclamation-circle text-sm"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-white font-bold font-mono text-xs">ANOMALY MODE</h4>
+                  </div>
+                </div>
+                <p class="text-gray-400 text-xs leading-relaxed">
+                  Overrides sensor data paths to broadcast high-amplitude outlier telemetry. Tests whether the H3 spatial corroboration moves them to <code class="inline">FAULTY</code>.
+                </p>
+              </div>
+
+              <div class="bg-dark-card border border-white/5 rounded-lg p-5">
+                <div class="flex items-center gap-3 mb-3">
+                  <div class="w-8 h-8 rounded bg-cyan-500/10 flex items-center justify-center text-cyan-400 shrink-0">
+                    <i class="fas fa-water text-sm"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-white font-bold font-mono text-xs">FLOOD MODE</h4>
+                  </div>
+                </div>
+                <p class="text-gray-400 text-xs leading-relaxed">
+                  Floods the ingestion port with malformed payloads or high-velocity packet bursts, testing parser isolation and rate limiters.
+                </p>
+              </div>
+            </div>
+
+            <h3 class="text-white font-bold mb-3">Executing Chaos Simulations</h3>
+            <div class="terminal-window">
+              <div class="terminal-header">
+                <div class="terminal-dot bg-mac-red"></div>
+                <div class="terminal-dot bg-mac-yellow"></div>
+                <div class="terminal-dot bg-mac-green"></div>
+                <span class="terminal-label">bash</span>
+              </div>
+              <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+                <div><span class="text-cyan-400"># Run anomaly injection every 5 seconds</span></div>
+                <div><span class="text-cyan-400">$</span> <span class="text-gray-300">python tools/chaos_monkey.py --mode anomaly --intensity high --interval 5</span></div>
+                <div class="text-gray-500 mt-2">
+                  [Chaos] Attacking network with mode: anomaly (intensity: high)
+                </div>
+                <div class="text-gray-500">
+                  [Chaos] Target selected: sensor_0003 in cell 871fb4670ffffff
+                </div>
+                <div class="text-yellow-500">
+                  [Chaos] Overriding sensor_0003 telemetry to 999.00 (Outlier injected)
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="roadmap" class="mb-20 scroll-mt-24">
+            <div class="section-divider">
+              <span class="hex">0x0A</span>
+              <h2>Roadmap & Future</h2>
+              <div class="line"></div>
+            </div>
+
+            <p class="text-gray-400 mb-6 leading-relaxed">
+              Synapse is an evolving research project exploring edge ingestion paradigms.
+            </p>
+
+            <div class="flow-step pl-8 border-l-2 border-cyan-400/20 py-4 ml-3">
+              <div class="flow-dot-filled"></div>
+              <h4 class="text-white font-bold font-mono text-sm">V1 - PROOF OF CONCEPT</h4>
+              <p class="text-gray-400 text-xs leading-relaxed mt-1">
+                Completed basic Python ingestion, ZeroMQ binding infrastructure, in-memory NodeRegistry, and primitive status updates.
+              </p>
+            </div>
+
+            <div class="flow-step pl-8 border-l-2 border-cyan-400/20 py-4 ml-3">
+              <div class="flow-dot-filled"></div>
+              <h4 class="text-white font-bold font-mono text-sm">V2 - SPATIAL CORROBORATION & SECURE RUNTIME</h4>
+              <p class="text-gray-400 text-xs leading-relaxed mt-1">
+                Completed H3 geometric indexing support, Median Absolute Deviation (MAD) robust outlier metrics, CurveZMQ encryption, token-bucket rates, and web dashboards.
+              </p>
+            </div>
+
+            <div class="flow-step pl-8 py-4 ml-3">
+              <div class="flow-dot-empty"></div>
+              <h4 class="text-cyan-400 font-bold font-mono text-sm">V3 - WASM PREDICTIVE RUNTIMES (IN DEVELOPMENT)</h4>
+              <p class="text-gray-400 text-xs leading-relaxed mt-1">
+                Migrating outlier and anomaly models directly into WebAssembly (WASM) modules to enable sandboxed cryptographic computation directly on microcontroller layers, signing payloads at the sensor core.
+              </p>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <footer class="border-t border-white/5 bg-black py-10">
+      <div
+        class="max-w-screen-2xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left"
+      >
+        <div class="flex flex-col sm:flex-row items-center gap-3">
+          <span class="font-display font-bold text-white"
+            >SYNAPSE<span class="text-cyan-400">_DOCS</span></span
+          >
+          <span class="text-gray-600 font-mono text-xs"
+            >v0.2.0 - MIT License</span
+          >
+        </div>
+        <div class="flex flex-wrap justify-center gap-6">
+          <a
+            href="/"
+            class="font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors"
+            >← BACK</a
+          >
+          <a
+            href="https://github.com/onyks-os/Synapse"
+            target="_blank"
+            class="font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors"
+            ><i class="fab fa-github mr-1"></i>SOURCE</a
+          >
+          <a
+            href="https://github.com/onyks-os/Synapse/issues"
+            target="_blank"
+            class="font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors"
+            >ISSUES</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const hamburger = document.getElementById("hamburger");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const bar1 = document.getElementById("bar1");
+      const bar2 = document.getElementById("bar2");
+      const bar3 = document.getElementById("bar3");
+
+      hamburger.addEventListener("click", () => {
+        const isOpen = mobileMenu.classList.toggle("open");
+        bar1.style.transform = isOpen ? "translateY(8px) rotate(45deg)" : "";
+        bar2.style.opacity = isOpen ? "0" : "1";
+        bar3.style.transform = isOpen ? "translateY(-8px) rotate(-45deg)" : "";
+        document.body.style.overflow = isOpen ? "hidden" : "";
+      });
+
+      document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.remove("open");
+          bar1.style.transform = "";
+          bar2.style.opacity = "1";
+          bar3.style.transform = "";
+          document.body.style.overflow = "";
+        });
+      });
+
+      const sections = document.querySelectorAll("section[id]");
+      const navLinks = document.querySelectorAll(".nav-link");
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = entry.target.getAttribute("id");
+              navLinks.forEach((link) => {
+                link.classList.remove("active");
+                if (link.getAttribute("href") === `#${id}`) {
+                  link.classList.add("active");
+                }
+              });
+            }
+          });
+        },
+        { rootMargin: "-20% 0px -70% 0px" },
+      );
+
+      sections.forEach((s) => observer.observe(s));
+
+      window.addEventListener("scroll", () => {
+        if (
+          window.innerHeight + window.scrollY >=
+          document.body.offsetHeight - 50
+        ) {
+          navLinks.forEach((link) => link.classList.remove("active"));
+          if (navLinks.length > 0) {
+            navLinks[navLinks.length - 1].classList.add("active");
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
