@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Synapse Documentation | Onyks-OS</title>
-    <meta name="description" content="Complete documentation for Synapse v0.2.0  a brokerless, edge-first symmetric P2P IoT mesh with ZTP, H3 spatial anomaly detection, CurveZMQ, Caddy TLS, and Kubernetes Helm deployment." />
+    <meta name="description" content="Complete documentation for Synapse v0.6.0: a brokerless, edge-first symmetric P2P IoT mesh with ZTP, H3 spatial anomaly detection, CurveZMQ, Caddy TLS, and Kubernetes Helm deployment." />
     <script src="https://cdn.tailwindcss.com"></script>
     <script
       data-goatcounter="https://onyks.goatcounter.com/count"
@@ -216,7 +216,7 @@
             <i class="fas fa-chevron-left"></i>
           </a>
           <span class="font-display font-bold text-lg text-white">SYNAPSE<span class="text-cyan-400">_DOCS</span></span>
-          <span class="badge badge-cyan hidden sm:inline">v0.2.0</span>
+          <span class="badge badge-cyan hidden sm:inline">v0.6.0</span>
         </div>
         <div class="hidden sm:flex items-center gap-3">
           <a href="https://github.com/sponsors/onyks-os" target="_blank"
@@ -302,6 +302,10 @@
               <span class="badge badge-green">ZTP / mDNS</span>
               <span class="badge badge-yellow">ZEROMQ</span>
               <span class="badge badge-red">H3 SPATIAL CORROBORATION</span>
+              <span class="badge badge-purple">PLUGGABLE COMPRESSION</span>
+              <span class="badge badge-cyan">SPATIAL RELAYING</span>
+              <span class="badge badge-green">DYNAMIC OTAA KEYEX</span>
+              <span class="badge badge-yellow">SQLITE TIMESERIES</span>
               <span class="badge badge-purple">KUBERNETES HELM</span>
               <span class="badge badge-cyan">CADDY TLS</span>
             </div>
@@ -311,12 +315,16 @@
             <p class="text-base md:text-lg text-gray-400 mb-8 leading-relaxed max-w-2xl">
               Synapse is a brokerless, edge-first IoT ingestion engine built on a
               <strong class="text-white">Symmetric P2P Mesh</strong> topology. Every node is
-              identical  there are no central brokers, no monitors, no single points of failure.
+              identical: there are no central brokers, no monitors, and no single points of failure.
               Nodes discover each other automatically via
               <strong class="text-white">Zero-Touch Provisioning</strong> (mDNS/Zeroconf),
               validate sensor readings locally through
-              <code class="inline">H3</code> spatial corroboration, and expose a
-              glassmorphic operator dashboard secured by a
+              <code class="inline">H3</code> spatial corroboration, compress payload bytes using a
+              <strong class="text-white">pluggable strategy</strong> (zlib, lz4, zstd),
+              re-route messages via <strong class="text-white">spatial relaying</strong>,
+              handshake keys securely with <strong class="text-white">dynamic OTAA</strong> (CurveZMQ),
+              archive post-corroboration data in a <strong class="text-white">local SQLite timeseries store</strong>,
+              and serve a glassmorphic operator dashboard secured by a
               <strong class="text-white">Caddy TLS</strong> reverse proxy sidecar.
             </p>
 
@@ -336,20 +344,23 @@
                 <div class="text-gray-500">[Synapse] Starting node-2 ... <span class="text-green-400">done</span></div>
                 <div class="text-gray-500">[Synapse] Starting node-3 ... <span class="text-green-400">done</span></div>
                 <div class="text-gray-500">[Synapse] Starting node-4 ... <span class="text-green-400">done</span></div>
+                <div class="text-gray-500">[node-1] CurveZMQ: secure keypair auto-generated (pub: Z85...)</div>
                 <div class="text-gray-500">[node-1] ZTP: discovered 3 peers via mDNS</div>
-                <div class="text-gray-500">[node-1] MeshNode bound PUB socket on tcp://0.0.0.0:5555</div>
+                <div class="text-gray-500">[node-1] OTAA: dynamic enrollments handshake active (token: synapse-otaa-default)</div>
+                <div class="text-gray-500">[node-1] Ingest: local timeseries store active (SQLite: synapse.db)</div>
+                <div class="text-gray-500">[node-1] MeshNode bound PUB socket on tcp://0.0.0.0:5555 (compression: none)</div>
                 <div class="text-green-400">[node-1] Dashboard → https://localhost:8441</div>
               </div>
             </div>
 
             <!-- Key features grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
               <div class="module-card p-4 bg-dark-card rounded">
                 <div class="flex items-center gap-2 mb-2">
                   <i class="fas fa-network-wired text-cyan-400 text-sm"></i>
                   <span class="text-white font-bold text-sm">Symmetric P2P Mesh</span>
                 </div>
-                <p class="text-gray-400 text-xs leading-relaxed">Every node is identical  runs <code class="inline">main_node.py</code>. No central broker. Fully decentralized ZeroMQ PUB/SUB with dynamic failover.</p>
+                <p class="text-gray-400 text-xs leading-relaxed">Every node is identical: runs <code class="inline">main_node.py</code>. No central broker. Fully decentralized ZeroMQ PUB/SUB with dynamic failover.</p>
               </div>
               <div class="module-card p-4 bg-dark-card rounded">
                 <div class="flex items-center gap-2 mb-2">
@@ -363,21 +374,42 @@
                   <i class="fas fa-sliders-h text-cyan-400 text-sm"></i>
                   <span class="text-white font-bold text-sm">Active Connection Management</span>
                 </div>
-                <p class="text-gray-400 text-xs leading-relaxed">Bounded peering via <code class="inline">SYNAPSE_MAX_CONNECTIONS</code>. Each node maintains at most <em>X</em> active peers, with dynamic reserve failover and self-peering filter.</p>
+                <p class="text-gray-400 text-xs leading-relaxed">Peering bounds via <code class="inline">SYNAPSE_MAX_CONNECTIONS</code>. Node maintains at most <em>X</em> active peers with reserve failover and self-peering filter.</p>
               </div>
               <div class="module-card p-4 bg-dark-card rounded">
                 <div class="flex items-center gap-2 mb-2">
-                  <i class="fas fa-hexagon text-cyan-400 text-sm"></i>
+                  <i class="fas fa-draw-polygon text-cyan-400 text-sm"></i>
                   <span class="text-white font-bold text-sm">Spatial Anomaly Detection</span>
                 </div>
                 <p class="text-gray-400 text-xs leading-relaxed">Real-time localized validation using Uber H3 and pluggable robust estimators (MAD default, Z-score, or AND-hybrid). Leave-one-out corroboration.</p>
               </div>
               <div class="module-card p-4 bg-dark-card rounded">
                 <div class="flex items-center gap-2 mb-2">
-                  <i class="fas fa-lock text-cyan-400 text-sm"></i>
-                  <span class="text-white font-bold text-sm">TLS &amp; CurveZMQ</span>
+                  <i class="fas fa-compress-alt text-cyan-400 text-sm"></i>
+                  <span class="text-white font-bold text-sm">Pluggable Compression</span>
                 </div>
-                <p class="text-gray-400 text-xs leading-relaxed">Caddy reverse proxy sidecar terminates HTTPS locally. ZMQ data channel hardened with Curve25519 mutual authentication and ZAP allowlist.</p>
+                <p class="text-gray-400 text-xs leading-relaxed">Bandwidth reduction (up to 70%) via zlib, lz4, or zstd while keeping spatial H3 topic headers in clear text for native ZMQ filtering.</p>
+              </div>
+              <div class="module-card p-4 bg-dark-card rounded">
+                <div class="flex items-center gap-2 mb-2">
+                  <i class="fas fa-route text-cyan-400 text-sm"></i>
+                  <span class="text-white font-bold text-sm">Spatial Multi-Hop Relaying</span>
+                </div>
+                <p class="text-gray-400 text-xs leading-relaxed">Telemetry propagation beyond direct range (k-ring 1). Intermediate nodes act as relays with vector loop prevention and duplicate suppression.</p>
+              </div>
+              <div class="module-card p-4 bg-dark-card rounded">
+                <div class="flex items-center gap-2 mb-2">
+                  <i class="fas fa-lock text-cyan-400 text-sm"></i>
+                  <span class="text-white font-bold text-sm">TLS &amp; Dynamic OTAA</span>
+                </div>
+                <p class="text-gray-400 text-xs leading-relaxed">Caddy sidecar terminates HTTPS. ZMQ data channel secured by CurveZMQ with dynamic Over-The-Air key exchange and auto-generation.</p>
+              </div>
+              <div class="module-card p-4 bg-dark-card rounded">
+                <div class="flex items-center gap-2 mb-2">
+                  <i class="fas fa-database text-cyan-400 text-sm"></i>
+                  <span class="text-white font-bold text-sm">Local Timeseries Store</span>
+                </div>
+                <p class="text-gray-400 text-xs leading-relaxed">Local database archiving of node readings in SQLite, exposing REST history query endpoints with age and size-based GC pruning.</p>
               </div>
               <div class="module-card p-4 bg-dark-card rounded">
                 <div class="flex items-center gap-2 mb-2">
@@ -480,8 +512,8 @@
             <div class="note-box">
               <div class="label"><i class="fas fa-info-circle mr-2"></i>UNIFIED ENTRYPOINT</div>
               Unlike older versions that shipped separate <code class="inline">main_sensor.py</code> and <code class="inline">main_monitor.py</code> daemons,
-              v0.2.0 consolidates everything into a single <code class="inline">src/main_node.py</code> entrypoint.
-              Every instance is a peer  there is no privileged "monitor" role.
+              v0.6.0 consolidates everything into a single <code class="inline">src/main_node.py</code> entrypoint.
+              Every instance is a peer: there is no privileged "monitor" role.
             </div>
           </section>
 
@@ -496,7 +528,7 @@
             </div>
 
             <p class="text-gray-400 mb-6 leading-relaxed">
-              Synapse v0.2.0 adopts a fully <strong class="text-white">Symmetric P2P Mesh</strong> model.
+              Synapse v0.6.0 adopts a fully <strong class="text-white">Symmetric P2P Mesh</strong> model.
               Unlike hub-and-spoke topologies that depend on a central broker or monitor daemon, every participant is an identical
               <code class="inline">Node</code> that simultaneously senses data, ingests peer telemetry, validates anomalies, and serves its own operator dashboard.
             </p>
@@ -508,7 +540,7 @@
                   <tr>
                     <th>Feature</th>
                     <th>Traditional Hub-and-Spoke</th>
-                    <th>Synapse v0.2.0 P2P Mesh</th>
+                    <th>Synapse v0.6.0 P2P Mesh</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -524,8 +556,8 @@
                   </tr>
                   <tr>
                     <td>Single Point of Failure</td>
-                    <td>Yes  broker cluster</td>
-                    <td>None  any node loss is transparent</td>
+                    <td>Yes: broker cluster</td>
+                    <td>None: any node loss is transparent</td>
                   </tr>
                   <tr>
                     <td>Anomaly Detection</td>
@@ -533,9 +565,29 @@
                     <td>Local spatial corroboration per node</td>
                   </tr>
                   <tr>
+                    <td>Compression</td>
+                    <td>No / Centralized proxy</td>
+                    <td>Pluggable (zlib, lz4, zstd) with clear-text topic filter</td>
+                  </tr>
+                  <tr>
+                    <td>Relaying</td>
+                    <td>Centralized routing</td>
+                    <td>Spatial multi-hop with loop prevention path vector</td>
+                  </tr>
+                  <tr>
+                    <td>Key Management</td>
+                    <td>Manual TLS certificates</td>
+                    <td>Dynamic OTAA Curve key exchange / auto-generation</td>
+                  </tr>
+                  <tr>
                     <td>Dashboard</td>
                     <td>Central web UI</td>
                     <td>Localized per node, cross-mesh navigation</td>
+                  </tr>
+                  <tr>
+                    <td>Local History Store</td>
+                    <td>N/A (Forwarded to cloud)</td>
+                    <td>SQLite local timeseries archiving post-corroboration</td>
                   </tr>
                   <tr>
                     <td>TLS</td>
@@ -560,7 +612,7 @@
                   <span class="text-white font-bold font-mono text-sm">main_node.py</span>
                 </div>
                 <p class="text-gray-400 text-sm leading-relaxed">
-                  Unified daemon that orchestrates all components. Resolves node identity (via <code class="inline">NODE_ID</code> env or hostname), computes geographic coordinates → H3 cell, then wires together the <code class="inline">MeshNode</code>, <code class="inline">GarbageCollector</code>, <code class="inline">PeerProvider</code>, and <code class="inline">DashboardServer</code>. Handles graceful shutdown on <code class="inline">SIGINT</code>/<code class="inline">SIGTERM</code>.
+                  Unified daemon that orchestrates all components. Resolves node identity (via <code class="inline">NODE_ID</code> env or hostname), computes geographic coordinates to H3 cell, then wires together the <code class="inline">MeshNode</code>, <code class="inline">GarbageCollector</code>, <code class="inline">PeerProvider</code>, and <code class="inline">DashboardServer</code>. Handles graceful shutdown on <code class="inline">SIGINT</code>/<code class="inline">SIGTERM</code>.
                 </p>
               </div>
 
@@ -570,15 +622,37 @@
                   <span class="text-white font-bold font-mono text-sm">MeshNode (zmq_mesh.py)</span>
                 </div>
                 <p class="text-gray-400 text-sm leading-relaxed mb-2">
-                  The async ZeroMQ backbone. Binds a <code class="inline">PUB</code> socket to broadcast telemetry with the H3 cell as topic prefix.
-                  Dynamically <code class="inline">connect</code>s a <code class="inline">SUB</code> socket to each discovered peer, subscribing only to its own cell and k-ring 1 neighbors. Key responsibilities:
+                  The async ZeroMQ backbone. Binds a <code class="inline">PUB</code> socket to broadcast telemetry using the hybrid binary frame format.
+                  Dynamically <code class="inline">connect</code>s a <code class="inline">SUB</code> socket to discovered peers. Key responsibilities:
                 </p>
                 <ul class="list-disc pl-6 mt-2 space-y-1 text-xs text-gray-400">
-                  <li><strong class="text-white">Active Connection Management:</strong> Maintains at most <code class="inline">SYNAPSE_MAX_CONNECTIONS</code> live ZMQ SUB connections. Excess peers enter a reserve queue. When an active peer disconnects, a reserve peer is promoted automatically.</li>
+                  <li><strong class="text-white">Active Connection Management:</strong> Maintains at most <code class="inline">SYNAPSE_MAX_CONNECTIONS</code> live ZMQ SUB connections. Excess peers enter a reserve queue with dynamic reconnect failover.</li>
                   <li><strong class="text-white">Self-Peering Filter:</strong> Automatically removes its own bind address from the peer list, preventing socket waste.</li>
-                  <li><strong class="text-white">Rate Limiter:</strong> Per-node token-bucket enforcement before passing payloads to the registry.</li>
-                  <li><strong class="text-white">Corroboration Trigger:</strong> After each ingest, calls <code class="inline">check_corroboration</code> on the cell's node set.</li>
+                  <li><strong class="text-white">Pluggable Compression &amp; Decryption:</strong> Handles frame parsing, decompressing payloads lazily and decrypting with CurveZMQ.</li>
+                  <li><strong class="text-white">Spatial Multi-Hop Relaying:</strong> Rewrites payload path vectors, appends own ID, and republishes telemetry within hop limits.</li>
+                  <li><strong class="text-white">P2P History Replication:</strong> Periodically requests historical logs from peers via HTTP to backfill local storage.</li>
+                  <li><strong class="text-white">Rate Limiter:</strong> Token-bucket rate-limiting checks prior to registry ingestion.</li>
                 </ul>
+              </div>
+
+              <div class="module-card p-5 bg-dark-card rounded">
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="badge badge-purple">COMPRESSION ENGINE</span>
+                  <span class="text-white font-bold font-mono text-sm">compression.py</span>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                  Pluggable compression strategies implementing a strict protocol. Supports `none` (default), `zlib` (built-in), and optional `lz4` / `zstd` backends. Compresses payload bytes while ZeroMQ clear-text H3 topic prefixes are preserved for routing.
+                </p>
+              </div>
+
+              <div class="module-card p-5 bg-dark-card rounded">
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="badge badge-yellow">SQLITE STORAGE</span>
+                  <span class="text-white font-bold font-mono text-sm">registry_store.py</span>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                  Direct connection interface to the SQLite store database. Manages registry mirroring across process restarts and records post-corroboration sensor data into a high-performance timeseries historical table.
+                </p>
               </div>
 
               <div class="module-card p-5 bg-dark-card rounded">
@@ -590,9 +664,9 @@
                   Pluggable discovery layer, selected by <code class="inline">SYNAPSE_DISCOVERY</code> env:
                 </p>
                 <ul class="list-disc pl-6 mt-2 space-y-1 text-xs text-gray-400">
-                  <li><strong class="text-white">ZeroconfPeerProvider</strong> <span class="badge badge-green text-[10px] ml-1">DEFAULT</span>  Publishes and discovers peers via mDNS (Zeroconf/Bonjour). Zero configuration required on local networks.</li>
-                  <li><strong class="text-white">BeaconPeerProvider</strong>  UDP Multicast beacons. Useful on networks where mDNS is blocked.</li>
-                  <li><strong class="text-white">StaticPeerProvider</strong>  Comma-separated list of static peer addresses. Suitable for Kubernetes or fixed infrastructure.</li>
+                  <li><strong class="text-white">ZeroconfPeerProvider</strong> <span class="badge badge-green text-[10px] ml-1">DEFAULT</span>: Publishes and discovers peers via mDNS (Zeroconf/Bonjour). Zero configuration required on local networks.</li>
+                  <li><strong class="text-white">BeaconPeerProvider</strong>: UDP Multicast beacons. Useful on networks where mDNS is blocked.</li>
+                  <li><strong class="text-white">StaticPeerProvider</strong>: Comma-separated list of static peer addresses. Suitable for Kubernetes or fixed infrastructure.</li>
                 </ul>
               </div>
 
@@ -603,7 +677,7 @@
                 </div>
                 <p class="text-gray-400 text-sm leading-relaxed">
                   Thread-safe in-memory registry protected by <code class="inline">threading.RLock</code>. Groups nodes by H3 cell. All reads return deep copies for safe cross-thread use with Flask.
-                  Optionally persists node rows to <strong class="text-white">SQLite</strong> (<code class="inline">SYNAPSE_REGISTRY_DB</code>) so state survives monitor restarts. Prometheus counters remain in-memory only.
+                  Optionally persists node rows to <strong class="text-white">SQLite</strong> (<code class="inline">SYNAPSE_REGISTRY_DB</code>) so state survives node restarts. Prometheus counters remain in-memory only.
                 </p>
               </div>
 
@@ -613,10 +687,7 @@
                   <span class="text-white font-bold font-mono text-sm">DashboardServer (http_server.py)</span>
                 </div>
                 <p class="text-gray-400 text-sm leading-relaxed">
-                  Flask + Waitress serving the glassmorphic operator dashboard and the versioned REST API. Features a full-screen Leaflet map with H3 hex overlays, floating glassmorphic panels,
-                  real-time client-side search and status filters (ALL / ALIVE / FAULTY / DEAD), click-to-pan map rows, SVG radial health gauge,
-                  Chaos Engineering command console with clipboard copy, and a retro event terminal with differential-polling log events.
-                  A "Connected Peers" sidebar allows cross-mesh navigation between node dashboards without centralized aggregation.
+                  Flask + Waitress serving the glassmorphic operator dashboard and versioned REST endpoints. Exposes `/api/v1/otaa/enroll` for dynamic public key exchange and `/api/v1/timeseries` for querying historical telemetry. Secures all dashboard endpoints with token authentication while bypassing health probes and enrollment handshakes.
                 </p>
               </div>
 
@@ -626,7 +697,7 @@
                   <span class="text-white font-bold font-mono text-sm">GarbageCollector (garbage_collector.py)</span>
                 </div>
                 <p class="text-gray-400 text-sm leading-relaxed">
-                  Background loop that periodically runs <code class="inline">check_timeouts</code> (marks silent nodes <code class="inline">DEAD</code> after <code class="inline">DEATH_TIMEOUT</code> seconds) and <code class="inline">evict_dead_nodes</code> (permanently removes nodes after <code class="inline">DEATH_TIMEOUT + EVICTION_TTL</code>).
+                  Background loop driving timeout markdowns and evictions. Tick routines run check-timeouts (DEAD state transition after silence) and evict-dead-nodes (removal after TTL). Additionally schedules periodic execution of timeseries database pruning routines based on age and record counts.
                 </p>
               </div>
             </div>
@@ -732,11 +803,47 @@
               Maximizes precision at the cost of recall  highly conservative.
             </p>
 
-            <div class="note-box">
+            <div class="note-box mb-6">
               <div class="label"><i class="fas fa-flask mr-2"></i>WORKED EXAMPLE</div>
               H3 cell with 5 temperature sensors: <code class="inline">min_peers=4</code>, threshold=<code class="inline">2.0</code>. Values: <code class="inline">s1=20.1, s2=20.0, s3=20.2, s4=19.9, s5=35.0</code>.
-              <br/>For <code class="inline">s5</code>, peers = {20.1, 20.0, 20.2, 19.9} → median≈20.05, MAD≈0.10 → Modified Z ≈ <strong class="text-red-400">100.3 → FAULTY</strong>.
+              <br/>For <code class="inline">s5</code>, peers = {20.1, 20.0, 20.2, 19.9} &rarr; median&asymp;20.05, MAD&asymp;0.10 &rarr; Modified Z &asymp; <strong class="text-red-400">100.3 &rarr; FAULTY</strong>.
             </div>
+
+            <h3 class="text-white font-bold mb-3">4. ZeroMQ Hybrid Binary Framing</h3>
+            <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+              ZeroMQ subscriptions perform spatial topic filtering in clear-text using the H3 cell prefix. The payload is separated by a pipe character and compressed using the selected strategy:
+            </p>
+            <div class="bg-dark-card border border-white/5 p-4 rounded font-mono text-xs text-center text-cyan-400 mb-6">
+              Frame = [H3_Cell_ASCII] + b"|" + Strategy(Payload_JSON)
+            </div>
+            <p class="text-gray-400 text-xs mb-6">
+              This layout enables edge nodes to leverage ZeroMQ native subscription matching at the socket level without decompressing headers, drastically reducing CPU cycles for unrelated traffic.
+            </p>
+
+            <h3 class="text-white font-bold mb-3">5. Spatial Multi-Hop Relaying &amp; Loop Prevention</h3>
+            <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+              To extend telemetry propagation beyond direct range (k-ring 1), nodes act as spatial relays by republishing messages under their local topic prefix while keeping coordinates and sender IDs unchanged.
+              To prevent infinite forwarding loops and broadcast storms, the message schema introduces a path vector:
+            </p>
+            <div class="bg-dark-card border border-white/5 p-4 rounded font-mono text-xs text-center text-cyan-400 mb-6">
+              relayed_by = [node_1, node_2, ..., node_k]
+            </div>
+            <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+              When a node <code class="inline">n</code> receives a relayed packet, the loop prevention rule is enforced:
+            </p>
+            <div class="bg-dark-card border border-white/5 p-4 rounded font-mono text-xs text-center text-cyan-400 mb-6">
+              If n &isin; relayed_by: Discard packet<br/>
+              Else if len(relayed_by) &ge; SYNAPSE_RELAY_MAX_HOPS: Discard packet<br/>
+              Else: relayed_by_new = relayed_by + [n] &rarr; Republish
+            </div>
+
+            <h3 class="text-white font-bold mb-3">6. Historical Duplicate Suppression</h3>
+            <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+              To avoid parsing or storing redundant messages propagated from multiple relay paths, the ingestion layer compares incoming timestamps against the node registry historical cache.
+              A packet is discarded immediately at the ingest boundary if:
+              <br/>
+              <code class="inline">timestamp_incoming &le; timestamp_registry_last_seen</code>
+            </p>
           </section>
 
           <!-- ═══════════════════════════════════════════
@@ -776,6 +883,18 @@
                     <td><span class="method-get">GET</span></td>
                     <td>Dict of Cell Summaries</td>
                     <td>Per-H3-cell aggregation with alive/faulty/dead counts and centroid. Legacy alias: <code class="inline">/api/cells</code>.</td>
+                  </tr>
+                  <tr>
+                    <td>/api/v1/otaa/enroll</td>
+                    <td><span class="badge badge-purple text-[10px]">POST</span></td>
+                    <td>JSON Status Object</td>
+                    <td>Symmetrically exchange and authorize ZMQ CURVE public keys upon discovery. Excluded from dashboard token auth.</td>
+                  </tr>
+                  <tr>
+                    <td>/api/v1/timeseries</td>
+                    <td><span class="method-get">GET</span></td>
+                    <td>Array of historical readings</td>
+                    <td>Query historical telemetry database. Parameters: <code class="inline">node_id</code>, <code class="inline">h3_cell</code>, <code class="inline">start_time</code>, <code class="inline">end_time</code>, <code class="inline">limit</code>. Legacy alias: <code class="inline">/api/timeseries</code>.</td>
                   </tr>
                   <tr>
                     <td>/metrics</td>
@@ -832,7 +951,7 @@
             </div>
 
             <h3 class="text-white font-bold mb-3">Example: GET /api/v1/nodes</h3>
-            <div class="terminal-window">
+            <div class="terminal-window mb-8">
               <div class="terminal-header">
                 <div class="terminal-dot bg-mac-red"></div>
                 <div class="terminal-dot bg-mac-yellow"></div>
@@ -860,6 +979,60 @@
     "lat": 45.4640,
     "lon": 9.1890,
     "last_value": 999.0
+  }
+]</pre>
+              </div>
+            </div>
+
+            <h3 class="text-white font-bold mb-3">Example: POST /api/v1/otaa/enroll</h3>
+            <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+              Send enrollment requests with a node identifier and public key Z85 string to configure peer authentication dynamically.
+            </p>
+            <div class="terminal-window mb-8">
+              <div class="terminal-header">
+                <div class="terminal-dot bg-mac-red"></div>
+                <div class="terminal-dot bg-mac-yellow"></div>
+                <div class="terminal-dot bg-mac-green"></div>
+                <span class="terminal-label">JSON Request</span>
+              </div>
+              <div class="p-4 sm:p-5 font-mono text-xs leading-6 text-gray-400 overflow-x-auto">
+<pre>{
+  "node_id": <span class="text-green-400">"node-c3d4"</span>,
+  "public_key": <span class="text-yellow-400">"t7.d&amp;F-gV=m]W5hR#c(P/y?Xq+eL*Z@wK8oNU2iv"</span>
+}</pre>
+              </div>
+            </div>
+
+            <h3 class="text-white font-bold mb-3">Example: GET /api/v1/timeseries</h3>
+            <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+              Query historical node telemetry readings archived in the local store. Filters: <code class="inline">node_id</code>, <code class="inline">h3_cell</code>, <code class="inline">start_time</code>, <code class="inline">end_time</code>, and <code class="inline">limit</code>.
+            </p>
+            <div class="terminal-window">
+              <div class="terminal-header">
+                <div class="terminal-dot bg-mac-red"></div>
+                <div class="terminal-dot bg-mac-yellow"></div>
+                <div class="terminal-dot bg-mac-green"></div>
+                <span class="terminal-label">JSON Response</span>
+              </div>
+              <div class="p-4 sm:p-5 font-mono text-xs leading-6 text-gray-400 overflow-x-auto">
+<pre>[
+  {
+    "timestamp": 1748389082.5,
+    "node_id": <span class="text-green-400">"node-a1b2"</span>,
+    "h3_cell": <span class="text-yellow-400">"871fb4670ffffff"</span>,
+    "lat": 45.4642,
+    "lon": 9.1895,
+    "value": 24.5,
+    "status": <span class="text-cyan-400">"ALIVE"</span>
+  },
+  {
+    "timestamp": 1748389079.1,
+    "node_id": <span class="text-green-400">"node-a1b2"</span>,
+    "h3_cell": <span class="text-yellow-400">"871fb4670ffffff"</span>,
+    "lat": 45.4642,
+    "lon": 9.1895,
+    "value": 24.1,
+    "status": <span class="text-cyan-400">"ALIVE"</span>
   }
 ]</pre>
               </div>
@@ -896,6 +1069,7 @@
   <span class="text-cyan-400">"timestamp"</span>: 1748389082.12,
   <span class="text-cyan-400">"status"</span>: <span class="text-green-400">"PING"</span>,
   <span class="text-cyan-400">"h3_cell"</span>: <span class="text-yellow-400">"871fb4670ffffff"</span>,      <span class="text-gray-600">// also used as ZMQ topic prefix</span>
+  <span class="text-cyan-400">"relayed_by"</span>: [<span class="text-green-400">"node-x9y0"</span>],  <span class="text-gray-600">// list of node IDs that relayed this message</span>
   <span class="text-cyan-400">"payload"</span>: {
     <span class="text-cyan-400">"value"</span>: 22.45,             <span class="text-gray-600">// required: used in corroboration</span>
     <span class="text-cyan-400">"lat"</span>: 45.4642,
@@ -922,13 +1096,21 @@
                   <tr><td>H3_RESOLUTION</td><td>7</td><td>H3 spatial resolution (4.3 km² per cell).</td></tr>
                   <tr><td>SYNAPSE_MAX_CONNECTIONS</td><td>0 (unlimited)</td><td>Max active ZMQ SUB connections. Set 8–12 for 50+ node meshes.</td></tr>
                   <tr><td>SYNAPSE_DISCOVERY</td><td>zeroconf</td><td>Peer discovery mode: <code class="inline">zeroconf</code>, <code class="inline">beacon</code>, <code class="inline">static</code>.</td></tr>
-                  <tr><td>DEATH_TIMEOUT</td><td>3.0</td><td>Seconds of silence before node → DEAD.</td></tr>
+                  <tr><td>DEATH_TIMEOUT</td><td>3.0</td><td>Seconds of silence before node &rarr; DEAD.</td></tr>
                   <tr><td>EVICTION_TTL</td><td>10.0</td><td>Seconds after DEAD before permanent eviction.</td></tr>
                   <tr><td>CORROBORATION_METHOD</td><td>mad</td><td>Outlier method: <code class="inline">mad</code>, <code class="inline">zscore</code>, <code class="inline">both</code>.</td></tr>
                   <tr><td>ANOMALY_ZSCORE_THRESHOLD</td><td>2.0</td><td>Score above which a node is flagged FAULTY.</td></tr>
                   <tr><td>CORROBORATION_MIN_PEERS</td><td>3</td><td>Min ALIVE peers required before corroboration runs.</td></tr>
                   <tr><td>RATE_LIMIT_MSG_PER_SEC</td><td>100</td><td>Token-bucket replenish rate per node.</td></tr>
                   <tr><td>RATE_LIMIT_BURST</td><td>20</td><td>Token-bucket burst capacity.</td></tr>
+                  <tr><td>SYNAPSE_COMPRESSION</td><td>none</td><td>Compression strategies: <code class="inline">none</code>, <code class="inline">zlib</code>, <code class="inline">lz4</code>, <code class="inline">zstd</code>.</td></tr>
+                  <tr><td>SYNAPSE_RELAY_MAX_HOPS</td><td>0</td><td>Hop limit for spatial multi-hop relaying (0 disables relaying).</td></tr>
+                  <tr><td>SYNAPSE_OTAA_ENABLED</td><td>true</td><td>Enable dynamic Over-The-Air Activation key exchange.</td></tr>
+                  <tr><td>SYNAPSE_OTAA_TOKEN</td><td>synapse-otaa-default</td><td>Secret key used to authorize REST key exchange handshakes.</td></tr>
+                  <tr><td>SYNAPSE_TIMESERIES_ENABLED</td><td>true</td><td>Enable local database archiving of node readings in SQLite.</td></tr>
+                  <tr><td>SYNAPSE_TIMESERIES_RETENTION_PERIOD</td><td>86400</td><td>History retention window in seconds (defaults to 24 hours).</td></tr>
+                  <tr><td>SYNAPSE_TIMESERIES_RETENTION_LIMIT</td><td>1000</td><td>History retention count limit per node.</td></tr>
+                  <tr><td>SYNAPSE_REPLICATION_INTERVAL</td><td>30.0</td><td>Seconds between periodic query pull backfills from discovered peers.</td></tr>
                   <tr><td>SYNAPSE_REGISTRY_DB</td><td>(none)</td><td>SQLite path for node row persistence across restarts.</td></tr>
                   <tr><td>NODE_ID</td><td>hostname</td><td>Override node identity string.</td></tr>
                   <tr><td>SENSOR_LAT / SENSOR_LON</td><td>random (Italy)</td><td>Fixed geographic coordinates for the node.</td></tr>
@@ -949,8 +1131,9 @@
             </div>
 
             <p class="text-gray-400 mb-6 leading-relaxed">
-              Synapse v0.2.0 implements a layered security model: <strong class="text-white">Caddy TLS</strong> at the HTTP/dashboard layer
-              and <strong class="text-white">CurveZMQ</strong> (Curve25519) with ZAP authentication at the ZMQ data channel layer.
+              Synapse v0.6.0 implements a layered security model: <strong class="text-white">Caddy TLS</strong> at the HTTP/dashboard layer,
+              <strong class="text-white">CurveZMQ</strong> (Curve25519) with ZAP authentication at the ZMQ data channel layer, and
+              <strong class="text-white">Dynamic OTAA</strong> key enrollment.
             </p>
 
             <h3 class="text-white font-bold mb-3">Layer 1: Caddy TLS Reverse Proxy Sidecar</h3>
@@ -999,8 +1182,17 @@
             <div class="caution-box mb-6">
               <div class="label"><i class="fas fa-shield-alt mr-2"></i>ZAP AUTHENTICATION (ZERO ACCESS PROTOCOL)</div>
               When CurveZMQ is enabled, ZeroMQ's ZAP handler is active on the node's SUB socket.
-              Any client whose public key is not present in <code class="inline">allowed_client_publickeys.txt</code>
-              is rejected at the TCP handshake phase  before any payload is processed.
+              Any client whose public key is not present in the allowed list
+              is rejected at the TCP handshake phase: before any payload is processed.
+            </div>
+
+            <h3 class="text-white font-bold mb-3">Layer 4: Dynamic Over-The-Air Activation (OTAA)</h3>
+            <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+              To bypass manual keypair pre-distribution, nodes run symmetrically authorized REST handshakes via <code class="inline">POST /api/v1/otaa/enroll</code> upon discovery. Public Curve keys are automatically registered on the target node, allowing handshake validation at the ZeroMQ ZAP authentication phase.
+            </p>
+            <div class="note-box mb-6">
+              <div class="label"><i class="fas fa-shield-alt mr-2"></i>SECURE BY DEFAULT CONFIGURATION</div>
+              Encryption (ZMQ CURVE) and dynamic enrollment (OTAA) are enabled by default. Fallback configurations utilize predefined default values (<code class="inline">synapse-admin</code> for HTTP credentials and <code class="inline">synapse-otaa-default</code> for enrollment tokens) ensuring deployments are secure out-of-the-box.
             </div>
 
             <h3 class="text-white font-bold mb-3">Layer 3: Rate Limiting via Token-Bucket</h3>
@@ -1031,8 +1223,8 @@
             <!-- Stats -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
               <div class="stat-card">
-                <div class="stat-val">80</div>
-                <div class="stat-label">Unit Tests</div>
+                <div class="stat-val">97</div>
+                <div class="stat-label">Unit &amp; Integration Tests</div>
               </div>
               <div class="stat-card">
                 <div class="stat-val">100%</div>
@@ -1063,16 +1255,17 @@
                 <div class="text-gray-500">=&gt; Applying automatic linting fixes and formatting (ruff)...</div>
                 <div class="text-gray-500">=&gt; Running tests (pytest)...</div>
                 <div class="text-gray-400 mt-1">
+                  tests/integration/test_compressed_mesh.py <span class="text-green-400">PASSED</span><br/>
+                  tests/integration/test_otaa_flow.py <span class="text-green-400">PASSED</span><br/>
+                  tests/integration/test_relay_flow.py <span class="text-green-400">PASSED</span><br/>
+                  tests/integration/test_timeseries_api.py <span class="text-green-400">PASSED</span><br/>
+                  tests/unit/test_timeseries.py <span class="text-green-400">PASSED</span><br/>
+                  tests/unit/test_compression.py <span class="text-green-400">PASSED</span><br/>
                   tests/unit/test_corroboration.py <span class="text-green-400">PASSED</span><br/>
                   tests/unit/test_node_registry.py <span class="text-green-400">PASSED</span><br/>
-                  tests/unit/test_rate_limiter.py <span class="text-green-400">PASSED</span><br/>
-                  tests/unit/test_zmq_mesh_limits.py <span class="text-green-400">PASSED</span><br/>
-                  tests/unit/test_zeroconf_discovery.py <span class="text-green-400">PASSED</span><br/>
-                  tests/unit/test_zmq_curve.py <span class="text-green-400">PASSED</span><br/>
-                  tests/unit/test_http_server.py <span class="text-green-400">PASSED</span><br/>
-                  <span class="text-gray-500">... (73 more)</span>
+                  <span class="text-gray-500">... (89 more)</span>
                 </div>
-                <div class="text-green-400 mt-1 font-bold">========================== 80 passed in 3.21 seconds ===========================</div>
+                <div class="text-green-400 mt-1 font-bold">========================== 97 passed in 8.99 seconds ===========================</div>
                 <div class="text-gray-500 mt-2">=&gt; Running type checking (mypy)...</div>
                 <div class="text-green-400">Success: no issues found in 21 source files.</div>
                 <div class="text-gray-500">=&gt; Running chaos smoke test integration...</div>
@@ -1097,6 +1290,12 @@
                   <tr><td>test_peer_discovery.py</td><td>Static, beacon, and zeroconf provider interfaces</td></tr>
                   <tr><td>test_event_logger.py</td><td>Structured event logging, JSON format output</td></tr>
                   <tr><td>test_main_node.py</td><td>Identity resolution, coordinate fallbacks, env parsing</td></tr>
+                  <tr><td>test_timeseries.py</td><td>SQLite historical logs archiving, filters, SQL-based age/count pruning</td></tr>
+                  <tr><td>test_compression.py</td><td>Pluggable compression strategies initialization (zlib, lz4, zstd, none)</td></tr>
+                  <tr><td>test_compressed_mesh.py</td><td>End-to-end ZeroMQ mesh publishing with active compression and decompression</td></tr>
+                  <tr><td>test_otaa_flow.py</td><td>REST dynamic key exchange handshake and token validation flows</td></tr>
+                  <tr><td>test_relay_flow.py</td><td>Spatial multi-hop relay topologies, loop prevention, and TTL hop limits</td></tr>
+                  <tr><td>test_timeseries_api.py</td><td>REST timeseries GET endpoints, filtering parameters, and data retrieval</td></tr>
                 </tbody>
               </table>
             </div>
@@ -1398,7 +1597,7 @@
                 </div>
                 <ul class="list-disc pl-6 mt-2 space-y-1 text-xs text-gray-400">
                   <li>Static analysis: <code class="inline">mypy</code> strict type checking + <code class="inline">ruff</code> linting</li>
-                  <li>Unit testing: <code class="inline">pytest</code> (80 tests)</li>
+                  <li>Unit testing: <code class="inline">pytest</code> (97 tests)</li>
                   <li>Helm chart linting: <code class="inline">helm lint charts/synapse</code></li>
                   <li>Chaos smoke integration: spins up a full Docker Compose topology, runs <code class="inline">tools/ci_chaos_smoke.py</code> to inject ZMQ anomalies and verify the mesh survives the attack</li>
                 </ul>
@@ -1474,15 +1673,28 @@
               </p>
             </div>
 
-            <div class="flow-step pl-8 py-4 ml-3">
+            <div class="flow-step pl-8 border-l-2 border-cyan-400/20 py-4 ml-3">
+              <div class="flow-dot-filled"></div>
+              <div class="flex items-center gap-2 mb-1">
+                <h4 class="text-white font-bold font-mono text-sm">V3  COMPRESSION, RELAYING &amp; TIMESERIES</h4>
+                <span class="badge badge-green">COMPLETE (v0.6.0)</span>
+              </div>
+              <p class="text-gray-400 text-xs leading-relaxed mt-1">
+                Pluggable payload compression strategies (zlib, lz4, zstd), spatial multi-hop relaying with loop prevention path vectors,
+                dynamic Over-The-Air Activation (OTAA) symmetrically enrolling keys via Flask, secure by default fallback modes,
+                and local SQLite timeseries storage archiving post-corroboration readings with automated background garbage collection pruning.
+              </p>
+            </div>
+
+            <div class="flow-step pl-8 border-l-2 border-transparent py-4 ml-3">
               <div class="flow-dot-empty"></div>
               <div class="flex items-center gap-2 mb-1">
-                <h4 class="text-cyan-400 font-bold font-mono text-sm">V3  WASM PREDICTIVE RUNTIMES</h4>
+                <h4 class="text-cyan-400 font-bold font-mono text-sm">V4  WASM PREDICTIVE RUNTIMES</h4>
                 <span class="badge badge-yellow">IN DEVELOPMENT</span>
               </div>
               <p class="text-gray-400 text-xs leading-relaxed mt-1">
                 Migrating outlier and anomaly models into <strong class="text-white">WebAssembly (WASM)</strong> modules to enable sandboxed cryptographic computation directly on microcontroller layers.
-                Payloads signed at the sensor core before transmission  enabling tamper-evident telemetry without a PKI server.
+                Payloads signed at the sensor core before transmission, enabling tamper-evident telemetry without a PKI server.
               </p>
             </div>
           </section>
@@ -1496,7 +1708,7 @@
       <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
         <div class="flex flex-col sm:flex-row items-center gap-3">
           <span class="font-display font-bold text-white">SYNAPSE<span class="text-cyan-400">_DOCS</span></span>
-          <span class="text-gray-600 font-mono text-xs">v0.2.0  MIT License</span>
+          <span class="text-gray-600 font-mono text-xs">v0.6.0  MIT License</span>
         </div>
         <div class="flex flex-wrap justify-center gap-6">
           <a href="/" class="font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors">← BACK</a>
