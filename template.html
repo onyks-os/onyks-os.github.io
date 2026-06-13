@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- SEO Optimization Meta Tags -->
+    <title>Project Title - Short, Catchy Keyword-Rich Title | Onyks-OS</title>
+    <meta name="description"
+        content="A compelling, unique description of the project (150-160 characters) summarizing key features, technologies, and target user benefits." />
+
+    <!-- Scripts & Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script data-goatcounter="https://onyks.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" />
+    <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/96/console.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ["Inter", "sans-serif"],
+                        display: ["Space Grotesk", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"],
+                    },
+                    colors: {
+                        cyan: { 400: "#22d3ee", 500: "#06b6d4" },
+                        dark: { 900: "#050505", card: "#0a0a0a", border: "#262626" },
+                    },
+                },
+            },
+        };
+    </script>
+
+    <!-- Custom Premium Styles -->
+    <style>
+        body {
+            background-color: #050505;
+            background-image: linear-gradient(rgba(34, 211, 238, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 211, 238, 0.02) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: #e5e5e5;
+        }
+
+        .terminal-window {
+            background: #0a0a0a;
+            border: 1px solid #262626;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: #111;
+            padding: 8px 16px;
+            border-bottom: 1px solid #262626;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .terminal-label {
+            margin-left: auto;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 11px;
+            color: #4a4a4a;
+        }
+
+        .terminal-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .bg-mac-red {
+            background: #ff5f56;
+        }
+
+        .bg-mac-yellow {
+            background: #ffbd2e;
+        }
+
+        .bg-mac-green {
+            background: #27c93f;
+        }
+
+        .nav-link.active {
+            color: #22d3ee;
+            border-left-color: #22d3ee;
+            background: rgba(34, 211, 238, 0.05);
+        }
+
+        .module-card {
+            border: 1px solid #262626;
+            transition: all 0.2s;
+        }
+
+        .module-card:hover {
+            border-color: #22d3ee;
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.07);
+        }
+
+        code.inline {
+            color: #22d3ee;
+            background: rgba(34, 211, 238, 0.08);
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            word-break: break-word;
+            font-family: "JetBrains Mono", monospace;
+        }
+
+        .badge {
+            display: inline-block;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 3px;
+        }
+
+        .badge-green {
+            background: rgba(39, 201, 63, 0.12);
+            color: #27c93f;
+            border: 1px solid rgba(39, 201, 63, 0.3);
+        }
+
+        .badge-yellow {
+            background: rgba(255, 189, 46, 0.12);
+            color: #ffbd2e;
+            border: 1px solid rgba(255, 189, 46, 0.3);
+        }
+
+        .badge-red {
+            background: rgba(255, 95, 86, 0.12);
+            color: #ff5f56;
+            border: 1px solid rgba(255, 95, 86, 0.3);
+        }
+
+        .badge-cyan {
+            background: rgba(34, 211, 238, 0.08);
+            color: #22d3ee;
+            border: 1px solid rgba(34, 211, 238, 0.25);
+        }
+
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-divider .hex {
+            font-family: "JetBrains Mono", monospace;
+            color: #22d3ee;
+            font-size: 0.8rem;
+        }
+
+        .section-divider h2 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .section-divider .line {
+            flex-grow: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .note-box {
+            padding: 1rem 1.25rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            color: #d1d5db;
+            word-break: break-word;
+            border: 1px solid rgba(34, 211, 238, 0.25);
+            background: rgba(34, 211, 238, 0.04);
+        }
+
+        .note-box .label {
+            color: #22d3ee;
+            font-weight: 700;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 0.75rem;
+            margin-bottom: 4px;
+        }
+
+        /* Mobile Menu */
+        #mobile-menu {
+            display: none;
+        }
+
+        @media (max-width: 1023px) {
+            #mobile-menu {
+                position: fixed;
+                top: 4rem;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: #050505;
+                border-top: 1px solid rgba(255, 255, 255, 0.05);
+                overflow-y: auto;
+                z-index: 40;
+                padding: 1.5rem;
+            }
+
+            #mobile-menu.open {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased min-h-screen flex flex-col">
+    <!-- Navigation Bar -->
+    <nav class="fixed w-full z-50 bg-dark-900/95 backdrop-blur border-b border-white/5 h-16 flex items-center">
+        <div class="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <a href="/" class="text-gray-400 hover:text-cyan-400 transition-colors">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <span class="font-display font-bold text-lg text-white">Project<span
+                        class="text-cyan-400">Name</span></span>
+                <span class="badge badge-cyan hidden sm:inline">v1.0.0</span>
+            </div>
+            <div class="hidden sm:flex items-center gap-3">
+                <a href="https://github.com/sponsors/onyks-os" target="_blank"
+                    class="font-mono text-sm text-[#ff69b4] border border-[#ff69b4]/30 px-3 py-1.5 hover:bg-[#ff69b4]/10 transition-colors flex items-center">
+                    <i class="fas fa-heart mr-2"></i>SPONSOR
+                </a>
+                <a href="https://github.com/onyks-os/ProjectRepository" target="_blank"
+                    class="font-mono text-sm text-cyan-400 border border-cyan-400/30 px-3 py-1.5 hover:bg-cyan-400/10 transition-colors flex items-center">
+                    <i class="fab fa-github mr-2"></i>SOURCE
+                </a>
+            </div>
+            <button id="hamburger"
+                class="lg:hidden flex flex-col gap-1.5 p-2 text-gray-400 hover:text-cyan-400 transition-colors"
+                aria-label="Menu">
+                <span class="block w-5 h-0.5 bg-current transition-all" id="bar1"></span>
+                <span class="block w-5 h-0.5 bg-current transition-all" id="bar2"></span>
+                <span class="block w-5 h-0.5 bg-current transition-all" id="bar3"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu">
+        <p class="font-mono text-xs text-gray-600 uppercase tracking-widest mb-3">Contents</p>
+        <ul class="space-y-0.5 font-mono text-sm">
+            <li>
+                <a href="#overview"
+                    class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">1.
+                    Overview</a>
+            </li>
+            <li>
+                <a href="#features"
+                    class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">2. Key
+                    Features</a>
+            </li>
+            <li>
+                <a href="#setup"
+                    class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">3. Setup &amp;
+                    Installation</a>
+            </li>
+        </ul>
+        <div class="mt-6 flex flex-col gap-3">
+            <a href="https://github.com/sponsors/onyks-os" target="_blank"
+                class="font-mono text-sm text-[#ff69b4] border border-[#ff69b4]/30 px-3 py-2 hover:bg-[#ff69b4]/10 transition-colors flex items-center justify-center">
+                <i class="fas fa-heart mr-2"></i>SPONSOR
+            </a>
+            <a href="https://github.com/onyks-os/ProjectRepository" target="_blank"
+                class="font-mono text-sm text-cyan-400 border border-cyan-400/30 px-3 py-2 hover:bg-cyan-400/10 transition-colors flex items-center justify-center">
+                <i class="fab fa-github mr-2"></i>VIEW SOURCE
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="flex-grow pt-16 flex max-w-screen-2xl mx-auto w-full">
+        <!-- Sidebar Navigation (Desktop only) -->
+        <aside
+            class="hidden lg:block w-64 shrink-0 border-r border-white/5 fixed h-[calc(100vh-4rem)] overflow-y-auto py-8">
+            <div class="px-6 mb-6">
+                <p class="font-mono text-xs text-gray-600 uppercase tracking-widest mb-3">Contents</p>
+                <ul class="space-y-0.5 font-mono text-sm" id="spy-nav">
+                    <li>
+                        <a href="#overview"
+                            class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">1.
+                            Overview</a>
+                    </li>
+                    <li>
+                        <a href="#features"
+                            class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">2.
+                            Key Features</a>
+                    </li>
+                    <li>
+                        <a href="#setup"
+                            class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">3.
+                            Setup &amp; Installation</a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="flex-grow lg:pl-64 p-4 sm:p-6 lg:p-12 w-full overflow-hidden">
+            <div class="max-w-4xl mx-auto w-full">
+
+                <!-- Overview Section -->
+                <section id="overview" class="mb-20 scroll-mt-24">
+                    <div class="mb-3 flex flex-wrap items-center gap-3">
+                        <span class="badge badge-cyan">TAG NAME</span>
+                        <span class="badge badge-green">STATUS</span>
+                    </div>
+                    <h1 class="text-3xl md:text-5xl font-display font-bold text-white mb-5 leading-tight">
+                        Project Name v1.0.0
+                    </h1>
+                    <!-- SEO Summary Introduction paragraph (2-3 lines with natural keywords) -->
+                    <p class="text-base md:text-lg text-gray-400 mb-8 leading-relaxed max-w-2xl">
+                        Write a 2-3 line summary introduction paragraph here incorporating primary keywords naturally.
+                        Ensure that terms describing the main stack, security models, or functionalities are present
+                        early on.
+                    </p>
+
+                    <!-- Interactive Code / Terminal Window -->
+                    <div class="terminal-window mb-8">
+                        <div class="terminal-header">
+                            <div class="terminal-dot bg-mac-red"></div>
+                            <div class="terminal-dot bg-mac-yellow"></div>
+                            <div class="terminal-dot bg-mac-green"></div>
+                            <span class="terminal-label">bash</span>
+                        </div>
+                        <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+                            <div><span class="text-cyan-400">$</span> <span class="text-gray-300">git clone
+                                    https://github.com/onyks-os/Project.git</span></div>
+                            <div><span class="text-cyan-400">$</span> <span class="text-gray-300">cd Project &amp;&amp;
+                                    command</span></div>
+                            <div class="mt-2 text-gray-500">[LOG] Performing action...</div>
+                            <div class="text-green-400">[OK] Initialization complete.</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Key Features Section -->
+                <section id="features" class="mb-20 scroll-mt-24">
+                    <div class="section-divider">
+                        <span class="hex">0x02</span>
+                        <h2>Key Features &amp; Capabilities</h2>
+                        <div class="line"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="module-card p-6 bg-dark-card rounded-lg">
+                            <div class="font-mono text-xs text-cyan-400 mb-3">FEATURE GROUP 1</div>
+                            <!-- Ordered or Unordered HTML lists for structured content -->
+                            <ul class="space-y-2 text-sm text-gray-400 leading-relaxed">
+                                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span> Describe
+                                    feature 1 details and architecture logic.</li>
+                                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span> Mention
+                                    security, protocols, or integration options.</li>
+                            </ul>
+                        </div>
+                        <div class="module-card p-6 bg-dark-card rounded-lg">
+                            <div class="font-mono text-xs text-cyan-400 mb-3">FEATURE GROUP 2</div>
+                            <ul class="space-y-2 text-sm text-gray-400 leading-relaxed">
+                                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span> Describe
+                                    performance metrics or scalability advantages.</li>
+                                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span> Elaborate
+                                    on UX, UI controls, or APIs provided.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Setup & Installation Section -->
+                <section id="setup" class="mb-20 scroll-mt-24">
+                    <div class="section-divider">
+                        <span class="hex">0x03</span>
+                        <h2>Setup &amp; Installation Instructions</h2>
+                        <div class="line"></div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+                        Provide clean step-by-step setup guides using HTML list tags and inline code elements.
+                    </p>
+                    <div class="note-box">
+                        <div class="label"><i class="fas fa-info-circle mr-2"></i>NOTICE</div>
+                        Enter any configuration tips, troubleshooting details, or architectural reminders in this note
+                        block.
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer with Cross-Project Navigation -->
+    <footer class="border-t border-white/5 bg-black py-10">
+        <div
+            class="max-w-screen-2xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <div class="flex flex-col sm:flex-row items-center gap-3">
+                <span class="font-display font-bold text-white">Project<span class="text-cyan-400">Name</span></span>
+                <span class="text-gray-600 font-mono text-xs">v1.0.0 — MIT License</span>
+            </div>
+            <div class="flex flex-col items-center md:items-end gap-3">
+                <div class="flex flex-wrap justify-center gap-6">
+                    <a href="/" class="font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors">← BACK</a>
+                    <a href="https://github.com/onyks-os/ProjectRepository" target="_blank"
+                        class="font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors"><i
+                            class="fab fa-github mr-1"></i>SOURCE</a>
+                    <a href="https://github.com/onyks-os/ProjectRepository/issues" target="_blank"
+                        class="font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors">ISSUES</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Behavior Script -->
+    <script>
+        // Hamburger Menu Toggle
+        const hamburger = document.getElementById("hamburger");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const bar1 = document.getElementById("bar1");
+        const bar2 = document.getElementById("bar2");
+        const bar3 = document.getElementById("bar3");
+
+        hamburger.addEventListener("click", () => {
+            const isOpen = mobileMenu.classList.toggle("open");
+            bar1.style.transform = isOpen ? "translateY(8px) rotate(45deg)" : "";
+            bar2.style.opacity = isOpen ? "0" : "1";
+            bar3.style.transform = isOpen ? "translateY(-8px) rotate(-45deg)" : "";
+            document.body.style.overflow = isOpen ? "hidden" : "";
+        });
+
+        document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+            link.addEventListener("click", () => {
+                mobileMenu.classList.remove("open");
+                bar1.style.transform = "";
+                bar2.style.opacity = "1";
+                bar3.style.transform = "";
+                document.body.style.overflow = "";
+            });
+        });
+
+        // Scroll Spy active navigation state
+        const sections = document.querySelectorAll("section[id]");
+        const navLinks = document.querySelectorAll(".nav-link");
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute("id");
+                        navLinks.forEach((link) => {
+                            link.classList.remove("active");
+                            if (link.getAttribute("href") === `#${id}`) {
+                                link.classList.add("active");
+                            }
+                        });
+                    }
+                });
+            },
+            { rootMargin: "-20% 0px -70% 0px" }
+        );
+
+        sections.forEach((s) => observer.observe(s));
+
+        window.addEventListener("scroll", () => {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+                navLinks.forEach((link) => link.classList.remove("active"));
+                if (navLinks.length > 0) {
+                    navLinks[navLinks.length - 1].classList.add("active");
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
