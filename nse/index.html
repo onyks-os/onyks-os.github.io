@@ -1,0 +1,955 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- SEO Optimization Meta Tags -->
+  <title>NSE - Network Sandbox Engine | Visual nftables Firewall Testing | Onyks-OS</title>
+  <meta name="description"
+    content="NSE is a visual, deterministic firewall testing environment for nftables rules using isolated Linux network namespaces (netns), Scapy, and a Svelte UI." />
+
+  <!-- Scripts & Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script data-goatcounter="https://onyks.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/96/console.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            display: ["Space Grotesk", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"],
+          },
+          colors: {
+            cyan: { 400: "#22d3ee", 500: "#06b6d4" },
+            dark: { 900: "#050505", card: "#0a0a0a", border: "#262626" },
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Custom Premium Styles -->
+  <style>
+    body {
+      background-color: #050505;
+      background-image: linear-gradient(rgba(34, 211, 238, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 211, 238, 0.02) 1px, transparent 1px);
+      background-size: 30px 30px;
+      color: #e5e5e5;
+    }
+
+    .terminal-window {
+      background: #0a0a0a;
+      border: 1px solid #262626;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .terminal-header {
+      background: #111;
+      padding: 8px 16px;
+      border-bottom: 1px solid #262626;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .terminal-label {
+      margin-left: auto;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      color: #4a4a4a;
+    }
+
+    .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .bg-mac-red {
+      background: #ff5f56;
+    }
+
+    .bg-mac-yellow {
+      background: #ffbd2e;
+    }
+
+    .bg-mac-green {
+      background: #27c93f;
+    }
+
+    .nav-link.active {
+      color: #22d3ee;
+      border-left-color: #22d3ee;
+      background: rgba(34, 211, 238, 0.05);
+    }
+
+    .module-card {
+      border: 1px solid #262626;
+      transition: all 0.2s;
+    }
+
+    .module-card:hover {
+      border-color: #22d3ee;
+      transform: translateY(-2px);
+      box-shadow: 0 0 15px rgba(34, 211, 238, 0.07);
+    }
+
+    code.inline {
+      color: #22d3ee;
+      background: rgba(34, 211, 238, 0.08);
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 0.85em;
+      word-break: break-word;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+
+    .badge-green {
+      background: rgba(39, 201, 63, 0.12);
+      color: #27c93f;
+      border: 1px solid rgba(39, 201, 63, 0.3);
+    }
+
+    .badge-yellow {
+      background: rgba(255, 189, 46, 0.12);
+      color: #ffbd2e;
+      border: 1px solid rgba(255, 189, 46, 0.3);
+    }
+
+    .badge-red {
+      background: rgba(255, 95, 86, 0.12);
+      color: #ff5f56;
+      border: 1px solid rgba(255, 95, 86, 0.3);
+    }
+
+    .badge-cyan {
+      background: rgba(34, 211, 238, 0.08);
+      color: #22d3ee;
+      border: 1px solid rgba(34, 211, 238, 0.25);
+    }
+
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-divider .hex {
+      font-family: "JetBrains Mono", monospace;
+      color: #22d3ee;
+      font-size: 0.8rem;
+    }
+
+    .section-divider h2 {
+      font-size: 1.875rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .section-divider .line {
+      flex-grow: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    table.doc-table {
+      width: 100%;
+      min-width: 600px;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    table.doc-table thead {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    table.doc-table th {
+      padding: 12px 16px;
+      text-align: left;
+      font-family: "JetBrains Mono", monospace;
+      color: #22d3ee;
+      font-weight: 400;
+      font-size: 0.8rem;
+    }
+
+    table.doc-table td {
+      padding: 12px 16px;
+      color: #9ca3af;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      vertical-align: top;
+    }
+
+    table.doc-table td:first-child {
+      font-family: "JetBrains Mono", monospace;
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    .caution-box,
+    .note-box,
+    .warn-box {
+      padding: 1rem 1.25rem;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      color: #d1d5db;
+      word-break: break-word;
+    }
+
+    .caution-box {
+      border: 1px solid rgba(255, 95, 86, 0.35);
+      background: rgba(255, 95, 86, 0.06);
+    }
+
+    .caution-box .label {
+      color: #ff5f56;
+      font-weight: 700;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.75rem;
+      margin-bottom: 4px;
+    }
+
+    .note-box {
+      border: 1px solid rgba(34, 211, 238, 0.25);
+      background: rgba(34, 211, 238, 0.04);
+    }
+
+    .note-box .label {
+      color: #22d3ee;
+      font-weight: 700;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.75rem;
+      margin-bottom: 4px;
+    }
+
+    .warn-box {
+      border: 1px solid rgba(255, 189, 46, 0.3);
+      background: rgba(255, 189, 46, 0.05);
+    }
+
+    .warn-box .label {
+      color: #ffbd2e;
+      font-weight: 700;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.75rem;
+      margin-bottom: 4px;
+    }
+
+    /* Mobile Menu */
+    #mobile-menu {
+      display: none;
+    }
+
+    @media (max-width: 1023px) {
+      #mobile-menu {
+        position: fixed;
+        top: 4rem;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #050505;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        overflow-y: auto;
+        z-index: 40;
+        padding: 1.5rem;
+      }
+
+      #mobile-menu.open {
+        display: block;
+      }
+    }
+  </style>
+</head>
+
+<body class="antialiased min-h-screen flex flex-col">
+  <!-- Navigation Bar -->
+  <nav class="fixed w-full z-50 bg-dark-900/95 backdrop-blur border-b border-white/5 h-16 flex items-center">
+    <div class="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <a href="/" class="text-gray-400 hover:text-cyan-400 transition-colors">
+          <i class="fas fa-chevron-left"></i>
+        </a>
+        <span class="font-display font-bold text-lg text-white">NSE<span class="text-cyan-400">_DOCS</span></span>
+        <span class="badge badge-cyan hidden sm:inline">v1.0.0</span>
+      </div>
+      <div class="hidden sm:flex items-center gap-3">
+        <a href="https://github.com/sponsors/onyks-os" target="_blank"
+          class="font-mono text-sm text-[#ff69b4] border border-[#ff69b4]/30 px-3 py-1.5 hover:bg-[#ff69b4]/10 transition-colors flex items-center">
+          <i class="fas fa-heart mr-2"></i>SPONSOR
+        </a>
+        <a href="https://github.com/onyks-os/NetworkSandboxEngine" target="_blank"
+          class="font-mono text-sm text-cyan-400 border border-cyan-400/30 px-3 py-1.5 hover:bg-cyan-400/10 transition-colors flex items-center">
+          <i class="fab fa-github mr-2"></i>SOURCE
+        </a>
+      </div>
+      <button id="hamburger"
+        class="lg:hidden flex flex-col gap-1.5 p-2 text-gray-400 hover:text-cyan-400 transition-colors"
+        aria-label="Menu">
+        <span class="block w-5 h-0.5 bg-current transition-all" id="bar1"></span>
+        <span class="block w-5 h-0.5 bg-current transition-all" id="bar2"></span>
+        <span class="block w-5 h-0.5 bg-current transition-all" id="bar3"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu">
+    <p class="font-mono text-xs text-gray-600 uppercase tracking-widest mb-3">Contents</p>
+    <ul class="space-y-0.5 font-mono text-sm">
+      <li><a href="#overview" class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">1.
+          Overview</a></li>
+      <li><a href="#features" class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">2.
+          Key Features</a></li>
+      <li><a href="#setup" class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">3.
+          Setup &amp; Installation</a></li>
+      <li><a href="#architecture"
+          class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">4. Architecture</a></li>
+      <li><a href="#flow" class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">5.
+          Execution Flow</a></li>
+      <li><a href="#cli" class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">6. CLI
+          Reference (YAML)</a></li>
+      <li><a href="#ttp-integration"
+          class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">7. TTP Integration</a>
+      </li>
+      <li><a href="#deployment" class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">8.
+          Deployment &amp; Releases</a></li>
+      <li><a href="#limitations"
+          class="mobile-nav-link block py-2.5 px-3 border-l-2 border-transparent text-gray-400">9. Limitations</a></li>
+    </ul>
+    <div class="mt-6 flex flex-col gap-3">
+      <a href="https://github.com/sponsors/onyks-os" target="_blank"
+        class="font-mono text-sm text-[#ff69b4] border border-[#ff69b4]/30 px-3 py-2 hover:bg-[#ff69b4]/10 transition-colors flex items-center justify-center">
+        <i class="fas fa-heart mr-2"></i>SPONSOR
+      </a>
+      <a href="https://github.com/onyks-os/NetworkSandboxEngine" target="_blank"
+        class="font-mono text-sm text-cyan-400 border border-cyan-400/30 px-3 py-2 hover:bg-cyan-400/10 transition-colors flex items-center justify-center">
+        <i class="fab fa-github mr-2"></i>VIEW SOURCE
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="flex-grow pt-16 flex max-w-screen-2xl mx-auto w-full">
+    <!-- Sidebar Navigation (Desktop only) -->
+    <aside
+      class="hidden lg:block w-64 shrink-0 border-r border-white/5 fixed h-[calc(100vh-4rem)] overflow-y-auto py-8">
+      <div class="px-6 mb-6">
+        <p class="font-mono text-xs text-gray-600 uppercase tracking-widest mb-3">Contents</p>
+        <ul class="space-y-0.5 font-mono text-sm" id="spy-nav">
+          <li><a href="#overview"
+              class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">1.
+              Overview</a></li>
+          <li><a href="#features"
+              class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">2.
+              Key Features</a></li>
+          <li><a href="#setup"
+              class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">3.
+              Setup &amp; Installation</a></li>
+          <li><a href="#architecture"
+              class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">4.
+              Architecture</a></li>
+          <li><a href="#flow"
+              class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">5.
+              Execution Flow</a></li>
+          <li><a href="#cli"
+              class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">6.
+              CLI Reference (YAML)</a></li>
+          <li><a href="#ttp-integration"
+              class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">7.
+              TTP Integration</a></li>
+          <li><a href="#deployment"
+              class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">8.
+              Deployment &amp; Releases</a></li>
+          <li><a href="#limitations"
+              class="nav-link block py-2 px-3 border-l-2 border-transparent text-gray-400 hover:text-white transition-colors">9.
+              Limitations</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Content Area -->
+    <main class="flex-grow lg:pl-64 p-4 sm:p-6 lg:p-12 w-full overflow-hidden">
+      <div class="max-w-4xl mx-auto w-full">
+
+        <!-- Overview Section -->
+        <section id="overview" class="mb-20 scroll-mt-24">
+          <div class="mb-3 flex flex-wrap items-center gap-3">
+            <span class="badge badge-cyan">FIREWALL TESTING</span>
+            <span class="badge badge-green">KERNEL LEVEL</span>
+            <span class="badge badge-cyan">FASTAPI + SVELTE</span>
+            <span class="badge badge-cyan">SCAPY INJECTOR</span>
+            <span class="badge badge-yellow">NETNS ISOLATED</span>
+          </div>
+          <h1 class="text-3xl md:text-5xl font-display font-bold text-white mb-5 leading-tight">
+            Network Sandbox Engine (NSE)
+          </h1>
+          <p class="text-base md:text-lg text-gray-400 mb-8 leading-relaxed max-w-2xl">
+            NSE is a visual, deterministic firewall testing environment for <strong class="text-white">nftables</strong>
+            rules.
+            Using ephemeral Linux network namespaces (<code class="inline">netns</code>) and Scapy packet injection, it
+            compiles and executes rules inside the real Linux kernel in total isolation.
+            The host firewall is never modified, providing a safe, scriptable, and visual platform for validating
+            complex routing logic, firewall policies, and traffic redirection behaviors.
+          </p>
+
+          <!-- Interactive Code / Terminal Window -->
+          <div class="terminal-window mb-8">
+            <div class="terminal-header">
+              <div class="terminal-dot bg-mac-red"></div>
+              <div class="terminal-dot bg-mac-yellow"></div>
+              <div class="terminal-dot bg-mac-green"></div>
+              <span class="terminal-label">bash</span>
+            </div>
+            <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+              <div><span class="text-cyan-400">$</span> <span class="text-gray-300">git clone
+                  https://github.com/onyks-os/NetworkSandboxEngine.git</span></div>
+              <div><span class="text-cyan-400">$</span> <span class="text-gray-300">cd NetworkSandboxEngine && make
+                  setup</span></div>
+              <div><span class="text-cyan-400">$</span> <span class="text-gray-300">sudo -E .venv/bin/python -m nse
+                  serve --dev</span></div>
+              <div class="mt-2 text-gray-500">[NSE] Development mode — binding to http://127.0.0.1:8000</div>
+              <div class="text-green-400">[OK] Ephemeral sandbox engine ready. Web UI initialized.</div>
+            </div>
+          </div>
+
+          <div class="caution-box">
+            <div class="label"><i class="fas fa-exclamation-triangle mr-2"></i>PRIVILEGE REQUIREMENT</div>
+            Managing network namespaces, creating virtual interfaces (<code class="inline">veth</code>), and injecting
+            raw packets (Scapy) requires kernel-level administration permissions.
+            The daemon and the CLI runner must be run with <code class="inline">root</code> privileges (e.g., using
+            <code class="inline">sudo</code>).
+          </div>
+        </section>
+
+        <!-- Key Features Section -->
+        <section id="features" class="mb-20 scroll-mt-24">
+          <div class="section-divider">
+            <span class="hex">0x02</span>
+            <h2>Key Features &amp; Capabilities</h2>
+            <div class="line"></div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="module-card p-6 bg-dark-card rounded-lg">
+              <div class="font-mono text-xs text-cyan-400 mb-3">STATEFUL SEQUENCES &amp; CONNTRACK</div>
+              <ul class="space-y-2 text-sm text-gray-400 leading-relaxed">
+                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span> Inject sequential list of
+                  packets via Scapy (e.g. simulating a TCP 3-way handshake).</li>
+                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span> Dynamic polling of <code
+                    class="inline">/proc/net/nf_conntrack</code> to capture connection state changes.</li>
+              </ul>
+            </div>
+            <div class="module-card p-6 bg-dark-card rounded-lg">
+              <div class="font-mono text-xs text-cyan-400 mb-3">MOCK DAEMON LISTENERS</div>
+              <ul class="space-y-2 text-sm text-gray-400 leading-relaxed">
+                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span> Automatically spawns
+                  background echo servers on target ports inside namespaces.</li>
+                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span> Generates real
+                  kernel-level TCP responses to complete connections and update conntrack.</li>
+              </ul>
+            </div>
+            <div class="module-card p-6 bg-dark-card rounded-lg">
+              <div class="font-mono text-xs text-cyan-400 mb-3">GATEWAY TOPOLOGY ROUTING</div>
+              <ul class="space-y-2 text-sm text-gray-400 leading-relaxed">
+                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span> Spawn dual-namespace
+                  layouts simulating a <strong class="text-white">Host ◄─► Router ◄─► Server</strong> topology.</li>
+                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span> Load and test transit
+                  forwarding rules on the intermediate Router namespace hook.</li>
+              </ul>
+            </div>
+            <div class="module-card p-6 bg-dark-card rounded-lg">
+              <div class="font-mono text-xs text-cyan-400 mb-3">WEB UI VISUALIZATION</div>
+              <ul class="space-y-2 text-sm text-gray-400 leading-relaxed">
+                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span> Interactive UI built with
+                  Svelte and FastAPI displaying real-time packet traces.</li>
+                <li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">→</span> Detailed logs of nftables
+                  match hook evaluations, verdicts, and connection states.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Setup & Installation Section -->
+        <section id="setup" class="mb-20 scroll-mt-24">
+          <div class="section-divider">
+            <span class="hex">0x03</span>
+            <h2>Setup &amp; Installation Instructions</h2>
+            <div class="line"></div>
+          </div>
+
+          <h3 class="text-white font-bold mb-3">Prerequisites</h3>
+          <div class="overflow-x-auto mb-8 border border-white/5 rounded">
+            <table class="doc-table w-full min-w-[600px]">
+              <thead>
+                <tr>
+                  <th>Dependency</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Python 3.10+</td>
+                  <td>Runs the backend FastAPI, pipeline orchestration, and CLI test runner</td>
+                </tr>
+                <tr>
+                  <td>Node.js 18+</td>
+                  <td>Required to compile the Svelte / Vite web interface (optional for CLI runner)</td>
+                </tr>
+                <tr>
+                  <td>nftables</td>
+                  <td>Required by the kernel to compile rules and trigger monitoring traces</td>
+                </tr>
+                <tr>
+                  <td>conntrack</td>
+                  <td>System utility required to read and poll `/proc/net/nf_conntrack` states</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="text-white font-bold mb-3">1. Install Host Tools (Debian/Ubuntu)</h3>
+          <div class="terminal-window mb-8">
+            <div class="terminal-header">
+              <span class="terminal-dot bg-mac-red"></span>
+              <span class="terminal-dot bg-mac-yellow"></span>
+              <span class="terminal-dot bg-mac-green"></span>
+              <span class="terminal-label">bash</span>
+            </div>
+            <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+              <div><span class="text-cyan-400">$</span> <span class="text-gray-300">sudo apt update</span></div>
+              <div><span class="text-cyan-400">$</span> <span class="text-gray-300">sudo apt install nftables iproute2
+                  python3-venv python3-pip conntrack -y</span></div>
+            </div>
+          </div>
+
+          <h3 class="text-white font-bold mb-3">2. Setup Python Virtual Environment</h3>
+          <div class="terminal-window mb-8">
+            <div class="terminal-header">
+              <span class="terminal-dot bg-mac-red"></span>
+              <span class="terminal-dot bg-mac-yellow"></span>
+              <span class="terminal-dot bg-mac-green"></span>
+              <span class="terminal-label">bash</span>
+            </div>
+            <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+              <div><span class="text-cyan-400">$</span> <span class="text-gray-300">make setup</span></div>
+            </div>
+          </div>
+
+          <h3 class="text-white font-bold mb-3">3. Running the Dashboard</h3>
+          <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+            Start the backend FastAPI daemon (requires root) and the frontend Vite development server in two separate
+            terminals:
+          </p>
+          <div class="terminal-window mb-8">
+            <div class="terminal-header">
+              <span class="terminal-dot bg-mac-red"></span>
+              <span class="terminal-dot bg-mac-yellow"></span>
+              <span class="terminal-dot bg-mac-green"></span>
+              <span class="terminal-label">bash</span>
+            </div>
+            <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+              <div><span class="text-gray-500"># Terminal 1 - Start Backend Daemon</span></div>
+              <div><span class="text-cyan-400">$</span> <span class="text-gray-300">make backend</span></div>
+              <div class="mt-2"><span class="text-gray-500"># Terminal 2 - Start Frontend</span></div>
+              <div><span class="text-cyan-400">$</span> <span class="text-gray-300">make frontend</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Architecture Section -->
+        <section id="architecture" class="mb-20 scroll-mt-24">
+          <div class="section-divider">
+            <span class="hex">0x04</span>
+            <h2>System Architecture</h2>
+            <div class="line"></div>
+          </div>
+
+          <div class="overflow-x-auto border border-white/5 rounded mb-8">
+            <table class="doc-table w-full min-w-[600px]">
+              <thead>
+                <tr>
+                  <th>Component</th>
+                  <th>Technology</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Frontend UI</td>
+                  <td>Svelte + Vite</td>
+                  <td>Web interface containing the rule editor, packet sequence builder, and real-time conntrack/trace
+                    animation.</td>
+                </tr>
+                <tr>
+                  <td>Daemon API</td>
+                  <td>FastAPI</td>
+                  <td>Main server running as root. Handles namespace allocations, veth pairings, and routes execution
+                    data over WebSockets.</td>
+                </tr>
+                <tr>
+                  <td>Packet Injector</td>
+                  <td>Scapy</td>
+                  <td>Forges L2/L3 packets matching the requested protocol (TCP, UDP, ICMP, ICMPv6), injecting them
+                    directly onto virtual link endpoints.</td>
+                </tr>
+                <tr>
+                  <td>Trace Harvester</td>
+                  <td>`nft monitor trace`</td>
+                  <td>Spawns as a background subprocess inside the target network namespace, parsing nftables tracing
+                    logs on-the-fly.</td>
+                </tr>
+                <tr>
+                  <td>CLI Runner</td>
+                  <td>Python argparse</td>
+                  <td>Headless utility to parse, execute, and assert YAML-based test suites offline for CI/CD
+                    environments.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Execution Flow Section -->
+        <section id="flow" class="mb-20 scroll-mt-24">
+          <div class="section-divider">
+            <span class="hex">0x05</span>
+            <h2>Test Run Execution Flow</h2>
+            <div class="line"></div>
+          </div>
+
+          <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+            The lifecycle of a single sandbox test request follows a strict synchronous/asynchronous pipeline
+            orchestrated by the daemon:
+          </p>
+
+          <div class="terminal-window mb-6">
+            <div class="terminal-header">
+              <span class="terminal-dot bg-mac-red"></span>
+              <span class="terminal-dot bg-mac-yellow"></span>
+              <span class="terminal-dot bg-mac-green"></span>
+              <span class="terminal-label">Pipeline Lifecycle</span>
+            </div>
+            <div class="p-5 font-mono text-xs text-gray-400 leading-6 space-y-2">
+              <div class="flex gap-4"><span class="text-cyan-400">1. Setup Topology:</span><span>Allocates namespaces,
+                  hooks virtual ethernet pairs (<code class="inline">veth</code>), and sets loopback devices UP.</span>
+              </div>
+              <div class="flex gap-4"><span class="text-cyan-400">2. Mock Listeners:</span><span>Launches lightweight
+                  UDP/TCP echo servers on targeted socket ports inside the server namespace.</span></div>
+              <div class="flex gap-4"><span class="text-cyan-400">3. Rule Loading:</span><span>Compiles and injects
+                  rulesets into the namespace kernel environment, appending <code
+                    class="inline">meta nftrace set 1</code>.</span></div>
+              <div class="flex gap-4"><span class="text-cyan-400">4. Harvester Init:</span><span>Starts <code
+                    class="inline">nft monitor trace</code> asynchronously to hook trace logs.</span></div>
+              <div class="flex gap-4"><span class="text-cyan-400">5. Packet Injection:</span><span>Triggers Scapy to
+                  send the forged packets. Outgoing packets re-exec python in the netns context via <code
+                    class="inline">nsenter</code>.</span></div>
+              <div class="flex gap-4"><span class="text-cyan-400">6. Conntrack Polling:</span><span>Drains connection
+                  tracking statistics and streams them to the UI/runner.</span></div>
+              <div class="flex gap-4"><span class="text-cyan-400">7. Garbage Collector:</span><span>Gracefully kills
+                  listeners, tears down namespace interfaces, and deletes netns descriptors.</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CLI Reference Section -->
+        <section id="cli" class="mb-20 scroll-mt-24">
+          <div class="section-divider">
+            <span class="hex">0x06</span>
+            <h2>CLI Test Runner &amp; YAML Suites</h2>
+            <div class="line"></div>
+          </div>
+
+          <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+            Automated assertions can be run inside headless environments using the <code class="inline">nse test</code>
+            CLI:
+          </p>
+          <div class="terminal-window mb-8">
+            <div class="terminal-header">
+              <span class="terminal-dot bg-mac-red"></span>
+              <span class="terminal-dot bg-mac-yellow"></span>
+              <span class="terminal-dot bg-mac-green"></span>
+              <span class="terminal-label">bash</span>
+            </div>
+            <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+              <div><span class="text-cyan-400">$</span> <span class="text-gray-300">sudo PYTHONPATH=backend
+                  .venv/bin/python -m nse.cli test --file backend/tests/test_suite.yaml</span></div>
+            </div>
+          </div>
+
+          <h3 class="text-white font-bold mb-3">Example YAML Suite (`test_suite.yaml`)</h3>
+          <div class="terminal-window">
+            <div class="terminal-header">
+              <span class="terminal-dot bg-mac-red"></span>
+              <span class="terminal-dot bg-mac-yellow"></span>
+              <span class="terminal-dot bg-mac-green"></span>
+              <span class="terminal-label">test_suite.yaml</span>
+            </div>
+            <div class="p-4 sm:p-5 font-mono text-xs leading-6 overflow-x-auto text-gray-300">
+              <div><span class="text-cyan-400">tests:</span></div>
+              <div>&nbsp;&nbsp;<span class="text-cyan-400">- name:</span> "Simple Topology Allow TCP 80"</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cyan-400">topology:</span> "simple"</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cyan-400">rules: |</span></div>
+              <div class="text-green-400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;table ip filter {</div>
+              <div class="text-green-400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chain input {</div>
+              <div class="text-green-400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type filter hook
+                input priority 0; policy drop;</div>
+              <div class="text-green-400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tcp dport 80
+                accept</div>
+              <div class="text-green-400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+              <div class="text-green-400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cyan-400">packets:</span></div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cyan-400">- protocol:</span> "tcp"</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cyan-400">dst_port:</span> 80</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cyan-400">expected_verdict:</span>
+                "ACCEPT"</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cyan-400">- protocol:</span> "tcp"</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cyan-400">dst_port:</span> 22</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cyan-400">expected_verdict:</span>
+                "DROP"</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TTP Integration Section -->
+        <section id="ttp-integration" class="mb-20 scroll-mt-24">
+          <div class="section-divider">
+            <span class="hex">0x07</span>
+            <h2>TTP (Transparent Tor Proxy) Integration Guide</h2>
+            <div class="line"></div>
+          </div>
+
+          <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+            NSE is officially integrated into TTP's pipeline to enable robust, offline verification of firewall rule
+            behaviors (such as redirection and leak drop prevention) without requiring active Tor network circuits.
+          </p>
+
+          <div class="note-box mb-6">
+            <div class="label"><i class="fas fa-plug mr-2"></i>BRIDGING RULES &amp; TESTS</div>
+            TTP runs its ruleset compilation during testing by patching the actual <code
+              class="inline">_run_nft_string()</code> function. The resulting ruleset string is fed directly to NSE,
+            verifying that DNS queries are intercepted onto port 9054 and DNS-over-TLS (port 853) is rejected by the
+            killswitch.
+          </div>
+
+          <h3 class="text-white font-bold mb-3">Example Pytest Integration</h3>
+          <div class="terminal-window">
+            <div class="terminal-header">
+              <span class="terminal-dot bg-mac-red"></span>
+              <span class="terminal-dot bg-mac-yellow"></span>
+              <span class="terminal-dot bg-mac-green"></span>
+              <span class="terminal-label">test_nse_integration.py</span>
+            </div>
+            <div class="p-4 sm:p-5 font-mono text-xs leading-6 overflow-x-auto text-gray-300">
+              <div><span class="text-cyan-400">import</span> json, tempfile, subprocess</div>
+              <div><span class="text-cyan-400">from</span> unittest.mock <span class="text-cyan-400">import</span>
+                patch, MagicMock</div>
+              <div><span class="text-cyan-400">from</span> ttp.firewall <span class="text-cyan-400">import</span>
+                apply_rules</div>
+              <br />
+              <div><span class="text-cyan-400">def</span> <span
+                  class="text-yellow-400">test_ttp_redirection_with_nse</span>():</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-gray-500"># 1. Capture compilation string</span></div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cyan-400">with</span> patch(<span
+                  class="text-green-400">"ttp.firewall._run_nft"</span>), \</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;patch(<span
+                  class="text-green-400">"ttp.firewall._run_nft_string"</span>) <span class="text-cyan-400">as</span>
+                mock_run_string, \</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;patch(<span
+                  class="text-green-400">"ttp.firewall.pwd.getpwnam"</span>) <span class="text-cyan-400">as</span>
+                mock_pwd:</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mock_pwd.return_value = MagicMock(pw_uid=110)</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;apply_rules(tor_user=<span
+                  class="text-green-400">"debian-tor"</span>, transport_port=9041, dns_port=9054)</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ruleset = mock_run_string.call_args[0][0]</div>
+              <br />
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-gray-500"># 2. Formulate NSE assertions</span></div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;test_suite = {</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-green-400">"tests"</span>: [{</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                  class="text-green-400">"name"</span>: <span class="text-green-400">"Redirect DNS traffic to Tor
+                  DNSPort"</span>,</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                  class="text-green-400">"rules"</span>: ruleset,</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                  class="text-green-400">"packets"</span>: [{<span class="text-green-400">"protocol"</span>: <span
+                  class="text-green-400">"udp"</span>, <span class="text-green-400">"dst_port"</span>: 53, <span
+                  class="text-green-400">"expected_verdict"</span>: <span class="text-green-400">"ACCEPT"</span>}]</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}]</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+              <br />
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-gray-500"># 3. Call NSE CLI test runner</span></div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;res = subprocess.run([<span class="text-green-400">"python3"</span>, <span
+                  class="text-green-400">"-m"</span>, <span class="text-green-400">"nse.cli"</span>, <span
+                  class="text-green-400">"test"</span>, ...])</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cyan-400">assert</span> res.returncode == 0</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Releases Section -->
+        <section id="deployment" class="mb-20 scroll-mt-24">
+          <div class="section-divider">
+            <span class="hex">0x08</span>
+            <h2>Production Deployment &amp; Releases</h2>
+            <div class="line"></div>
+          </div>
+
+          <h3 class="text-white font-bold mb-3">Release Packaging (`make release`)</h3>
+          <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+            Running <code class="inline">make release</code> compiles the frontend assets, embeds them inside the python
+            backend, packages the wheel (<code class="inline">.whl</code>), and signs the final release bundle using
+            GPG.
+          </p>
+
+          <h3 class="text-white font-bold mb-3">Docker Container Deployment</h3>
+          <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+            To run the dashboard inside an isolated container with netns capabilities:
+          </p>
+          <div class="terminal-window">
+            <div class="terminal-header">
+              <span class="terminal-dot bg-mac-red"></span>
+              <span class="terminal-dot bg-mac-yellow"></span>
+              <span class="terminal-dot bg-mac-green"></span>
+              <span class="terminal-label">bash</span>
+            </div>
+            <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
+              <div><span class="text-cyan-400">$</span> <span class="text-gray-300">docker build -t nse -f
+                  release/Dockerfile .</span></div>
+              <div><span class="text-cyan-400">$</span> <span class="text-gray-300">docker run --privileged -p 8000:8000
+                  -d --name nse-container nse</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Limitations Section -->
+        <section id="limitations" class="mb-20 scroll-mt-24">
+          <div class="section-divider">
+            <span class="hex">0x09</span>
+            <h2>Known Limitations</h2>
+            <div class="line"></div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-4">
+            <div class="warn-box">
+              <div class="label"><i class="fas fa-exclamation-circle mr-2"></i>SOCKET OWNER MATCHING (skuid/skgid)</div>
+              Because Scapy injectors construct raw L2/L3 packets and inject them at interface level, they lack local
+              process socket associations inside the kernel.
+              As a result, nftables rules that match on local socket owners (such as <code
+                class="inline">meta skuid</code> or <code class="inline">meta skgid</code>) will not trigger on injected
+              Scapy packets.
+            </div>
+            <div class="warn-box">
+              <div class="label"><i class="fas fa-network-wired mr-2"></i>KERNEL CAPABILITIES</div>
+              Traces rely on <code class="inline">nft monitor trace</code> support, which requires modern Linux Kernel
+              releases (Kernel 5.4+).
+              Running in restrictive VM or minimal container runtimes that block kernel module loading might cause
+              pipeline errors.
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/5 bg-black py-10">
+    <div
+      class="max-w-screen-2xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+      <div class="flex flex-col sm:flex-row items-center gap-3">
+        <span class="font-display font-bold text-white">Network<span class="text-cyan-400">SandboxEngine</span></span>
+        <span class="text-gray-600 font-mono text-xs">v1.0.0 — MIT License</span>
+      </div>
+      <div class="flex flex-col items-center md:items-end gap-3">
+        <div class="flex flex-wrap justify-center gap-6">
+          <a href="/" class="font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors">← BACK</a>
+          <a href="https://github.com/onyks-os/NetworkSandboxEngine" target="_blank"
+            class="font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors"><i
+              class="fab fa-github mr-1"></i>SOURCE</a>
+          <a href="https://github.com/onyks-os/NetworkSandboxEngine/issues" target="_blank"
+            class="font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors">ISSUES</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Interactive Behavior Script -->
+  <script>
+    // Hamburger Menu Toggle
+    const hamburger = document.getElementById("hamburger");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const bar1 = document.getElementById("bar1");
+    const bar2 = document.getElementById("bar2");
+    const bar3 = document.getElementById("bar3");
+
+    hamburger.addEventListener("click", () => {
+      const isOpen = mobileMenu.classList.toggle("open");
+      bar1.style.transform = isOpen ? "translateY(8px) rotate(45deg)" : "";
+      bar2.style.opacity = isOpen ? "0" : "1";
+      bar3.style.transform = isOpen ? "translateY(-8px) rotate(-45deg)" : "";
+      document.body.style.overflow = isOpen ? "hidden" : "";
+    });
+
+    document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("open");
+        bar1.style.transform = "";
+        bar2.style.opacity = "1";
+        bar3.style.transform = "";
+        document.body.style.overflow = "";
+      });
+    });
+
+    // Scroll Spy active navigation state
+    const sections = document.querySelectorAll("section[id]");
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute("id");
+            navLinks.forEach((link) => {
+              link.classList.remove("active");
+              if (link.getAttribute("href") === `#${id}`) {
+                link.classList.add("active");
+              }
+            });
+          }
+        });
+      },
+      { rootMargin: "-20% 0px -70% 0px" }
+    );
+
+    sections.forEach((s) => observer.observe(s));
+
+    window.addEventListener("scroll", () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+        navLinks.forEach((link) => link.classList.remove("active"));
+        if (navLinks.length > 0) {
+          navLinks[navLinks.length - 1].classList.add("active");
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>
