@@ -344,7 +344,7 @@
           <i class="fas fa-chevron-left"></i>
         </a>
         <span class="font-display font-bold text-lg text-white">TTP<span class="text-cyan-400">_DOCS</span></span>
-        <span class="badge badge-cyan hidden sm:inline">v0.4.0</span>
+        <span class="badge badge-cyan hidden sm:inline">v0.4.5</span>
       </div>
       <div class="hidden sm:flex items-center gap-3">
         <a href="https://github.com/sponsors/onyks-os" target="_blank"
@@ -516,14 +516,18 @@
             <span class="badge badge-cyan">NATIVE IPv6</span>
           </div>
           <h1 class="text-3xl md:text-5xl font-display font-bold text-white mb-5 leading-tight">
-            Transparent Tor Proxy v0.4.0
+            Transparent Tor Proxy v0.4.5
           </h1>
           <p class="text-base md:text-lg text-gray-400 mb-8 leading-relaxed max-w-2xl">
             TTP is a Linux CLI tool designed to route all system traffic transparently through the Tor network. Using
-            nftables and a systemd watchdog service, it provides a crash-safe, leak-proof environment for secure online
-            privacy. It intercepts <strong class="text-white">all outgoing network traffic</strong> without requiring
-            per-application configuration, loading firewall rules atomically and always restoring your network after any
-            crash or outage.
+            nftables, a network-resilient watchdog service, and a zero-leak active socket termination protocol, it
+            provides
+            a crash-safe, leak-proof environment for secure online privacy. It intercepts <strong class="text-white">all
+              outgoing network traffic</strong>
+            without per-application configuration, supports split-tunneling user bypasses, coexists with external Tor
+            instances via Bring-Your-Own-Daemon (BYOD) mode,
+            and loads all firewall rules atomically, always ensuring complete network restoration after any shutdown or
+            outage.
           </p>
 
           <div class="terminal-window mb-8">
@@ -634,6 +638,13 @@
                   <td>
                     Required for firewall and DNS modifications, and all
                     commands must be run with <code class="inline">sudo</code>
+                  </td>
+                </tr>
+                <tr>
+                  <td>conntrack</td>
+                  <td>
+                    Recommended. Used during teardown to invalidate active connection states (<code
+                      class="inline">conntrack -F</code>) and eliminate cleartext leaks.
                   </td>
                 </tr>
               </tbody>
@@ -850,12 +861,13 @@
               <p class="text-gray-400 text-sm leading-relaxed">
                 Implements a multi-chain, "Safe-Release" architecture.
                 Generates a stateless ruleset with three chains:
-                <code class="inline">prerouting</code>,
-                <code class="inline">output</code> (NAT), and
-                <code class="inline">filter_out</code> (Filter). The latter
-                acts as a dedicated <strong>Kill-Switch</strong>. Supports **Selective Root Routing** (sudo/root routed
-                by default), automatic **LAN Bypass** (local RFC 1918 subnets), and **DoT Prevention** (port 853
-                reject). Applied atomically via <code class="inline">nft -f</code>.
+                <code class="inline">prerouting</code>, <code class="inline">output</code> (NAT), and
+                <code class="inline">filter_out</code> (Filter). The latter acts as a dedicated
+                <strong>Kill-Switch</strong>.
+                Supports **Split-Tunneling Bypass** (exempting specific UIDs/GIDs), **IPv6 Force Disable** (dropping all
+                IPv6 traffic),
+                and a multi-stage **Zero-Leak teardown** (injecting TCP resets and flushing connection tracking states).
+                Applied atomically via <code class="inline">nft -f</code>.
               </p>
             </div>
 
@@ -881,10 +893,11 @@
               </div>
               <p class="text-gray-400 text-sm leading-relaxed">
                 Volatile session locking. Reads and writes a JSON lock file at
-                <code class="inline">/run/ttp/ttp.lock</code> (tmpfs) containing session PID, ports, timestamp, and
-                watchdog status keys (<code class="inline">watchdog_active</code>, <code
-                  class="inline">watchdog_pid</code>). Verifies PID validity to auto-recover orphaned sessions, and runs
-                the pre-flight safety check to ensure sufficient tmpfs RAM.
+                <code class="inline">/run/ttp/ttp.lock</code> (tmpfs) with strict <code class="inline">0o644</code>
+                permissions.
+                Contains session PID, ports, timestamp, active bypass configurations, and watchdog status keys. Verifies
+                PID validity to auto-recover orphaned sessions, and runs the pre-flight safety check to ensure
+                sufficient tmpfs RAM.
               </p>
             </div>
 
@@ -911,9 +924,10 @@
               <p class="text-gray-400 text-sm leading-relaxed">
                 Integrity and auto-healing monitor. Spawns and manages the TTP session background watchdog daemon
                 service (<code class="inline">ttp-watchdog.service</code>). Periodically monitors firewall table rules,
+                active bypass rules,
                 the DNS overlay mount, and Tor daemon connectivity. Handles <strong>Auto-Healing (First Strike)</strong>
-                and triggers the <strong>Emergency Killswitch (Second Strike)</strong> if recovery fails, completely
-                locking network interfaces and broadcasting system alerts.
+                (re-applying bypassed users/groups rules if missing)
+                and triggers the <strong>Emergency Killswitch (Second Strike)</strong> if recovery fails.
               </p>
             </div>
 
@@ -980,7 +994,9 @@
                 Verifies root privileges (<code class="inline">os.geteuid() == 0</code>), registers signal handlers,
                 and executes a **Pre-flight safety check** verifying that <code class="inline">/run/ttp</code> (tmpfs)
                 has at least 5MB of free space to prevent out-of-memory crashes. On Fedora/RHEL, ensures the custom
-                SELinux policy is compiled.
+                SELinux policy is compiled. If running in **BYOD mode** (<code class="inline">--external-daemon</code>),
+                it scans sockets in <code class="inline">/proc/net/tcp</code> / <code
+                  class="inline">/proc/net/tcp6</code> to dynamically parse Tor's numeric UID.
               </p>
             </div>
             <div class="flow-step">
@@ -1001,11 +1017,13 @@
                 3. Volatile Tor service setup
               </h4>
               <p class="text-sm leading-relaxed">
-                <code class="inline">tor_install.ensure_tor_ready()</code> generates a volatile, sandboxed
+                If not in BYOD mode, TTP's <code class="inline">tor_install.ensure_tor_ready()</code> generates a
+                volatile, sandboxed
                 <code class="inline">torrc</code> in <code class="inline">/run/tor/ttp/torrc</code> and writes
                 a dedicated service unit file directly to the systemd path at
                 <code class="inline">/run/systemd/system/ttp-tor.service</code>. It then reloads systemd and
-                starts this isolated Tor instance.
+                starts this isolated Tor instance. If BYOD mode is active, it runs passive checks on the external daemon
+                ports.
               </p>
             </div>
             <div class="flow-step">
@@ -1016,8 +1034,11 @@
               <p class="text-sm leading-relaxed">
                 Applies a stateless ruleset atomically via <code class="inline">nft -f</code>.
                 This redirects system TCP and DNS traffic to Tor's dedicated ports while
-                enabling a strict filter-based <strong>Kill-Switch</strong> to reject all non-Tor cleartext traffic
-                and IPv6 leaks immediately.
+                enabling a strict filter-based <strong>Kill-Switch</strong> to reject all non-Tor cleartext traffic.
+                Also injects dynamic split-tunneling exception rules (<code
+                  class="inline">meta skuid &lt;uid&gt; accept</code> / <code
+                  class="inline">meta skgid &lt;gid&gt; accept</code>) at the top of chains for bypassed users/groups,
+                and drops outbound IPv6 if forced via <code class="inline">--no-ipv6</code>.
               </p>
             </div>
             <div class="flow-step">
@@ -1039,8 +1060,9 @@
                 6. Volatile lock file write
               </h4>
               <p class="text-sm leading-relaxed">
-                Writes a JSON session lock file to <code class="inline">/run/ttp/ttp.lock</code> containing the active
-                process PID, timestamps, and DNS backup parameters (<code class="inline">mount_target</code>). This file
+                Writes a JSON session lock file to <code class="inline">/run/ttp/ttp.lock</code> with strict <code
+                  class="inline">0o644</code> permissions. It contains the active
+                process PID, timestamps, bypass configurations, DNS parameters, and watchdog status keys. This file
                 resides entirely in `tmpfs` and evaporates automatically if the host loses power.
               </p>
             </div>
@@ -1074,45 +1096,57 @@
           <div class="relative pl-6 border-l border-white/10 space-y-7 text-gray-400 mb-4">
             <div class="flow-step">
               <div class="flow-dot-filled"></div>
-              <h4 class="text-white font-semibold mb-1">Preventive Watchdog Stop &amp; Graceful Teardown</h4>
+              <h4 class="text-white font-semibold mb-1">1. Preventive Watchdog Stop</h4>
               <p class="text-sm mb-1">
                 Stops the background watchdog service daemon immediately to prevent triggering the emergency killswitch
-                during teardown. Then sends a cryptographic <code class="inline">SHUTDOWN</code> signal to Tor to close
-                active circuits cleanly before touching firewall rules, eliminating cleartext <code
-                  class="inline">RST</code> leaks.
+                during teardown.
               </p>
             </div>
             <div class="flow-step">
               <div class="flow-dot-empty"></div>
-              <h4 class="text-white font-semibold mb-1">Stop Tor service</h4>
+              <h4 class="text-white font-semibold mb-1">2. Lockdown &amp; Active Socket Slaughter</h4>
               <p class="text-sm mb-1">
-                Stops the dedicated TTP Tor service, unlinks the volatile unit file at
-                <code class="inline">/run/systemd/system/ttp-tor.service</code>, and triggers a systemd daemon-reload.
+                To prevent cleartext leak of in-flight packets, TTP applies temporary firewall lockdown rules (exempting
+                Tor).
+                It then injects TCP Reset rules (<code
+                  class="inline">meta l4proto tcp counter reject with tcp reset</code>) and standard rejects alongside a
+                1.5-second micro-delay, actively terminating all pending local sockets.
               </p>
             </div>
             <div class="flow-step">
               <div class="flow-dot-empty"></div>
-              <h4 class="text-white font-semibold mb-1">Restore firewall</h4>
+              <h4 class="text-white font-semibold mb-1">3. Connection Tracking State Invalidation</h4>
               <p class="text-sm mb-1">
-                Atomically flushes and removes the entire TTP ruleset table by executing:
-                <code class="inline">nft destroy table inet ttp</code>.
+                If the <code class="inline">conntrack</code> utility is installed, TTP invalidates active kernel
+                connection tracking states via <code class="inline">conntrack -F</code>. This flushes UDP streams and
+                active NAT links before removing firewall rules.
               </p>
             </div>
             <div class="flow-step">
               <div class="flow-dot-empty"></div>
-              <h4 class="text-white font-semibold mb-1">Restore DNS</h4>
+              <h4 class="text-white font-semibold mb-1">4. Tor Teardown</h4>
               <p class="text-sm mb-1">
-                Dismantles the resolver bind-mount using <code class="inline">umount -l</code> (lazy unmount)
-                to ensure the overlay is detached instantly even if system resources are temporarily busy, then cleans
-                up
-                the volatile <code class="inline">resolv.conf</code> from the RAM disk.
+                Sends a cryptographic <code class="inline">SHUTDOWN</code> signal to Tor's Control Socket to close
+                circuits cleanly. If not in BYOD mode, TTP then stops the dedicated <code
+                  class="inline">ttp-tor.service</code> systemd service, unlinks the transient unit file, and reloads
+                the daemon.
               </p>
             </div>
             <div class="flow-step">
               <div class="flow-dot-empty"></div>
-              <h4 class="text-white font-semibold mb-1">Delete lock</h4>
-              <p class="text-sm">
-                Removes <code class="inline">/run/ttp/ttp.lock</code>. Cleartext networking is restored.
+              <h4 class="text-white font-semibold mb-1">5. Restore Firewall</h4>
+              <p class="text-sm mb-1">
+                Atomically flushes and destroys the entire TTP ruleset table by executing <code
+                  class="inline">nft destroy table inet ttp</code>.
+              </p>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot-empty"></div>
+              <h4 class="text-white font-semibold mb-1">6. Restore DNS &amp; Delete Lock</h4>
+              <p class="text-sm mb-1">
+                Dismantles the resolver bind-mount using <code class="inline">umount -l</code> (lazy unmount) to ensure
+                instant overlay detachment, cleans up the volatile resolver file, and deletes the lock file at <code
+                  class="inline">/run/ttp/ttp.lock</code>. Cleartext networking is fully restored.
               </p>
             </div>
           </div>
@@ -1141,7 +1175,7 @@
             </div>
             <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
               <div class="rule-line">
-                <span class="rule-comment"># TTP - Transparent Tor Proxy rules (v0.4.0 Dual-Stack)</span>
+                <span class="rule-comment"># TTP - Transparent Tor Proxy rules (v0.4.5 Dual-Stack)</span>
               </div>
               <div class="rule-line">
                 <span class="rule-comment"># Applied atomically via nft -f</span>
@@ -1218,6 +1252,22 @@
                 <span class="ml-8 text-gray-300">meta skuid</span>
                 <span class="rule-value">114</span>
                 <span class="rule-action">accept</span>
+              </div>
+              <div class="mt-1"></div>
+              <div class="rule-line">
+                <span class="rule-comment ml-8"># 1b. Split-tunneling bypass exceptions (UID 1001, GID 1002)</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-300">meta skuid 1001 ip daddr != 127.0.0.1 accept</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-300">meta skuid 1001 ip6 daddr != ::1 accept</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-300">meta skgid 1002 ip daddr != 127.0.0.1 accept</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-300">meta skgid 1002 ip6 daddr != ::1 accept</span>
               </div>
               <div class="mt-1"></div>
               <div class="rule-line">
@@ -1304,6 +1354,16 @@
                 <span class="rule-value">114</span>
                 <span class="rule-action">accept</span>
               </div>
+              <div class="mt-1"></div>
+              <div class="rule-line">
+                <span class="rule-comment ml-8"># Split-tunneling bypass exceptions (UID 1001, GID 1002)</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-300">meta skuid 1001 accept</span>
+              </div>
+              <div class="rule-line">
+                <span class="ml-8 text-gray-300">meta skgid 1002 accept</span>
+              </div>
               <div class="rule-line">
                 <span class="rule-comment ml-8"># Allow root processes if explicitly requested via --allow-root</span>
               </div>
@@ -1377,7 +1437,7 @@
 
           <div class="warn-box mb-4">
             <div class="label">
-              <i class="fas fa-exclamation-triangle mr-2"></i>CRITICAL RULE ORDERING IN TTP v0.4.0
+              <i class="fas fa-exclamation-triangle mr-2"></i>CRITICAL RULE ORDERING IN TTP v0.4.5
             </div>
             <ul class="list-disc pl-5 space-y-1">
               <li>
@@ -1455,6 +1515,29 @@
                 Rejects direct traffic to well-known public DoH resolver IPs on port 443 (Cloudflare, Google, Quad9,
                 OpenDNS) - both IPv4 and IPv6. This provides defense-in-depth protection against non-compliant browsers
                 that bypass the local resolver and ignore canary domain signals.
+              </p>
+            </div>
+            <div class="module-card p-5 bg-dark-card">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="badge badge-cyan">SPLIT TUNNELING</span>
+                <span class="text-white font-bold font-mono text-sm">UID &amp; GID Bypass Exceptions</span>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">
+                Allows specific local users or groups to communicate directly with the cleartext WAN (bypassing Tor NAT
+                redirection and watchdog lockdown) via <code class="inline">meta skuid</code> / <code
+                  class="inline">meta skgid</code> rules. Configured via <code class="inline">--bypass-user</code> and
+                <code class="inline">--bypass-group</code>.
+              </p>
+            </div>
+            <div class="module-card p-5 bg-dark-card">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="badge badge-red">ZERO-LEAK SHUTDOWN</span>
+                <span class="text-white font-bold font-mono text-sm">Active Socket Slaughter</span>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">
+                Prevents cleartext traffic leaks during teardown by applying transient lockdown rules, actively
+                injecting TCP resets (RST packets) to terminate pending connections, and flushing Netfilter conntrack
+                states via <code class="inline">conntrack -F</code>.
               </p>
             </div>
           </div>
@@ -1560,17 +1643,26 @@
                 class="bg-white/3 px-5 py-3 flex items-center justify-between border-b border-white/5 overflow-x-auto whitespace-nowrap">
                 <span class="font-mono text-white font-bold text-sm sm:text-base">sudo ttp start [--interface/-i
                   &lt;iface&gt;] [--bootstrap-timeout &lt;sec&gt;] [--allow-root] [--no-lan-bypass]
-                  [--watchdog/-w]</span>
+                  [--watchdog/-w] [--bypass-user &lt;users&gt;] [--bypass-group &lt;groups&gt;]
+                  [--no-ipv6] [--external-daemon] [--tor-uid &lt;uid&gt;]</span>
               </div>
               <div class="p-5 text-gray-400 text-sm leading-relaxed space-y-3">
                 <p>
                   Starts the transparent proxy session. Orchestrates the full startup sequence, establishing the
-                  volatile Tor daemon, loading network-level nftables intercepts, and mounting the DNS resolver overlay.
+                  volatile Tor daemon (or linking with an external instance), loading network-level nftables intercepts,
+                  and mounting the DNS resolver overlay.
                 </p>
                 <div class="text-xs text-gray-500 space-y-1 font-mono pl-4 border-l border-white/10 mb-2">
                   <div>--allow-root Exempt processes running as UID 0 (root) from redirection</div>
                   <div>--no-lan-bypass Disable automatic exemption of RFC 1918 and local networks</div>
                   <div>--watchdog, -w Enable background health monitoring and emergency killswitch</div>
+                  <div>--bypass-user &lt;users&gt; Comma-separated list of usernames to exempt from Tor redirection
+                  </div>
+                  <div>--bypass-group &lt;groups&gt; Comma-separated list of groupnames to exempt from Tor redirection
+                  </div>
+                  <div>--no-ipv6 Force drop all outbound IPv6 traffic to prevent leaks</div>
+                  <div>--external-daemon Enable BYOD mode, coexisting with an external running Tor process</div>
+                  <div>--tor-uid &lt;uid&gt; Specify the numeric UID of the external Tor daemon (BYOD mode)</div>
                 </div>
                 <div class="terminal-window mt-3">
                   <div class="terminal-header">
@@ -1685,7 +1777,8 @@
                 class="bg-white/3 px-5 py-3 flex items-center justify-between border-b border-white/5 overflow-x-auto whitespace-nowrap">
                 <span class="font-mono text-white font-bold text-sm sm:text-base">sudo ttp restart [--interface/-i
                   &lt;iface&gt;] [--bootstrap-timeout &lt;sec&gt;] [--allow-root] [--no-lan-bypass]
-                  [--watchdog/-w]</span>
+                  [--watchdog/-w] [--bypass-user &lt;users&gt;] [--bypass-group &lt;groups&gt;]
+                  [--no-ipv6] [--external-daemon] [--tor-uid &lt;uid&gt;]</span>
               </div>
               <div class="p-5 text-gray-400 text-sm leading-relaxed space-y-3">
                 <p>
@@ -1697,6 +1790,13 @@
                   <div>--allow-root Exempt processes running as UID 0 (root) from redirection</div>
                   <div>--no-lan-bypass Disable automatic exemption of RFC 1918 and local networks</div>
                   <div>--watchdog, -w Enable background health monitoring and emergency killswitch</div>
+                  <div>--bypass-user &lt;users&gt; Comma-separated list of usernames to exempt from Tor redirection
+                  </div>
+                  <div>--bypass-group &lt;groups&gt; Comma-separated list of groupnames to exempt from Tor redirection
+                  </div>
+                  <div>--no-ipv6 Force drop all outbound IPv6 traffic to prevent leaks</div>
+                  <div>--external-daemon Enable BYOD mode, coexisting with an external running Tor process</div>
+                  <div>--tor-uid &lt;uid&gt; Specify the numeric UID of the external Tor daemon (BYOD mode)</div>
                 </div>
               </div>
             </div>
@@ -1874,7 +1974,7 @@
             TTP establishes a background monitoring unit (<code class="inline">ttp-watchdog.service</code>). Operating
             continuously during an active session, it runs integrity diagnostics every 15 seconds to ensure that no
             leakage vectors develop due to system service restarts, third-party interventions, or hardware anomalies.
-            <strong>In v0.4.0, the watchdog was upgraded to be network-resilient</strong>: it dynamically detects
+            <strong>Since v0.4.0, the watchdog has been network-resilient</strong>: it dynamically detects
             physical network carrier drops and route removals, safely suspending integrity checks when offline to
             prevent false-positive lockouts, and automatically resuming when connectivity stabilizes. The watchdog
             operates under a strict two-strike escalation protocol:
@@ -2216,9 +2316,10 @@
               <div class="label">
                 <i class="fas fa-exclamation-triangle mr-2"></i>IPv6 DUAL-STACK &amp; FALLBACK DROP
               </div>
-              TTP v0.4.0 supports native transparent IPv6 redirection, automatically generating a dual-stack
-              configuration if IPv6 is supported by the host. However, if the host lacks IPv6 support or routing is
-              disabled, TTP falls back to dropping all outgoing IPv6 traffic to prevent potential cleartext leaks.
+              TTP v0.4.5 supports native transparent IPv6 redirection, automatically generating a dual-stack
+              configuration if IPv6 is supported by the host. However, if the host lacks IPv6 support, routing is
+              disabled, or the <code class="inline">--no-ipv6</code> option is supplied, TTP falls back to dropping all
+              outgoing IPv6 traffic to prevent potential cleartext leaks.
             </div>
 
             <div class="warn-box">
@@ -2306,7 +2407,7 @@
       class="max-w-screen-2xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
       <div class="flex flex-col sm:flex-row items-center gap-3">
         <span class="font-display font-bold text-white">TTP<span class="text-cyan-400">_DOCS</span></span>
-        <span class="text-gray-600 font-mono text-xs">v0.4.0 - MIT License</span>
+        <span class="text-gray-600 font-mono text-xs">v0.4.5 - MIT License</span>
       </div>
       <div class="flex flex-col items-center md:items-end gap-3">
         <div class="flex flex-wrap justify-center gap-6">

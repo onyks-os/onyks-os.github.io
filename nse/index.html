@@ -288,7 +288,7 @@
           <i class="fas fa-chevron-left"></i>
         </a>
         <span class="font-display font-bold text-lg text-white">NSE<span class="text-cyan-400">_DOCS</span></span>
-        <span class="badge badge-cyan hidden sm:inline">v1.0.0</span>
+        <span class="badge badge-cyan hidden sm:inline">v1.1.0</span>
       </div>
       <div class="hidden sm:flex items-center gap-3">
         <a href="https://github.com/sponsors/onyks-os" target="_blank"
@@ -423,10 +423,9 @@
                   https://github.com/onyks-os/NetworkSandboxEngine.git</span></div>
               <div><span class="text-cyan-400">$</span> <span class="text-gray-300">cd NetworkSandboxEngine && make
                   setup</span></div>
-              <div><span class="text-cyan-400">$</span> <span class="text-gray-300">sudo -E .venv/bin/python -m nse
-                  serve --dev</span></div>
-              <div class="mt-2 text-gray-500">[NSE] Development mode — binding to http://127.0.0.1:8000</div>
-              <div class="text-green-400">[OK] Ephemeral sandbox engine ready. Web UI initialized.</div>
+              <div><span class="text-cyan-400">$</span> <span class="text-gray-300">sudo -E make run-rootd</span></div>
+              <div class="mt-2 text-gray-500">[NSE-ROOTD] Socket server running as root...</div>
+              <div class="text-green-400">[OK] Listening on /var/run/nse-core.sock</div>
             </div>
           </div>
 
@@ -553,10 +552,10 @@
             </div>
           </div>
 
-          <h3 class="text-white font-bold mb-3">3. Running the Dashboard</h3>
+          <h3 class="text-white font-bold mb-3">3. Running the Dashboard (Privilege Separation)</h3>
           <p class="text-gray-400 text-sm mb-4 leading-relaxed">
-            Start the backend FastAPI daemon (requires root) and the frontend Vite development server in two separate
-            terminals:
+            NSE version 1.1.0+ implements a privilege-separated architecture. Start the root execution daemon, the
+            unprivileged API server, and the Vite frontend dev server in three separate terminals:
           </p>
           <div class="terminal-window mb-8">
             <div class="terminal-header">
@@ -566,9 +565,12 @@
               <span class="terminal-label">bash</span>
             </div>
             <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
-              <div><span class="text-gray-500"># Terminal 1 - Start Backend Daemon</span></div>
-              <div><span class="text-cyan-400">$</span> <span class="text-gray-300">make backend</span></div>
-              <div class="mt-2"><span class="text-gray-500"># Terminal 2 - Start Frontend</span></div>
+              <div><span class="text-gray-500"># Terminal 1 - Start Root Daemon (requires root)</span></div>
+              <div><span class="text-cyan-400">$</span> <span class="text-gray-300">sudo -E make run-rootd</span></div>
+              <div class="mt-2"><span class="text-gray-500"># Terminal 2 - Start API Web Server (runs as normal
+                  user)</span></div>
+              <div><span class="text-cyan-400">$</span> <span class="text-gray-300">make run-web</span></div>
+              <div class="mt-2"><span class="text-gray-500"># Terminal 3 - Start Vite Frontend Dev Server</span></div>
               <div><span class="text-cyan-400">$</span> <span class="text-gray-300">make frontend</span></div>
             </div>
           </div>
@@ -599,10 +601,18 @@
                     animation.</td>
                 </tr>
                 <tr>
-                  <td>Daemon API</td>
+                  <td>Execution Daemon (`nse-rootd`)</td>
+                  <td>Python JSON-RPC</td>
+                  <td>Runs as root. Exposes an isolated UNIX socket interface (<code
+                      class="inline">/var/run/nse-core.sock</code>) to handle low-level network namespace allocations,
+                    Scapy packet injections, and trace harvesting.</td>
+                </tr>
+                <tr>
+                  <td>Web Server (`nse-web`)</td>
                   <td>FastAPI</td>
-                  <td>Main server running as root. Handles namespace allocations, veth pairings, and routes execution
-                    data over WebSockets.</td>
+                  <td>Runs as an unprivileged user. Interacts with the user interface via WebSockets and REST,
+                    delegating low-level operations to the root daemon using <code class="inline">RootdClient</code>.
+                  </td>
                 </tr>
                 <tr>
                   <td>Packet Injector</td>
@@ -678,8 +688,8 @@
           </div>
 
           <p class="text-gray-400 text-sm mb-4 leading-relaxed">
-            Automated assertions can be run inside headless environments using the <code class="inline">nse test</code>
-            CLI:
+            Automated assertions can be run inside headless environments using the <code
+              class="inline">nse-runner</code> CLI:
           </p>
           <div class="terminal-window mb-8">
             <div class="terminal-header">
@@ -689,8 +699,8 @@
               <span class="terminal-label">bash</span>
             </div>
             <div class="p-4 sm:p-5 font-mono text-sm leading-7 overflow-x-auto whitespace-nowrap">
-              <div><span class="text-cyan-400">$</span> <span class="text-gray-300">sudo PYTHONPATH=backend
-                  .venv/bin/python -m nse.cli test --file backend/tests/test_suite.yaml</span></div>
+              <div><span class="text-cyan-400">$</span> <span class="text-gray-300">sudo -E .venv/bin/python -m
+                  nse.cli.runner --file tests/test_suite.yaml</span></div>
             </div>
           </div>
 
@@ -797,8 +807,8 @@
               <br />
               <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-gray-500"># 3. Call NSE CLI test runner</span></div>
               <div>&nbsp;&nbsp;&nbsp;&nbsp;res = subprocess.run([<span class="text-green-400">"python3"</span>, <span
-                  class="text-green-400">"-m"</span>, <span class="text-green-400">"nse.cli"</span>, <span
-                  class="text-green-400">"test"</span>, ...])</div>
+                  class="text-green-400">"-m"</span>, <span class="text-green-400">"nse.cli.runner"</span>, <span
+                  class="text-green-400">"--file"</span>, tmp_yaml_path])</div>
               <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cyan-400">assert</span> res.returncode == 0</div>
             </div>
           </div>
@@ -814,9 +824,9 @@
 
           <h3 class="text-white font-bold mb-3">Release Packaging (`make release`)</h3>
           <p class="text-gray-400 text-sm mb-4 leading-relaxed">
-            Running <code class="inline">make release</code> compiles the frontend assets, embeds them inside the python
-            backend, packages the wheel (<code class="inline">.whl</code>), and signs the final release bundle using
-            GPG.
+            Running <code class="inline">make release</code> runs linter and unit tests, compiles python distribution
+            package files (wheel and source distribution), copies deployment assets (like the Dockerfile and systemd
+            template), and signs the final release bundle containing the checksums using GPG.
           </p>
 
           <h3 class="text-white font-bold mb-3">Docker Container Deployment</h3>
@@ -876,7 +886,7 @@
       class="max-w-screen-2xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
       <div class="flex flex-col sm:flex-row items-center gap-3">
         <span class="font-display font-bold text-white">Network<span class="text-cyan-400">SandboxEngine</span></span>
-        <span class="text-gray-600 font-mono text-xs">v1.0.0 — MIT License</span>
+        <span class="text-gray-600 font-mono text-xs">v1.1.0 — MIT License</span>
       </div>
       <div class="flex flex-col items-center md:items-end gap-3">
         <div class="flex flex-wrap justify-center gap-6">
