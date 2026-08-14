@@ -12,29 +12,31 @@
         <meta name="author" content="onyks-os">
       
       
-        <link rel="canonical" href="https://onyks-os.github.io/ttp/">
+        <link rel="canonical" href="https://onyks-os.github.io/ttp/explanation/architecture/">
       
       
+        <link rel="prev" href="../../how-to/vm-testing/">
       
-        <link rel="next" href="tutorials/quickstart/">
+      
+        <link rel="next" href="../watchdog-fsm/">
       
       
         
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>TTP - Transparent Tor Proxy</title>
+        <title>Architecture & Flow - TTP - Transparent Tor Proxy</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -53,11 +55,11 @@
       
     
     
-      <link rel="stylesheet" href="assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="stylesheets/extra.css">
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -82,7 +84,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#transparent-tor-proxy-ttp" class="md-skip">
+        <a href="#explanation-system-architecture-and-execution-flow" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +100,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="TTP - Transparent Tor Proxy" class="md-header__button md-logo" aria-label="TTP - Transparent Tor Proxy" data-md-component="logo">
+    <a href="../.." title="TTP - Transparent Tor Proxy" class="md-header__button md-logo" aria-label="TTP - Transparent Tor Proxy" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -118,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              Architecture & Flow
             
           </span>
         </div>
@@ -223,11 +225,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="." class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
         
   
   
@@ -248,7 +248,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="tutorials/quickstart/" class="md-tabs__link">
+        <a href="../../tutorials/quickstart/" class="md-tabs__link">
           
   
   
@@ -268,7 +268,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="how-to/user-bypass/" class="md-tabs__link">
+        <a href="../../how-to/user-bypass/" class="md-tabs__link">
           
   
   
@@ -284,11 +284,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="explanation/architecture/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
           
   
   
@@ -308,7 +310,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="reference/cli/" class="md-tabs__link">
+        <a href="../../reference/cli/" class="md-tabs__link">
           
   
   
@@ -328,7 +330,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="release-notes/changelog/" class="md-tabs__link">
+        <a href="../../release-notes/changelog/" class="md-tabs__link">
           
   
   
@@ -368,7 +370,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="TTP - Transparent Tor Proxy" class="md-nav__button md-logo" aria-label="TTP - Transparent Tor Proxy" data-md-component="logo">
+    <a href="../.." title="TTP - Transparent Tor Proxy" class="md-nav__button md-logo" aria-label="TTP - Transparent Tor Proxy" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -395,37 +397,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Home
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -441,59 +416,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#core-technical-features" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Core Technical Features
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick Usage
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#documentation-structure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Documentation Structure
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -557,7 +479,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tutorials/quickstart/" class="md-nav__link">
+      <a href="../../tutorials/quickstart/" class="md-nav__link">
         
   
   
@@ -585,7 +507,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tutorials/bypass-basics/" class="md-nav__link">
+      <a href="../../tutorials/bypass-basics/" class="md-nav__link">
         
   
   
@@ -613,7 +535,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tutorials/censorship-circumvention/" class="md-nav__link">
+      <a href="../../tutorials/censorship-circumvention/" class="md-nav__link">
         
   
   
@@ -641,7 +563,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tutorials/automating-sessions/" class="md-nav__link">
+      <a href="../../tutorials/automating-sessions/" class="md-nav__link">
         
   
   
@@ -669,7 +591,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tutorials/diagnosing-failures/" class="md-nav__link">
+      <a href="../../tutorials/diagnosing-failures/" class="md-nav__link">
         
   
   
@@ -697,7 +619,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tutorials/ipv6-policy/" class="md-nav__link">
+      <a href="../../tutorials/ipv6-policy/" class="md-nav__link">
         
   
   
@@ -784,7 +706,7 @@
   
   
     <li class="md-nav__item">
-      <a href="how-to/user-bypass/" class="md-nav__link">
+      <a href="../../how-to/user-bypass/" class="md-nav__link">
         
   
   
@@ -812,7 +734,7 @@
   
   
     <li class="md-nav__item">
-      <a href="how-to/bridges/" class="md-nav__link">
+      <a href="../../how-to/bridges/" class="md-nav__link">
         
   
   
@@ -840,7 +762,7 @@
   
   
     <li class="md-nav__item">
-      <a href="how-to/custom-nftables/" class="md-nav__link">
+      <a href="../../how-to/custom-nftables/" class="md-nav__link">
         
   
   
@@ -868,7 +790,7 @@
   
   
     <li class="md-nav__item">
-      <a href="how-to/vm-testing/" class="md-nav__link">
+      <a href="../../how-to/vm-testing/" class="md-nav__link">
         
   
   
@@ -900,26 +822,31 @@
       
   
   
+    
   
   
+  
     
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   
@@ -937,7 +864,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -952,10 +879,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="explanation/architecture/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture & Flow
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -971,6 +925,115 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-system-layer-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. System Layer Diagram
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-kernel-network-pipeline-nftables-interception" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Kernel Network Pipeline (nftables Interception)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Kernel Network Pipeline (nftables Interception)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#packet-routing-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Packet Routing Logic
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-stateless-dns-overlay-subsystem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Stateless DNS Overlay Subsystem
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Stateless DNS Overlay Subsystem">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vfs-bind-mount-overlay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VFS Bind-Mount Overlay
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#systemd-resolved-volatile-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        systemd-resolved Volatile Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-volatile-storage-and-memory-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Volatile Storage and Memory Layout
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -983,7 +1046,7 @@
   
   
     <li class="md-nav__item">
-      <a href="explanation/watchdog-fsm/" class="md-nav__link">
+      <a href="../watchdog-fsm/" class="md-nav__link">
         
   
   
@@ -1011,7 +1074,7 @@
   
   
     <li class="md-nav__item">
-      <a href="explanation/security-assessment/" class="md-nav__link">
+      <a href="../security-assessment/" class="md-nav__link">
         
   
   
@@ -1098,7 +1161,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/cli/" class="md-nav__link">
+      <a href="../../reference/cli/" class="md-nav__link">
         
   
   
@@ -1126,7 +1189,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/dependencies/" class="md-nav__link">
+      <a href="../../reference/dependencies/" class="md-nav__link">
         
   
   
@@ -1154,7 +1217,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/api/" class="md-nav__link">
+      <a href="../../reference/api/" class="md-nav__link">
         
   
   
@@ -1241,7 +1304,7 @@
   
   
     <li class="md-nav__item">
-      <a href="release-notes/changelog/" class="md-nav__link">
+      <a href="../../release-notes/changelog/" class="md-nav__link">
         
   
   
@@ -1296,10 +1359,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#core-technical-features" class="md-nav__link">
+  <a href="#1-system-layer-diagram" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Core Technical Features
+        1. System Layer Diagram
       
     </span>
   </a>
@@ -1307,21 +1370,77 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-usage" class="md-nav__link">
+  <a href="#2-kernel-network-pipeline-nftables-interception" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Usage
+        2. Kernel Network Pipeline (nftables Interception)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Kernel Network Pipeline (nftables Interception)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#packet-routing-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Packet Routing Logic
       
     </span>
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#documentation-structure" class="md-nav__link">
+  <a href="#3-stateless-dns-overlay-subsystem" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Documentation Structure
+        3. Stateless DNS Overlay Subsystem
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Stateless DNS Overlay Subsystem">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vfs-bind-mount-overlay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VFS Bind-Mount Overlay
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#systemd-resolved-volatile-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        systemd-resolved Volatile Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-volatile-storage-and-memory-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Volatile Storage and Memory Layout
       
     </span>
   </a>
@@ -1348,96 +1467,141 @@
   
 
 
-<h1 id="transparent-tor-proxy-ttp">Transparent Tor Proxy (TTP)</h1>
-<p>TTP is a Linux system utility that transparently routes all TCP and DNS traffic through the Tor network using <code>nftables</code> kernel rules and a volatile runtime architecture.</p>
-<p><a class="md-button md-button--primary" href="tutorials/quickstart/">Quickstart Guide</a>
-<a class="md-button" href="explanation/architecture/">Architecture &amp; FSM</a>
-<a class="md-button" href="https://github.com/onyks-os/TransparentTorProxy">GitHub Repository</a></p>
+<h1 id="explanation-system-architecture-and-execution-flow">Explanation: System Architecture and Execution Flow</h1>
+<p>TTP transparently routes all system TCP traffic and DNS queries through the Tor network by orchestrating Linux kernel subsystems, system utilities, and Tor control interfaces without modifying persistent host configurations.</p>
 <hr />
-<div class="admonition warning">
-<p class="admonition-title">Security Notice</p>
-<p>Transparent proxying routes system network connections through Tor, but it does not modify application-layer identifiers such as browser user-agents, HTTP headers, or TLS client hellos. For comprehensive privacy recommendations and threat modeling guidelines, refer to <a href="https://www.privacyguides.org/">Privacy Guides</a>.</p>
-</div>
+<h2 id="1-system-layer-diagram">1. System Layer Diagram</h2>
+<pre class="mermaid"><code>flowchart TD
+    subgraph Layer1["1. User &amp; Application Layer"]
+        App["Target Linux Application"]
+        CLI["TTP CLI Controller"]
+        State["Volatile RAM State (/run/ttp)"]
+    end
+
+    subgraph Layer2["2. Interception &amp; Control Layer"]
+        NFT["nftables Engine (inet ttp Table)"]
+        DNSOverlay["VFS DNS Mount Overlay (/etc/resolv.conf)"]
+        Resolved["systemd-resolved (Volatile Drop-in)"]
+        FSM["Watchdog FSM Daemon"]
+    end
+
+    subgraph Layer3["3. Service &amp; Socket Layer"]
+        TorDaemon["Dedicated Tor Service (ttp-tor.service)"]
+        TorControl["Tor ControlPort Socket (/run/tor/ttp/control)"]
+        TransPort["Tor TransPort (127.0.0.1:9040 / [::1]:9040)"]
+        DNSPort["Tor DNSPort (127.0.0.1:5353)"]
+    end
+
+    subgraph Layer4["4. Network &amp; WAN Layer"]
+        TorNetwork["Tor Relays &amp; Exit Nodes"]
+        WAN["Internet / WAN"]
+    end
+
+    App --&gt;|TCP Traffic| NFT
+    App --&gt;|DNS Query| Resolved
+    Resolved --&gt;|Forward| DNSOverlay
+
+    CLI --&gt;|Configure| NFT
+    CLI --&gt;|Apply Mount| DNSOverlay
+    CLI --&gt;|Launch| TorDaemon
+    CLI --&gt;|Write Lock| State
+
+    FSM --&gt;|Monitor 5s| NFT
+    FSM --&gt;|Inotify Watch| DNSOverlay
+    FSM --&gt;|Query Status| TorControl
+
+    NFT --&gt;|Redirect TCP| TransPort
+    DNSOverlay --&gt;|Route DNS| DNSPort
+
+    TransPort --&gt; TorDaemon
+    DNSPort --&gt; TorDaemon
+    TorDaemon --&gt; TorControl
+    TorDaemon --&gt;|Encrypted Circuits| TorNetwork
+    TorNetwork --&gt; WAN</code></pre>
 <hr />
-<h2 id="core-technical-features">Core Technical Features</h2>
-<div class="grid cards">
-<ul>
-<li>
-<p><strong>Volatile Runtime Architecture</strong></p>
-<hr />
-<p>All session state, runtime <code>torrc</code> files, locks, and log buffers are maintained strictly in <code>/run/ttp</code> (<code>tmpfs</code>). No configuration data or session traces are written to persistent storage.</p>
-</li>
-<li>
-<p><strong>Kernel-Level Network Interception</strong></p>
-<hr />
-<p>Traffic is intercepted globally via custom <code>inet ttp</code> <code>nftables</code> tables. Applications require no individual proxy configuration, environment variables, or wrapper scripts.</p>
-</li>
-<li>
-<p><strong>Stateless DNS Overlay</strong></p>
-<hr />
-<p>System DNS resolution is bound to Tor DNSPort (<code>127.0.0.1:5353</code>) via an isolated <code>mount --bind</code> overlay on <code>/etc/resolv.conf</code> and <code>systemd-resolved</code> runtime overrides.</p>
-</li>
-<li>
-<p><strong>FSM Watchdog and Self-Healing</strong></p>
-<hr />
-<p>A background Finite State Machine monitors <code>nftables</code> rule integrity and process health. If tampered with or interrupted, rules are automatically repaired or reset to a closed killswitch state.</p>
-</li>
-<li>
-<p><strong>Subnet and Process Exclusion</strong></p>
-<hr />
-<p>Supports RFC 1918 local area network exclusion (<code>--lan-bypass</code>) and process isolation by system user or group (<code>--bypass-user</code>, <code>--bypass-group</code>, <code>sudo ttp bypass</code>).</p>
-</li>
-<li>
-<p><strong>IPv6 Leak Prevention</strong></p>
-<hr />
-<p>Ensures zero IPv6 leaks through explicit dual-stack redirection rules or a hard outbound drop policy (<code>--no-ipv6</code>).</p>
-</li>
-</ul>
-</div>
-<hr />
-<h2 id="quick-usage">Quick Usage</h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Start transparent proxy session with default FSM watchdog</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sudo<span class="w"> </span>ttp<span class="w"> </span>start
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Verify Tor circuit connectivity and public exit IP</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>ttp<span class="w"> </span>check
+<h2 id="2-kernel-network-pipeline-nftables-interception">2. Kernel Network Pipeline (<code>nftables</code> Interception)</h2>
+<p>Network interception is executed atomically via a dedicated <code>nftables</code> table named <code>inet ttp</code>. The table defines three primary netfilter chains:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>table inet ttp {
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    chain prerouting {
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        type filter hook prerouting priority dstnat; policy accept;
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        iifname != &quot;lo&quot; meta l4proto tcp redirect to :9040
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    }
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Display live session state and active options</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>ttp<span class="w"> </span>status
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># Terminate session and restore original network state</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>sudo<span class="w"> </span>ttp<span class="w"> </span>stop
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    chain output {
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        type route hook output priority mangle; policy accept;
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        skuid &quot;ttp-tor&quot; accept
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        skuid &quot;clearnet-user&quot; accept
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        skgid &quot;bypass-group&quot; accept
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        oifname &quot;lo&quot; accept
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        udp dport 53 redirect to :5353
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        tcp dport 53 redirect to :5353
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        meta l4proto tcp redirect to :9040
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    }
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    chain filter_out {
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>        type filter hook output priority filter; policy accept;
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        udp dport 443 drop
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>        tcp dport 853 drop
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>        udp dport 853 drop
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>        ip6 nexthdr != { icmpv6 } drop
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    }
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>}
 </span></code></pre></div>
+<h3 id="packet-routing-logic">Packet Routing Logic</h3>
+<ol>
+<li><strong>UID/GID Exemption</strong>: Packets originating from <code>ttp-tor</code> (Tor daemon UID), designated bypass users (<code>--bypass-user</code>), or bypass groups (<code>--bypass-group</code>) are accepted without redirection.</li>
+<li><strong>DNS Interception</strong>: Outbound UDP and TCP port 53 traffic is redirected to Tor DNSPort (<code>127.0.0.1:5353</code>).</li>
+<li><strong>TCP Redirection</strong>: All remaining outbound TCP connections are redirected to Tor TransPort (<code>127.0.0.1:9040</code> for IPv4, <code>[::1]:9040</code> for IPv6).</li>
+<li><strong>Hard Interception Rules (<code>filter_out</code>)</strong>:</li>
+<li><strong>QUIC / UDP 443 Drop</strong>: Drops UDP port 443 packets to prevent browsers from using HTTP/3 QUIC, forcing fallback to TCP (which Tor proxies).</li>
+<li><strong>DoT Drop</strong>: Drops TCP and UDP port 853 to prevent DNS-over-TLS bypass.</li>
+<li><strong>DoH Resolver Blocks</strong>: Drops traffic destined for known public DNS-over-HTTPS resolver IP addresses.</li>
+<li><strong>IPv6 Enforcement</strong>: When <code>--no-ipv6</code> is enabled, all non-ICMPv6 outbound IPv6 packets are dropped at the output hook.</li>
+</ol>
 <hr />
-<h2 id="documentation-structure">Documentation Structure</h2>
-<div class="grid cards">
-<ul>
-<li>
-<p><strong>Tutorials</strong></p>
+<h2 id="3-stateless-dns-overlay-subsystem">3. Stateless DNS Overlay Subsystem</h2>
+<p>System DNS resolution is isolated through a dual-mechanism approach:</p>
+<h3 id="vfs-bind-mount-overlay">VFS Bind-Mount Overlay</h3>
+<p>TTP creates a temporary RAM-backed <code>resolv.conf</code> file containing <code>nameserver 127.0.0.1</code> and overlays <code>/etc/resolv.conf</code> using a VFS kernel bind-mount (<code>mount --bind</code>).
+* <strong>Disk Integrity</strong>: The physical <code>/etc/resolv.conf</code> file on host storage is untouched.
+* <strong>Teardown</strong>: Upon session termination, <code>umount -l /etc/resolv.conf</code> unmounts the overlay instantly.</p>
+<h3 id="systemd-resolved-volatile-integration"><code>systemd-resolved</code> Volatile Integration</h3>
+<p>If <code>systemd-resolved</code> is active, TTP writes a volatile drop-in configuration at <code>/run/systemd/resolved.conf.d/ttp.conf</code> setting <code>DNS=127.0.0.1:5353</code> and <code>Domains=~.</code> before issuing a reload signal. This prevents <code>systemd-resolved</code> from querying upstream ISP resolvers.</p>
 <hr />
-<p>Step-by-step guides for installation, initial configuration, and verifying system proxying.</p>
-<p><a href="tutorials/quickstart/">View Tutorials</a></p>
-</li>
-<li>
-<p><strong>How-To Guides</strong></p>
-<hr />
-<p>Instructions for configuring Tor bridges, user bypass policies, and VM testing environments.</p>
-<p><a href="how-to/bridges/">View How-To Guides</a></p>
-</li>
-<li>
-<p><strong>Explanation</strong></p>
-<hr />
-<p>Deep dives into the <code>nftables</code> architecture, DNS mount mechanics, FSM state transitions, and security model.</p>
-<p><a href="explanation/architecture/">View Architecture</a></p>
-</li>
-<li>
-<p><strong>Reference</strong></p>
-<hr />
-<p>Command-line options, global flags, exit codes, system dependencies, and Python API details.</p>
-<p><a href="reference/cli/">View CLI Reference</a></p>
-</li>
-</ul>
-</div>
+<h2 id="4-volatile-storage-and-memory-layout">4. Volatile Storage and Memory Layout</h2>
+<p>TTP enforces a strict zero-disk residue design policy. All operational data is stored in <code>tmpfs</code> RAM filesystems:</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Storage Type</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/run/ttp/ttp.lock</code></td>
+<td><code>tmpfs</code></td>
+<td>Atomic session lockfile containing active parameters.</td>
+</tr>
+<tr>
+<td><code>/run/ttp/ttp.log</code></td>
+<td><code>tmpfs</code></td>
+<td>Volatile session log buffer.</td>
+</tr>
+<tr>
+<td><code>/run/tor/ttp/torrc</code></td>
+<td><code>tmpfs</code></td>
+<td>Generated Tor daemon runtime configuration.</td>
+</tr>
+<tr>
+<td><code>/run/tor/ttp/control</code></td>
+<td><code>tmpfs</code></td>
+<td>Unix domain socket for Tor ControlPort.</td>
+</tr>
+</tbody>
+</table>
+<p>Because all state resides under <code>/run</code>, any abrupt power loss or hard reboot automatically purges all runtime artifacts without manual intervention.</p>
 
 
 
@@ -1493,14 +1657,14 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
       
-        <script src="javascripts/mermaid_init.js"></script>
+        <script src="../../javascripts/mermaid_init.js"></script>
       
     
   </body>

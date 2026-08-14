@@ -12,29 +12,31 @@
         <meta name="author" content="onyks-os">
       
       
-        <link rel="canonical" href="https://onyks-os.github.io/ttp/">
+        <link rel="canonical" href="https://onyks-os.github.io/ttp/how-to/user-bypass/">
       
       
+        <link rel="prev" href="../../tutorials/ipv6-policy/">
       
-        <link rel="next" href="tutorials/quickstart/">
+      
+        <link rel="next" href="../bridges/">
       
       
         
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>TTP - Transparent Tor Proxy</title>
+        <title>User Bypass - TTP - Transparent Tor Proxy</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -53,11 +55,11 @@
       
     
     
-      <link rel="stylesheet" href="assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="stylesheets/extra.css">
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -82,7 +84,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#transparent-tor-proxy-ttp" class="md-skip">
+        <a href="#how-to-user-and-group-bypass-split-tunneling" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +100,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="TTP - Transparent Tor Proxy" class="md-header__button md-logo" aria-label="TTP - Transparent Tor Proxy" data-md-component="logo">
+    <a href="../.." title="TTP - Transparent Tor Proxy" class="md-header__button md-logo" aria-label="TTP - Transparent Tor Proxy" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -118,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              User Bypass
             
           </span>
         </div>
@@ -223,11 +225,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="." class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
         
   
   
@@ -248,7 +248,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="tutorials/quickstart/" class="md-tabs__link">
+        <a href="../../tutorials/quickstart/" class="md-tabs__link">
           
   
   
@@ -264,11 +264,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="how-to/user-bypass/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
           
   
   
@@ -288,7 +290,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="explanation/architecture/" class="md-tabs__link">
+        <a href="../../explanation/architecture/" class="md-tabs__link">
           
   
   
@@ -308,7 +310,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="reference/cli/" class="md-tabs__link">
+        <a href="../../reference/cli/" class="md-tabs__link">
           
   
   
@@ -328,7 +330,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="release-notes/changelog/" class="md-tabs__link">
+        <a href="../../release-notes/changelog/" class="md-tabs__link">
           
   
   
@@ -368,7 +370,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="TTP - Transparent Tor Proxy" class="md-nav__button md-logo" aria-label="TTP - Transparent Tor Proxy" data-md-component="logo">
+    <a href="../.." title="TTP - Transparent Tor Proxy" class="md-nav__button md-logo" aria-label="TTP - Transparent Tor Proxy" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -395,37 +397,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Home
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -441,59 +416,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#core-technical-features" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Core Technical Features
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick Usage
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#documentation-structure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Documentation Structure
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -557,7 +479,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tutorials/quickstart/" class="md-nav__link">
+      <a href="../../tutorials/quickstart/" class="md-nav__link">
         
   
   
@@ -585,7 +507,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tutorials/bypass-basics/" class="md-nav__link">
+      <a href="../../tutorials/bypass-basics/" class="md-nav__link">
         
   
   
@@ -613,7 +535,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tutorials/censorship-circumvention/" class="md-nav__link">
+      <a href="../../tutorials/censorship-circumvention/" class="md-nav__link">
         
   
   
@@ -641,7 +563,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tutorials/automating-sessions/" class="md-nav__link">
+      <a href="../../tutorials/automating-sessions/" class="md-nav__link">
         
   
   
@@ -669,7 +591,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tutorials/diagnosing-failures/" class="md-nav__link">
+      <a href="../../tutorials/diagnosing-failures/" class="md-nav__link">
         
   
   
@@ -697,7 +619,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tutorials/ipv6-policy/" class="md-nav__link">
+      <a href="../../tutorials/ipv6-policy/" class="md-nav__link">
         
   
   
@@ -729,26 +651,31 @@
       
   
   
+    
   
   
+  
     
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   
@@ -766,7 +693,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -781,10 +708,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="how-to/user-bypass/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Bypass
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -800,6 +754,98 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-exempting-a-dedicated-system-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Exempting a Dedicated System User
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Exempting a Dedicated System User">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#launching-a-dedicated-clearnet-browser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Launching a Dedicated Clearnet Browser
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-exempting-a-system-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Exempting a System Group
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-running-local-web-servers-unproxied" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Running Local Web Servers Unproxied
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-one-off-command-execution-sudo-ttp-bypass" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. One-Off Command Execution (sudo ttp bypass)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Considerations
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -812,7 +858,7 @@
   
   
     <li class="md-nav__item">
-      <a href="how-to/bridges/" class="md-nav__link">
+      <a href="../bridges/" class="md-nav__link">
         
   
   
@@ -840,7 +886,7 @@
   
   
     <li class="md-nav__item">
-      <a href="how-to/custom-nftables/" class="md-nav__link">
+      <a href="../custom-nftables/" class="md-nav__link">
         
   
   
@@ -868,7 +914,7 @@
   
   
     <li class="md-nav__item">
-      <a href="how-to/vm-testing/" class="md-nav__link">
+      <a href="../vm-testing/" class="md-nav__link">
         
   
   
@@ -955,7 +1001,7 @@
   
   
     <li class="md-nav__item">
-      <a href="explanation/architecture/" class="md-nav__link">
+      <a href="../../explanation/architecture/" class="md-nav__link">
         
   
   
@@ -983,7 +1029,7 @@
   
   
     <li class="md-nav__item">
-      <a href="explanation/watchdog-fsm/" class="md-nav__link">
+      <a href="../../explanation/watchdog-fsm/" class="md-nav__link">
         
   
   
@@ -1011,7 +1057,7 @@
   
   
     <li class="md-nav__item">
-      <a href="explanation/security-assessment/" class="md-nav__link">
+      <a href="../../explanation/security-assessment/" class="md-nav__link">
         
   
   
@@ -1098,7 +1144,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/cli/" class="md-nav__link">
+      <a href="../../reference/cli/" class="md-nav__link">
         
   
   
@@ -1126,7 +1172,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/dependencies/" class="md-nav__link">
+      <a href="../../reference/dependencies/" class="md-nav__link">
         
   
   
@@ -1154,7 +1200,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/api/" class="md-nav__link">
+      <a href="../../reference/api/" class="md-nav__link">
         
   
   
@@ -1241,7 +1287,7 @@
   
   
     <li class="md-nav__item">
-      <a href="release-notes/changelog/" class="md-nav__link">
+      <a href="../../release-notes/changelog/" class="md-nav__link">
         
   
   
@@ -1296,10 +1342,38 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#core-technical-features" class="md-nav__link">
+  <a href="#1-exempting-a-dedicated-system-user" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Core Technical Features
+        1. Exempting a Dedicated System User
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Exempting a Dedicated System User">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#launching-a-dedicated-clearnet-browser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Launching a Dedicated Clearnet Browser
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-exempting-a-system-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Exempting a System Group
       
     </span>
   </a>
@@ -1307,10 +1381,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-usage" class="md-nav__link">
+  <a href="#3-running-local-web-servers-unproxied" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Usage
+        3. Running Local Web Servers Unproxied
       
     </span>
   </a>
@@ -1318,10 +1392,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#documentation-structure" class="md-nav__link">
+  <a href="#4-one-off-command-execution-sudo-ttp-bypass" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Documentation Structure
+        4. One-Off Command Execution (sudo ttp bypass)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Considerations
       
     </span>
   </a>
@@ -1348,95 +1433,50 @@
   
 
 
-<h1 id="transparent-tor-proxy-ttp">Transparent Tor Proxy (TTP)</h1>
-<p>TTP is a Linux system utility that transparently routes all TCP and DNS traffic through the Tor network using <code>nftables</code> kernel rules and a volatile runtime architecture.</p>
-<p><a class="md-button md-button--primary" href="tutorials/quickstart/">Quickstart Guide</a>
-<a class="md-button" href="explanation/architecture/">Architecture &amp; FSM</a>
-<a class="md-button" href="https://github.com/onyks-os/TransparentTorProxy">GitHub Repository</a></p>
+<h1 id="how-to-user-and-group-bypass-split-tunneling">How-To: User and Group Bypass (Split Tunneling)</h1>
+<p>This guide provides practical recipes for running specific applications, system accounts, or local development servers outside the Tor transparent proxy using TTP split-tunneling features.</p>
 <hr />
-<div class="admonition warning">
-<p class="admonition-title">Security Notice</p>
-<p>Transparent proxying routes system network connections through Tor, but it does not modify application-layer identifiers such as browser user-agents, HTTP headers, or TLS client hellos. For comprehensive privacy recommendations and threat modeling guidelines, refer to <a href="https://www.privacyguides.org/">Privacy Guides</a>.</p>
-</div>
+<h2 id="1-exempting-a-dedicated-system-user">1. Exempting a Dedicated System User</h2>
+<p>To run a dedicated user account outside Tor proxying:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Start TTP excluding the &#39;clearnet-user&#39; account</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sudo<span class="w"> </span>ttp<span class="w"> </span>start<span class="w"> </span>--bypass-user<span class="w"> </span>clearnet-user
+</span></code></pre></div>
+<h3 id="launching-a-dedicated-clearnet-browser">Launching a Dedicated Clearnet Browser</h3>
+<p>Execute a web browser instance as the bypassed user:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Launch Firefox as the bypassed user</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo<span class="w"> </span>-u<span class="w"> </span>clearnet-user<span class="w"> </span>firefox<span class="w"> </span><span class="p">&amp;</span>
+</span></code></pre></div>
+<p>Any TCP connection initiated by processes owned by <code>clearnet-user</code> bypasses the <code>inet ttp</code> <code>nftables</code> table and routes directly via standard network interfaces.</p>
 <hr />
-<h2 id="core-technical-features">Core Technical Features</h2>
-<div class="grid cards">
-<ul>
-<li>
-<p><strong>Volatile Runtime Architecture</strong></p>
+<h2 id="2-exempting-a-system-group">2. Exempting a System Group</h2>
+<p>To exempt all users belonging to a specific system group:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Start TTP excluding the &#39;bypass-users&#39; group</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>ttp<span class="w"> </span>start<span class="w"> </span>--bypass-group<span class="w"> </span>bypass-users
+</span></code></pre></div>
+<p>Add your local user to the bypass group:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>bypass-users<span class="w"> </span><span class="nv">$USER</span>
+</span></code></pre></div>
+<p>Note that group membership updates require re-logging or spawning a new shell via <code>sg bypass-users</code>.</p>
 <hr />
-<p>All session state, runtime <code>torrc</code> files, locks, and log buffers are maintained strictly in <code>/run/ttp</code> (<code>tmpfs</code>). No configuration data or session traces are written to persistent storage.</p>
-</li>
-<li>
-<p><strong>Kernel-Level Network Interception</strong></p>
-<hr />
-<p>Traffic is intercepted globally via custom <code>inet ttp</code> <code>nftables</code> tables. Applications require no individual proxy configuration, environment variables, or wrapper scripts.</p>
-</li>
-<li>
-<p><strong>Stateless DNS Overlay</strong></p>
-<hr />
-<p>System DNS resolution is bound to Tor DNSPort (<code>127.0.0.1:5353</code>) via an isolated <code>mount --bind</code> overlay on <code>/etc/resolv.conf</code> and <code>systemd-resolved</code> runtime overrides.</p>
-</li>
-<li>
-<p><strong>FSM Watchdog and Self-Healing</strong></p>
-<hr />
-<p>A background Finite State Machine monitors <code>nftables</code> rule integrity and process health. If tampered with or interrupted, rules are automatically repaired or reset to a closed killswitch state.</p>
-</li>
-<li>
-<p><strong>Subnet and Process Exclusion</strong></p>
-<hr />
-<p>Supports RFC 1918 local area network exclusion (<code>--lan-bypass</code>) and process isolation by system user or group (<code>--bypass-user</code>, <code>--bypass-group</code>, <code>sudo ttp bypass</code>).</p>
-</li>
-<li>
-<p><strong>IPv6 Leak Prevention</strong></p>
-<hr />
-<p>Ensures zero IPv6 leaks through explicit dual-stack redirection rules or a hard outbound drop policy (<code>--no-ipv6</code>).</p>
-</li>
-</ul>
-</div>
-<hr />
-<h2 id="quick-usage">Quick Usage</h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Start transparent proxy session with default FSM watchdog</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sudo<span class="w"> </span>ttp<span class="w"> </span>start
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Verify Tor circuit connectivity and public exit IP</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>ttp<span class="w"> </span>check
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Display live session state and active options</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>ttp<span class="w"> </span>status
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># Terminate session and restore original network state</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>sudo<span class="w"> </span>ttp<span class="w"> </span>stop
+<h2 id="3-running-local-web-servers-unproxied">3. Running Local Web Servers Unproxied</h2>
+<p>To host a local development web server (e.g. Node.js, Python, or Nginx) accessible over standard ISP networks while TTP is active:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Run local Python HTTP server under a bypassed user</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>sudo<span class="w"> </span>-u<span class="w"> </span>clearnet-user<span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>http.server<span class="w"> </span><span class="m">8080</span>
+</span></code></pre></div>
+<p>Alternatively, use <code>sudo ttp bypass</code> to run the server in a transient <code>systemd</code> scope:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>ttp<span class="w"> </span>bypass<span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>http.server<span class="w"> </span><span class="m">8080</span>
 </span></code></pre></div>
 <hr />
-<h2 id="documentation-structure">Documentation Structure</h2>
-<div class="grid cards">
-<ul>
-<li>
-<p><strong>Tutorials</strong></p>
+<h2 id="4-one-off-command-execution-sudo-ttp-bypass">4. One-Off Command Execution (<code>sudo ttp bypass</code>)</h2>
+<p>To execute a single command as an unproxied process without creating permanent user exemptions:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Perform a direct curl request</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>sudo<span class="w"> </span>ttp<span class="w"> </span>bypass<span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span>https://api.ipify.org
+</span></code></pre></div>
 <hr />
-<p>Step-by-step guides for installation, initial configuration, and verifying system proxying.</p>
-<p><a href="tutorials/quickstart/">View Tutorials</a></p>
-</li>
-<li>
-<p><strong>How-To Guides</strong></p>
-<hr />
-<p>Instructions for configuring Tor bridges, user bypass policies, and VM testing environments.</p>
-<p><a href="how-to/bridges/">View How-To Guides</a></p>
-</li>
-<li>
-<p><strong>Explanation</strong></p>
-<hr />
-<p>Deep dives into the <code>nftables</code> architecture, DNS mount mechanics, FSM state transitions, and security model.</p>
-<p><a href="explanation/architecture/">View Architecture</a></p>
-</li>
-<li>
-<p><strong>Reference</strong></p>
-<hr />
-<p>Command-line options, global flags, exit codes, system dependencies, and Python API details.</p>
-<p><a href="reference/cli/">View CLI Reference</a></p>
-</li>
-</ul>
+<h2 id="security-considerations">Security Considerations</h2>
+<div class="admonition warning">
+<p class="admonition-title">Cleartext Exposure</p>
+<p>Traffic generated by bypassed UIDs/GIDs does not pass through Tor. Avoid running applications carrying sensitive credentials or personal identifiers under a bypassed identity.</p>
 </div>
 
 
@@ -1493,14 +1533,14 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
       
-        <script src="javascripts/mermaid_init.js"></script>
+        <script src="../../javascripts/mermaid_init.js"></script>
       
     
   </body>

@@ -1,0 +1,1972 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for Network Sandbox Engine (NSE) - isolated Linux network namespace testing and kernel nftables trace evaluation.">
+      
+      
+        <meta name="author" content="onyks-os">
+      
+      
+        <link rel="canonical" href="https://onyks-os.github.io/NetworkSandboxEngine/release-notes/changelog/">
+      
+      
+        <link rel="prev" href="../../reference/dependencies/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Changelog - Network Sandbox Engine (NSE)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#changelog" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Network Sandbox Engine (NSE)" class="md-header__button md-logo" aria-label="Network Sandbox Engine (NSE)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Network Sandbox Engine (NSE)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Changelog
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/onyks-os/NetworkSandboxEngine" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    onyks-os/NetworkSandboxEngine
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../tutorials/quickstart/" class="md-tabs__link">
+          
+  
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../how-to/in-process-integration/" class="md-tabs__link">
+          
+  
+  
+  How-To Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../explanation/architecture/" class="md-tabs__link">
+          
+  
+  
+  Explanation
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reference/cli/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  Release Notes
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Network Sandbox Engine (NSE)" class="md-nav__button md-logo" aria-label="Network Sandbox Engine (NSE)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Network Sandbox Engine (NSE)
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/onyks-os/NetworkSandboxEngine" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    onyks-os/NetworkSandboxEngine
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/test-suites/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test Suite YAML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/debugging-rulesets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ruleset Debugging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/gateway-topology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gateway Topology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-To Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How-To Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/in-process-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    In-Process GUI Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/custom-packets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom Packet Specs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/cicd-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CI/CD Automation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Explanation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Explanation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture & In-Process Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/deterministic-oracle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deterministic Oracle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/namespace-lifecycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Namespace Lifecycle & Naming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/dependencies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration & Dependencies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Notes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Release Notes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#200-2026-08-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.0.0 - 2026-08-13
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.0.0 - 2026-08-13">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#breaking-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Breaking Changes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#added" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#111-2026-08-05" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.1 - 2026-08-05
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1.1 - 2026-08-05">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#110-2026-06-19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.0 - 2026-06-19
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1.0 - 2026-06-19">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#100-2026-06-18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.0 - 2026-06-18
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.0 - 2026-06-18">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#added_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Added">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-headless-engine-nse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Headless Engine (nse/)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-models-nsemodels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Models (nse/models/)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cli-runner-nseclirunnerpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLI Runner (nse/cli/runner.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gui-daemon-gui-not-on-pypi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GUI Daemon (gui/ - not on PyPI)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frontend-guigui_svelte-not-on-pypi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frontend (gui/gui_svelte/ - not on PyPI)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#packaging-and-release" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Packaging and Release
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#makefile-targets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Makefile Targets
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#200-2026-08-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.0.0 - 2026-08-13
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.0.0 - 2026-08-13">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#breaking-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Breaking Changes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#added" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#111-2026-08-05" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.1 - 2026-08-05
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1.1 - 2026-08-05">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#110-2026-06-19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.0 - 2026-06-19
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1.0 - 2026-06-19">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#100-2026-06-18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.0 - 2026-06-18
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.0 - 2026-06-18">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#added_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Added">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-headless-engine-nse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Headless Engine (nse/)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-models-nsemodels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Models (nse/models/)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cli-runner-nseclirunnerpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLI Runner (nse/cli/runner.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gui-daemon-gui-not-on-pypi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GUI Daemon (gui/ - not on PyPI)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frontend-guigui_svelte-not-on-pypi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frontend (gui/gui_svelte/ - not on PyPI)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#packaging-and-release" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Packaging and Release
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#makefile-targets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Makefile Targets
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="changelog">Changelog</h1>
+<p>All notable changes to the Network Sandbox Engine (NSE) project are documented in this file.</p>
+<p>The format follows <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>. This project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
+<hr />
+<h2 id="200-2026-08-13"><a href="https://github.com/onyks-os/NetworkSandboxEngine/releases/tag/v2.0.0">2.0.0</a> - 2026-08-13</h2>
+<p>Single-Process In-Process Architecture, Pydantic Hard Dependency, Deterministic Verdict Oracle, and Strict Static Typing.</p>
+<h3 id="breaking-changes">Breaking Changes</h3>
+<ul>
+<li><strong>Elimination of <code>rootd</code> Daemon</strong>: Removed socket daemon <code>gui/rootd.py</code>, <code>gui/api/rootd_client.py</code>, and <code>gui/api/deps.py</code>. FastAPI web application and <code>NetnsController</code> now run directly in-process with root privileges.</li>
+<li><strong>Mandatory Pydantic Dependency</strong>: <code>pydantic</code> promoted to a mandatory core dependency of <code>nse/</code>; eliminated all stdlib fallback dataclasses and stubs.</li>
+<li><strong>Consolidated Model Hierarchy</strong>: Deleted <code>nse/models/base.py</code>. <code>TopologyType</code> and <code>PacketSpec</code> now collapse to a single source of truth in <code>nse.models.test_request</code>.</li>
+<li><strong>Target Orchestrator Signature</strong>: Rewrote <code>run_test_pipeline</code> signature to target standard request-driven API returning <code>list[TraceEvent]</code>.</li>
+<li><strong>Purged Controller State</strong>: Removed <code>enqueue_test</code>, <code>release_test</code>, <code>has_test</code>, <code>get_status</code>, <code>get_event_queue</code>, and <code>_tests</code> tracking methods from <code>NetnsController</code>.</li>
+</ul>
+<h3 id="added">Added</h3>
+<ul>
+<li><strong>Trace Harvester Readiness Probe</strong>: Added <code>wait_ready()</code> in <code>TraceHarvester</code> using <code>asyncio.Event</code> readiness signal, eliminating hardcoded warm-up delay sleeps.</li>
+<li><strong>Uniform Naming &amp; Startup Sweep</strong>: Created <code>nse.core.naming</code> helper with <code>derive_names()</code> and automated orphan netns/veth startup sweep in <code>NetnsController</code>.</li>
+<li><strong>Teardown Retry &amp; Subprocess Timeouts</strong>: Implemented retry backoff in <code>destroy_netns</code> and enforced <code>timeout=</code> parameters across all <code>subprocess.run</code> calls.</li>
+<li><strong>Strict Static Typing &amp; Import Boundaries</strong>: Enforced <code>mypy --strict</code> across all 22 source files and configured <code>import-linter</code> contract preventing <code>nse/</code> from importing <code>gui/</code>.</li>
+<li><strong>MkDocs Web Documentation</strong>: Created comprehensive web documentation site powered by MkDocs Material and <code>mkdocstrings</code>.</li>
+<li><strong>Local CI Automation</strong>: Added <code>make ci-local</code> and <code>make docs</code> Makefile targets.</li>
+</ul>
+<hr />
+<h2 id="111-2026-08-05"><a href="https://github.com/onyks-os/NetworkSandboxEngine/releases/tag/v1.1.1">1.1.1</a> - 2026-08-05</h2>
+<p>Kernel tracing initialization fix, background noise filtering in YAML test runner, and Makefile dynamic binary resolution.</p>
+<h3 id="added_1">Added</h3>
+<ul>
+<li><strong>Automatic Kernel Tracing Prepending</strong>: Automatically inject a high-priority <code>table inet nse_trace</code> prerouting chain (<code>meta nftrace set 1</code>) in <code>RuleEngine.load()</code> to guarantee <code>nft monitor trace</code> captures trace events for all test packets.</li>
+</ul>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li><strong>YAML Runner Trace Noise Filtering</strong>: Filtered out background setup noise (IPv6 NDP, DAD, MLD, and socket init packets) in <code>nse.cli.runner</code> to accurately match verdicts (<code>ACCEPT</code>/<code>DROP</code>) to injected test packets.</li>
+<li><strong><code>nft monitor trace</code> Regex Parser</strong>: Updated <code>_PACKET_RE</code> in <code>gui/daemon/trace_harvester.py</code> to handle both quoted and unquoted <code>iif</code> strings in trace lines across different Linux kernel and <code>nftables</code> versions.</li>
+<li><strong>Dynamic Executable Resolution in Makefile</strong>: Updated <code>Makefile</code> to dynamically detect <code>PYTHON</code>, <code>RUFF</code>, <code>TWINE</code>, and <code>PYTEST</code> in <code>.venv</code> with automatic fallbacks to <code>PATH</code> system binaries.</li>
+<li><strong>Ruff Code Quality Compliance</strong>: Resolved all Ruff static analysis errors (<code>ASYNC221</code>, <code>I001</code>, <code>BLE001</code>, <code>UP037</code>, <code>TRY401</code>, <code>PIE790</code>) across <code>nse/</code>, <code>gui/</code>, and <code>tests/</code>.</li>
+</ul>
+<hr />
+<h2 id="110-2026-06-19"><a href="https://github.com/onyks-os/NetworkSandboxEngine/releases/tag/v1.1.0">1.1.0</a> - 2026-06-19</h2>
+<p>Introducing native container environments support and a Zero-Trust Privilege Separation architecture for the web server.</p>
+<h3 id="added_2">Added</h3>
+<ul>
+<li><strong>Native Container Support (<code>nsenter</code> fallback)</strong>: Added robust container detection in <code>nse/core/utils.py</code> (checking <code>container</code> env, <code>/.dockerenv</code>, <code>/proc/1/environ</code>, and <code>cgroup</code> format). Dynamic fallback from <code>ip netns exec</code> to <code>nsenter --net</code> namespace switching prevents remount errors in container runtimes.</li>
+<li><strong>Zero-Trust Privilege Separation</strong>:</li>
+<li><code>nse-rootd</code> UNIX domain socket server running as root and managing network namespaces, Scapy injection, and trace harvesting. Secure <code>/var/run/nse-core.sock</code> socket is automatically chowned to <code>SUDO_UID</code>/<code>SUDO_GID</code> when run via <code>sudo</code>.</li>
+<li><code>RootdClient</code> client proxy allowing unprivileged web server instances (<code>nse-web</code> / <code>gui/server.py</code>) to delegate low-level sandbox execution without running as root.</li>
+<li><strong>Dedicated RPC Unit Tests</strong>: Added asynchronous mocking test <code>test_rootd_rpc_communication</code> to verify JSON-RPC protocol between client and daemon.</li>
+</ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li><strong>Makefile and dev-setup</strong>: Restructured commands (<code>make run-rootd</code>, <code>make run-web</code>, <code>make backend</code>, and <code>make dev</code>) and updated startup instructions to reflect the decoupled daemon architecture.</li>
+</ul>
+<hr />
+<h2 id="100-2026-06-18"><a href="https://github.com/onyks-os/NetworkSandboxEngine/releases/tag/v1.0.0">1.0.0</a> - 2026-06-18</h2>
+<p>First stable release of the Network Sandbox Engine.</p>
+<h3 id="summary">Summary</h3>
+<p>NSE v1.0.0 is published as a headless Python library (<code>network-sandbox-engine</code> on PyPI) with an optional GUI layer that lives in-repository. The core engine depends only on <code>scapy</code>; CLI tooling requires <code>pydantic</code> and <code>pyyaml</code> via the <code>[cli]</code> extra. The GUI daemon (FastAPI and Svelte) is excluded from the wheel by design and is run from a repository clone.</p>
+<hr />
+<h3 id="added_3">Added</h3>
+<h4 id="core-headless-engine-nse">Core Headless Engine (<code>nse/</code>)</h4>
+<ul>
+<li><code>NetnsController</code>: async context manager for ephemeral Linux network namespace lifecycle (create, configure, teardown). Supports <code>simple</code> (host to sandbox) and <code>gateway</code> (host to router to server) topologies.</li>
+<li><code>PCAPAsserter</code>: wraps Scapy <code>AsyncSniffer</code> to arm BPF-filtered captures on veth interfaces and assert captured packet counts in integration tests.</li>
+<li><code>RuleEngine</code>: validates and loads <code>nftables</code> rulesets using <code>nft --check -f</code> and <code>nft -f</code>. Parses line-level error messages into structured <code>RuleValidationError</code> exceptions. Automatically arms kernel tracing via <code>meta nftrace set 1</code>.</li>
+<li><code>ScapyInjector</code>: forges and injects IPv4/IPv6 TCP, UDP, ICMP, and ICMPv6 packets at Layer 2/3. Uses in-process <code>sendp()</code> for host-originating packets and <code>ip netns exec</code> subprocess for egress from inside a namespace.</li>
+<li><code>run_test_pipeline()</code>: top-level orchestrator that chains validation, topology setup, mock listener spawning, rule loading, trace harvesting, sequential packet injection, conntrack polling, and namespace teardown.</li>
+<li><code>parse_conntrack_line()</code>: parser for <code>/proc/net/nf_conntrack</code> entries. Extracts <code>proto</code>, <code>state</code>, <code>src</code>, <code>dst</code>, <code>sport</code>, and <code>dport</code> for both IPv4 and IPv6 flows.</li>
+<li>Stateful traffic and conntrack integration: <code>/proc/net/nf_conntrack</code> is polled after each packet injection and connection states (<code>SYN_SENT</code>, <code>ESTABLISHED</code>, <code>TIME_WAIT</code>) are streamed to consumers.</li>
+<li>Dual-stack IPv4/IPv6: all veth links are configured with both address families. DAD is disabled globally inside namespaces (<code>accept_dad=0</code>) for instant address availability.</li>
+</ul>
+<h4 id="data-models-nsemodels">Data Models (<code>nse/models/</code>)</h4>
+<ul>
+<li><code>PacketSpec</code>: Pydantic model (lazy import) defining protocol, IPs, ports, TCP flags, and packet size. Validates IPv4/IPv6 addresses and allowed flag values.</li>
+<li><code>TestRequest</code>: Pydantic model with <code>rules</code>, <code>packets: list[PacketSpec]</code>, and <code>topology: TopologyType</code>.</li>
+<li><code>TopologyType</code>: string enum with values <code>simple</code> and <code>gateway</code>.</li>
+<li><code>TraceEvent</code>: Pydantic model for kernel trace output events of type <code>hook</code>, <code>match</code>, or <code>verdict</code>.</li>
+<li><code>base.py</code>: pure stdlib dataclasses for use without Pydantic.</li>
+</ul>
+<h4 id="cli-runner-nseclirunnerpy">CLI Runner (<code>nse/cli/runner.py</code>)</h4>
+<ul>
+<li><code>nse-runner --file &lt;yaml&gt;</code> CLI entrypoint registered in <code>pyproject.toml</code>.</li>
+<li>Reads YAML test suites, invokes <code>run_test_pipeline()</code>, evaluates expected verdicts, and prints formatted results.</li>
+<li>Silent drops (no matching <code>TraceEvent</code>) are treated as <code>DROP</code>.</li>
+<li>Exits with <code>0</code> on full pass, <code>1</code> on any failure.</li>
+<li>Displays a clear install hint if <code>pydantic</code> or <code>pyyaml</code> is missing.</li>
+</ul>
+<h4 id="gui-daemon-gui-not-on-pypi">GUI Daemon (<code>gui/</code> - not on PyPI)</h4>
+<ul>
+<li><code>TraceHarvester</code>: async subprocess spawning <code>nft monitor trace</code> inside the evaluation namespace. Parsed events are pushed into an <code>asyncio.Queue</code>.</li>
+<li><code>MockListener</code>: background TCP/UDP echo daemon spawner using <code>ip netns exec</code>. Enables complete TCP handshakes and valid conntrack state generation.</li>
+<li>FastAPI REST API: <code>POST /api/test</code> and <code>GET /api/status/{test_id}</code>.</li>
+<li>WebSocket streaming: <code>WS /ws/{test_id}</code> streams <code>TraceEvent</code> JSON messages to the frontend.</li>
+</ul>
+<h4 id="frontend-guigui_svelte-not-on-pypi">Frontend (<code>gui/gui_svelte/</code> - not on PyPI)</h4>
+<ul>
+<li>Rule editor for <code>nftables</code> ruleset authoring.</li>
+<li>Multi-packet sequence crafter with topology selector.</li>
+<li>Real-time animated pipeline visualizer: hook, rule match, and verdict events.</li>
+<li>Conntrack table: live tabular view of active connection states.</li>
+<li>Offline documentation view at <code>#/docs</code>.</li>
+</ul>
+<h4 id="packaging-and-release">Packaging and Release</h4>
+<ul>
+<li><code>pyproject.toml</code> at repository root. Build backend: <code>setuptools</code>. Targets only <code>nse/</code> via <code>packages.find.include</code>. Hard dependency: <code>scapy&gt;=2.5.0</code>. Optional extra <code>[cli]</code>: <code>pydantic&gt;=2.0.0</code> and <code>pyyaml&gt;=6.0</code>.</li>
+<li><code>make release</code>: runs <code>lint + test</code>, builds the wheel and source distribution, copies deployment assets, generates <code>SHA256SUMS</code>, and signs it with GPG. The signing key is auto-detected from the keyring and can be overridden with <code>GPG_KEY_ID=&lt;id&gt;</code>.</li>
+<li><code>Dockerfile</code>: multi-stage production image for containerized daemon deployment.</li>
+<li><code>scripts/nse.service</code>: systemd unit template binding to <code>/run/nse.sock</code> in production.</li>
+<li><code>tests/test_netns.py</code>: unified test suite with 20 unit tests and 2 root-only integration tests.</li>
+<li><code>conftest.py</code>: root <code>sys.path</code> injection allowing pytest to discover both <code>nse/</code> and <code>gui/</code> packages.</li>
+</ul>
+<h4 id="makefile-targets">Makefile Targets</h4>
+<table>
+<thead>
+<tr>
+<th>Target</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>make setup</code></td>
+<td>Bootstrap venv and run npm install</td>
+</tr>
+<tr>
+<td><code>make test</code></td>
+<td>Run unit tests</td>
+</tr>
+<tr>
+<td><code>make integration-test</code></td>
+<td>Run root-level integration tests</td>
+</tr>
+<tr>
+<td><code>make lint</code></td>
+<td>Ruff static analysis</td>
+</tr>
+<tr>
+<td><code>make format</code></td>
+<td>Ruff auto-format</td>
+</tr>
+<tr>
+<td><code>make verify</code></td>
+<td>Run <code>lint</code> and <code>test</code></td>
+</tr>
+<tr>
+<td><code>make release</code></td>
+<td>Build and sign all release artifacts</td>
+</tr>
+<tr>
+<td><code>make publish-test</code></td>
+<td>Upload to TestPyPI via Twine</td>
+</tr>
+<tr>
+<td><code>make publish</code></td>
+<td>Upload to PyPI via Twine</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="changed_1">Changed</h3>
+<ul>
+<li>Repository restructured from a monolithic <code>backend/nse/</code> layout to a root-level separation:</li>
+<li><code>nse/</code> is the headless PyPI package (replaces <code>backend/nse/</code>).</li>
+<li><code>gui/</code> is the GUI daemon (replaces GUI modules formerly in <code>backend/nse/</code> and the <code>frontend/</code> directory).</li>
+<li><code>tests/</code> is the unified test suite (replaces <code>backend/tests/</code>).</li>
+<li><code>TraceHarvester</code> and <code>MockListener</code> moved to <code>gui/daemon/</code>. These components are part of the GUI layer and are not included in the wheel.</li>
+<li>Pydantic imports in <code>nse/</code> models are wrapped in <code>try/except ImportError</code> to allow the core to be imported with only <code>scapy</code> installed.</li>
+<li><code>TestRequest.packet</code> changed to <code>TestRequest.packets: list[PacketSpec]</code> to support packet sequences. This is a breaking API change.</li>
+<li><code>pyproject.toml</code> migrated from <code>backend/pyproject.toml</code> to the repository root. Build backend changed from Poetry to setuptools.</li>
+<li><code>Makefile</code> updated with root-level paths.</li>
+</ul>
+<hr />
+<h3 id="fixed_1">Fixed</h3>
+<ul>
+<li>GPG signing in <code>make release</code> failed with "no default secret key" in non-interactive shells. Fixed by adding <code>--local-user $(GPG_KEY_ID)</code> with automatic key detection from the keyring.</li>
+<li>Interface name assertion in <code>test_create_namespace_lifecycle_mocked</code> was off by one character for 8-character namespace names.</li>
+<li>Svelte compilation crash caused by raw curly braces in code blocks. Fixed by escaping them as <code>&amp;#123;</code> and <code>&amp;#125;</code>.</li>
+</ul>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../../javascripts/mermaid_init.js"></script>
+      
+    
+  </body>
+</html>

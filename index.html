@@ -173,10 +173,7 @@
           const internalPages = {
             'TransparentTorProxy': '/ttp',
             'NetworkSandboxEngine': '/nse',
-            'Lavanderia-Galvani': '/lavanderia',
             'App-Tesoreria': '/tesoreria',
-            'Synapse': '/synapse',
-            'ProxyBenchmarkSuite': '/pbs',
           };
           const isInternal = !!internalPages[repo.name];
           const targetLink = isInternal ? internalPages[repo.name] : repo.html_url;
