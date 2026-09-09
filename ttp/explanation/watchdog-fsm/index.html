@@ -18,7 +18,7 @@
         <link rel="prev" href="../architecture/">
       
       
-        <link rel="next" href="../security-assessment/">
+        <link rel="next" href="../verification/">
       
       
         
@@ -1068,6 +1068,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../verification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zero-Leak Verification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../security-assessment/" class="md-nav__link">
         
   
@@ -1520,9 +1548,11 @@
 <h3 id="2-kernel-nftables-ruleset-verification">2. Kernel <code>nftables</code> Ruleset Verification</h3>
 <p>Executes netfilter atomic queries asserting that the <code>inet ttp</code> table, <code>output</code> chain, and <code>filter_out</code> chain are loaded in the kernel. If another process or <code>firewalld</code> reload flushes the table, the watchdog transitions to <code>DEGRADED</code> and re-applies the ruleset.</p>
 <h3 id="3-inotify-double-watch-dns-overlay-verification">3. Inotify Double-Watch DNS Overlay Verification</h3>
-<p>Monitors <code>/etc/resolv.conf</code> using Linux <code>inotify</code>:
-* <strong>Symlink Target Watch</strong>: Detects external modifications to <code>/etc/resolv.conf</code> target path.
-* <strong>VFS Mount Point Watch</strong>: Asserts that the active mount overlay (<code>mountpoint -q /etc/resolv.conf</code>) remains mounted.</p>
+<p>Monitors <code>/etc/resolv.conf</code> using Linux <code>inotify</code>:</p>
+<ul>
+<li><strong>Symlink Target Watch</strong>: Detects external modifications to <code>/etc/resolv.conf</code> target path.</li>
+<li><strong>VFS Mount Point Watch</strong>: Asserts that the active mount overlay (<code>mountpoint -q /etc/resolv.conf</code>) remains mounted.</li>
+</ul>
 <hr />
 <h2 id="4-emergency-lockout-fail-closed-killswitch">4. Emergency Lockout (Fail-Closed Killswitch)</h2>
 <p>If self-healing fails while in <code>DEGRADED</code> state, or if an unrecoverable breach is detected, the watchdog executes <code>apply_emergency_killswitch()</code>:</p>

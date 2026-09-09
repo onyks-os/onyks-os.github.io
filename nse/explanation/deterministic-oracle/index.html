@@ -12,7 +12,7 @@
         <meta name="author" content="onyks-os">
       
       
-        <link rel="canonical" href="https://onyks-os.github.io/NetworkSandboxEngine/explanation/deterministic-oracle/">
+        <link rel="canonical" href="https://onyks-os.github.io/nse/explanation/deterministic-oracle/">
       
       
         <link rel="prev" href="../architecture/">
@@ -29,7 +29,7 @@
     
     
       
-        <title>Deterministic Oracle - Network Sandbox Engine (NSE)</title>
+        <title>The Verdict Oracle - Network Sandbox Engine (NSE)</title>
       
     
     
@@ -84,7 +84,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#explanation-deterministic-verdict-oracle" class="md-skip">
+        <a href="#explanation-the-verdict-oracle" class="md-skip">
           Skip to content
         </a>
       
@@ -120,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Deterministic Oracle
+              The Verdict Oracle
             
           </span>
         </div>
@@ -657,7 +657,7 @@
   <span class="md-ellipsis">
     
   
-    In-Process GUI Integration
+    Embedding NSE in Python
   
 
     
@@ -805,7 +805,7 @@
   <span class="md-ellipsis">
     
   
-    Architecture & In-Process Model
+    Architecture & Privilege Model
   
 
     
@@ -842,7 +842,7 @@
   <span class="md-ellipsis">
     
   
-    Deterministic Oracle
+    The Verdict Oracle
   
 
     
@@ -860,7 +860,7 @@
   <span class="md-ellipsis">
     
   
-    Deterministic Oracle
+    The Verdict Oracle
   
 
     
@@ -886,10 +886,43 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#how-the-oracle-works" class="md-nav__link">
+  <a href="#the-problem-this-solves" class="md-nav__link">
     <span class="md-ellipsis">
       
-        How the Oracle Works
+        The problem this solves
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The contract
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verdict-reduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verdict reduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proving-the-contract-holds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Proving the contract holds
       
     </span>
   </a>
@@ -1197,10 +1230,43 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#how-the-oracle-works" class="md-nav__link">
+  <a href="#the-problem-this-solves" class="md-nav__link">
     <span class="md-ellipsis">
       
-        How the Oracle Works
+        The problem this solves
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The contract
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verdict-reduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verdict reduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proving-the-contract-holds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Proving the contract holds
       
     </span>
   </a>
@@ -1227,17 +1293,89 @@
   
 
 
-<h1 id="explanation-deterministic-verdict-oracle">Explanation: Deterministic Verdict Oracle</h1>
-<p>NSE's verdict oracle determines packet pass/drop outcomes deterministically from kernel <code>nftables</code> trace events.</p>
+<h1 id="explanation-the-verdict-oracle">Explanation: The Verdict Oracle</h1>
+<p>NSE decides pass/drop outcomes from kernel <code>nftables</code> trace events. This page is
+about the part that matters more than the parsing: <strong>how NSE knows it was
+looking</strong>.</p>
 <hr />
-<h2 id="how-the-oracle-works">How the Oracle Works</h2>
+<h2 id="the-problem-this-solves">The problem this solves</h2>
+<p>A firewall test is a negative assertion — <em>"this packet did not get through"</em>.
+Negative assertions have a failure mode that positive ones do not: if the
+instrument stops working, the assertion still holds. A trace monitor that never
+attached to the kernel produces exactly the same output as a firewall that
+blocked everything.</p>
+<p>Up to 2.0.0, NSE had that failure mode in three places at once:</p>
+<ul>
+<li>the readiness probe signalled when the <em>read loop</em> was scheduled, not when
+  <code>nft monitor trace</code> had subscribed to the kernel;</li>
+<li>the trace deadline was fixed when the loop started, so a long packet sequence
+  outlived it and the verdict stream was truncated with no error;</li>
+<li>the CLI runner treated a mismatch between expected and observed verdict counts
+  as something to print, not something to fail on.</li>
+</ul>
+<p>Together, a completely blind run exited 0.</p>
+<hr />
+<h2 id="the-contract">The contract</h2>
+<p>Every run carries its own positive control.</p>
+<pre class="mermaid"><code>graph LR
+    A["Load ruleset&lt;br/&gt;+ nse_trace scaffolding"] --&gt; B["Start&lt;br/&gt;nft monitor trace"]
+    B --&gt; C{"Readiness canary&lt;br/&gt;observed?"}
+    C --&gt;|no, after N retries| X["ORACLE ERROR&lt;br/&gt;run reports nothing"]
+    C --&gt;|yes| D["Inject test packets&lt;br/&gt;(deadline extended per packet)"]
+    D --&gt; E{"Liveness canary&lt;br/&gt;observed?"}
+    E --&gt;|no| X
+    E --&gt;|yes| F{"Read loop ended cleanly?&lt;br/&gt;Every line parsed?"}
+    F --&gt;|no| X
+    F --&gt;|yes| G["Verdict stream&lt;br/&gt;(canaries removed by trace id)"]</code></pre>
 <ol>
-<li><strong>Rule Tracing Enablement</strong>: NSE automatically prepends <code>_TRACE_INIT_RULESET</code> to set <code>meta nftrace set 1</code> on incoming traffic.</li>
-<li><strong>Readiness Probe (<code>wait_ready()</code>)</strong>: <code>TraceHarvester</code> waits for an <code>asyncio.Event</code> readiness signal confirming <code>nft monitor trace</code> is active.</li>
-<li><strong>Sequential Packet Injection</strong>: Packets in a test request are injected sequentially.</li>
-<li><strong>Kernel Event Matching</strong>: <code>nft monitor trace</code> output is parsed into structured <code>TraceEvent</code> objects.</li>
-<li><strong>Verdict Extraction</strong>: Verdicts (<code>ACCEPT</code>, <code>DROP</code>, <code>REJECT</code>) are extracted directly from user ruleset matches and chain policy decisions without synthetic padding.</li>
+<li><strong>Trace scaffolding</strong>: <code>RuleEngine.load()</code> prepends a <code>table inet nse_trace</code>
+   prerouting chain with <code>meta nftrace set 1</code>, so every packet entering the
+   namespace produces trace events.</li>
+<li><strong>Readiness canary</strong>: a probe packet is injected and re-injected until <em>its
+   own</em> kernel trace event is observed. This is a proof, not a signal: nothing
+   proceeds until the kernel has demonstrably delivered an event.</li>
+<li><strong>Sequential injection</strong>: test packets go in one at a time, and the trace
+   deadline is pushed forward after each one. The read loop polls its deadline,
+   so an extension takes effect even while it is parked on a read.</li>
+<li><strong>Liveness canary</strong>: a second probe after the last test packet. If it is not
+   observed, the monitor stopped watching part-way through and the verdict stream
+   is truncated by an unknown amount.</li>
+<li><strong>Health check</strong>: the harvester's terminal state must be a clean stop — not an
+   unexpected EOF, a timeout or a crash — and its count of unparsed trace lines
+   must be zero.</li>
+<li><strong>Reporting</strong>: canary trace ids are removed from the results, so probes never
+   appear in your verdict stream.</li>
 </ol>
+<p>Any failure in steps 2, 4 or 5 emits an <code>error</code> event. The CLI runner fails on
+error events, and reports them as <strong>oracle errors</strong>, kept separate from firewall
+failures in the summary: a broken measurement and a broken ruleset are different
+problems and want different fixes.</p>
+<hr />
+<h2 id="verdict-reduction">Verdict reduction</h2>
+<p><code>reduce_verdicts()</code> collapses a trace stream into one verdict per packet:</p>
+<ul>
+<li>events are grouped by <code>trace_id</code> — one packet's traversal of the netfilter
+  stack shares an id across chains;</li>
+<li>events from the <code>nse_trace</code> scaffolding table are excluded, since they exist
+  only to switch tracing on;</li>
+<li><code>DROP</code> and <code>REJECT</code> beat <code>ACCEPT</code>, because a packet accepted by one chain and
+  dropped by another did not get through;</li>
+<li>a trace id that reached the user ruleset but produced <strong>no</strong> verdict is
+  omitted. That makes the observed count differ from the expected count, which
+  is an oracle error — deliberately, rather than being rounded up to a pass.</li>
+</ul>
+<p><code>REJECT</code> is indistinguishable from <code>DROP</code> in the reduced stream, so an
+expectation of <code>REJECT</code> is compared as <code>DROP</code>.</p>
+<hr />
+<h2 id="proving-the-contract-holds">Proving the contract holds</h2>
+<p>The guarantee above is itself tested. Setting <code>NSE_FORCE_BLIND=1</code> makes the
+parser understand nothing — which is what a kernel trace format change looks like
+from the outside — and <code>make test-blind</code> asserts that the suite then <strong>fails</strong>.
+That job runs in CI on every push.</p>
+<p>Separately, <code>test_parser_understands_every_line_of_a_real_trace</code> asserts, against
+whatever kernel the runner has, that a real run left zero trace lines unparsed.
+CI runs it on more than one image so a format change breaks a build rather than
+silently blinding the oracle.</p>
 
 
 

@@ -12,7 +12,7 @@
         <meta name="author" content="onyks-os">
       
       
-        <link rel="canonical" href="https://onyks-os.github.io/NetworkSandboxEngine/explanation/architecture/">
+        <link rel="canonical" href="https://onyks-os.github.io/nse/explanation/architecture/">
       
       
         <link rel="prev" href="../../how-to/cicd-setup/">
@@ -29,7 +29,7 @@
     
     
       
-        <title>Architecture & In-Process Model - Network Sandbox Engine (NSE)</title>
+        <title>Architecture & Privilege Model - Network Sandbox Engine (NSE)</title>
       
     
     
@@ -84,7 +84,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#explanation-architecture-in-process-model" class="md-skip">
+        <a href="#explanation-architecture" class="md-skip">
           Skip to content
         </a>
       
@@ -120,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Architecture & In-Process Model
+              Architecture & Privilege Model
             
           </span>
         </div>
@@ -657,7 +657,7 @@
   <span class="md-ellipsis">
     
   
-    In-Process GUI Integration
+    Embedding NSE in Python
   
 
     
@@ -814,7 +814,7 @@
   <span class="md-ellipsis">
     
   
-    Architecture & In-Process Model
+    Architecture & Privilege Model
   
 
     
@@ -832,7 +832,7 @@
   <span class="md-ellipsis">
     
   
-    Architecture & In-Process Model
+    Architecture & Privilege Model
   
 
     
@@ -858,30 +858,35 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#architectural-evolution-v1x-vs-v200" class="md-nav__link">
+  <a href="#layers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Architectural Evolution: v1.x vs v2.0.0
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Architectural Evolution: v1.x vs v2.0.0">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#why-in-process" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why In-Process?
+        Layers
       
     </span>
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#privilege-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Privilege model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#isolation-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Isolation guarantee
+      
+    </span>
+  </a>
   
 </li>
       
@@ -908,7 +913,7 @@
   <span class="md-ellipsis">
     
   
-    Deterministic Oracle
+    The Verdict Oracle
   
 
     
@@ -1214,30 +1219,35 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#architectural-evolution-v1x-vs-v200" class="md-nav__link">
+  <a href="#layers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Architectural Evolution: v1.x vs v2.0.0
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Architectural Evolution: v1.x vs v2.0.0">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#why-in-process" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why In-Process?
+        Layers
       
     </span>
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#privilege-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Privilege model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#isolation-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Isolation guarantee
+      
+    </span>
+  </a>
   
 </li>
       
@@ -1261,26 +1271,71 @@
   
 
 
-<h1 id="explanation-architecture-in-process-model">Explanation: Architecture &amp; In-Process Model</h1>
-<p>NSE v2.0.0 uses a single-process root architecture designed for maximum performance, minimal dependency overhead, and thread safety.</p>
+<h1 id="explanation-architecture">Explanation: Architecture</h1>
+<p>NSE is a library and a CLI. There is no server, no socket, and no daemon: you
+call it, it builds a namespace, measures, and tears the namespace down.</p>
 <hr />
-<h2 id="architectural-evolution-v1x-vs-v200">Architectural Evolution: v1.x vs v2.0.0</h2>
+<h2 id="layers">Layers</h2>
 <pre class="mermaid"><code>graph TD
-    subgraph "Legacy v1.x (Multi-Process RPC)"
-        GUI1[FastAPI Server] --&gt;|UNIX Socket JSON-RPC| RootD[rootd Daemon]
-        RootD --&gt;|Subprocess| Netns1[Netns Lifecycle]
+    CLI["nse.cli.runner&lt;br/&gt;YAML suites, exit codes"] --&gt; Core
+    Lib["Your code&lt;br/&gt;run_test_pipeline()"] --&gt; Core
+
+    subgraph Core["nse.core"]
+        Pipeline["pipeline&lt;br/&gt;orchestration + canary probes"]
+        Netns["netns_controller&lt;br/&gt;namespaces, veth, topologies"]
+        Rules["rule_engine&lt;br/&gt;nft --check, nft -f"]
+        Inject["scapy_injector&lt;br/&gt;L2/L3 forging"]
+        Harvest["trace_harvester&lt;br/&gt;nft monitor trace parsing"]
     end
 
-    subgraph "Modern v2.0.0 (In-Process Root Execution)"
-        App[FastAPI / Svelte Server] --&gt;|Direct Python Calls| Core[nse.core.*]
-        Core --&gt;|Scapy / NetnsController| Netns2[Linux Network Namespace]
-    end</code></pre>
-<h3 id="why-in-process">Why In-Process?</h3>
-<ol>
-<li><strong>Elimination of IPC Overhead</strong>: Eliminates JSON serialization, socket connections, and daemon protocol management.</li>
-<li><strong>Simplified Lifecycle</strong>: A single root process owns the FastAPI web app and netns creation.</li>
-<li><strong>Pydantic Model Consistency</strong>: Direct passing of typed Pydantic models (<code>TestRequest</code>, <code>TraceEvent</code>) without schema duplication across boundaries.</li>
-</ol>
+    Core --&gt; Models["nse.models&lt;br/&gt;TestRequest, PacketSpec, TraceEvent"]
+    Core --&gt; Kernel["Linux kernel&lt;br/&gt;netns + nftables + netlink"]</code></pre>
+<p><code>import-linter</code> enforces two boundaries in <code>make lint</code>:</p>
+<ul>
+<li><code>nse.core</code> and <code>nse.models</code> must not import <code>nse.cli</code> — the engine cannot
+  depend on the CLI that drives it;</li>
+<li><code>nse.models</code> must not import the engine — models stay a leaf.</li>
+</ul>
+<hr />
+<h2 id="privilege-model">Privilege model</h2>
+<p>NSE runs as root, because creating network namespaces, loading nftables rulesets
+and reading kernel trace events all require it.</p>
+<p>It holds those privileges only for the duration of a run, and it exposes no
+network or IPC surface while it does. That is a deliberate change:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Model</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1.1.0 – 1.1.1</td>
+<td style="text-align: left;">An unprivileged FastAPI server delegating to an <code>nse-rootd</code> daemon over a UNIX socket.</td>
+</tr>
+<tr>
+<td style="text-align: left;">2.0.0</td>
+<td style="text-align: left;">The FastAPI server ran <strong>in-process as root</strong>. Fewer moving parts, considerably more attack surface.</td>
+</tr>
+<tr>
+<td style="text-align: left;">2.1.0 onward</td>
+<td style="text-align: left;">No server at all. The web interface is archived; NSE is a library and a CLI.</td>
+</tr>
+</tbody>
+</table>
+<p>Removing the web layer removed the reason to have a long-lived root process, and
+with it the JavaScript toolchain, the ASGI stack, and a CI job. For a tool whose
+job is to be trusted about firewall behaviour, a smaller audited surface is worth
+more than a GUI.</p>
+<p>The code for the web interface remains in git history at tag <code>v2.0.0</code>.</p>
+<hr />
+<h2 id="isolation-guarantee">Isolation guarantee</h2>
+<p>Rulesets are only ever loaded inside <code>nse_&lt;id&gt;</code> / <code>nsr_&lt;id&gt;</code> / <code>nss_&lt;id&gt;</code>
+namespaces. <code>RuleEngine.load()</code> refuses an empty namespace name outright, so a
+missing argument cannot fall through to the host firewall. Teardown removes both
+the namespaces and the host-side veth interfaces, with a retry backoff, and a
+startup sweep removes anything a previous crashed run left behind.</p>
 
 
 

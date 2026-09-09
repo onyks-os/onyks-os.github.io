@@ -12,7 +12,7 @@
         <meta name="author" content="onyks-os">
       
       
-        <link rel="canonical" href="https://onyks-os.github.io/NetworkSandboxEngine/">
+        <link rel="canonical" href="https://onyks-os.github.io/nse/">
       
       
       
@@ -746,7 +746,7 @@
   <span class="md-ellipsis">
     
   
-    In-Process GUI Integration
+    Embedding NSE in Python
   
 
     
@@ -889,7 +889,7 @@
   <span class="md-ellipsis">
     
   
-    Architecture & In-Process Model
+    Architecture & Privilege Model
   
 
     
@@ -917,7 +917,7 @@
   <span class="md-ellipsis">
     
   
-    Deterministic Oracle
+    The Verdict Oracle
   
 
     
@@ -1322,8 +1322,8 @@
 <hr />
 <h2 id="key-features">Key Features</h2>
 <ul>
-<li><strong>In-Process Architecture</strong>: Single-process root execution eliminating separate daemons (<code>rootd</code>) or IPC sockets.</li>
-<li><strong>Deterministic Verdict Oracle</strong>: Per-packet injection and kernel trace harvesting with instant readiness probes (<code>wait_ready()</code>).</li>
+<li><strong>Library and CLI only</strong>: no server, no socket, no daemon. Root privileges are held for the duration of a run and nothing listens.</li>
+<li><strong>Self-verifying Oracle</strong>: canary packets before and after every run prove the kernel trace was actually being observed, so a blind engine fails instead of reporting a clean result.</li>
 <li><strong>Isolated Topologies</strong>: Supports <strong>Simple</strong> (single sandbox netns) and <strong>Gateway</strong> (router + server netns chain) topologies.</li>
 <li><strong>Scapy Packet Injection</strong>: Forge arbitrary TCP, UDP, and ICMP packets across IPv4 and IPv6 protocols.</li>
 <li><strong>Robust Netns Lifecycle</strong>: Automated startup sweeps of orphan namespaces and veth pairs with exponential backoff teardowns.</li>
@@ -1367,7 +1367,7 @@
 <ul>
 <li><strong><a href="tutorials/quickstart/">Quickstart Guide</a></strong>: Get up and running in 5 minutes.</li>
 <li><strong><a href="tutorials/test-suites/">Test Suite YAML</a></strong>: Define declarative YAML test suites for CLI execution.</li>
-<li><strong><a href="how-to/in-process-integration/">In-Process Integration</a></strong>: Integrate NSE into FastAPI, Svelte, or Python applications.</li>
+<li><strong><a href="how-to/in-process-integration/">Embedding NSE</a></strong>: call the engine directly from your own Python test suite.</li>
 <li><strong><a href="explanation/architecture/">Architecture &amp; Flow</a></strong>: In-depth breakdown of in-process netns execution.</li>
 <li><strong><a href="reference/api/">Python API Reference</a></strong>: Complete auto-generated Python API documentation.</li>
 </ul>

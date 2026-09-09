@@ -12,7 +12,7 @@
         <meta name="author" content="onyks-os">
       
       
-        <link rel="canonical" href="https://onyks-os.github.io/NetworkSandboxEngine/reference/dependencies/">
+        <link rel="canonical" href="https://onyks-os.github.io/nse/reference/dependencies/">
       
       
         <link rel="prev" href="../api/">
@@ -657,7 +657,7 @@
   <span class="md-ellipsis">
     
   
-    In-Process GUI Integration
+    Embedding NSE in Python
   
 
     
@@ -800,7 +800,7 @@
   <span class="md-ellipsis">
     
   
-    Architecture & In-Process Model
+    Architecture & Privilege Model
   
 
     
@@ -828,7 +828,7 @@
   <span class="md-ellipsis">
     
   
-    Deterministic Oracle
+    The Verdict Oracle
   
 
     
@@ -1068,13 +1068,41 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#web-development-dependencies-cli-dev" class="md-nav__link">
+  <a href="#optional-extras" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Web &amp; Development Dependencies ([cli], dev)
+        Optional extras
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Optional extras">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cli-the-yaml-suite-runner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [cli] — the YAML suite runner
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dev-contributing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [dev] — contributing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1230,13 +1258,41 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#web-development-dependencies-cli-dev" class="md-nav__link">
+  <a href="#optional-extras" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Web &amp; Development Dependencies ([cli], dev)
+        Optional extras
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Optional extras">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cli-the-yaml-suite-runner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [cli] — the YAML suite runner
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dev-contributing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [dev] — contributing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1294,15 +1350,14 @@
 <td style="text-align: left;"><code>&gt;= 2.5.0</code></td>
 <td style="text-align: left;">Layer 2 / Layer 3/4 packet forging and injection</td>
 </tr>
-<tr>
-<td style="text-align: left;"><code>pyyaml</code></td>
-<td style="text-align: left;"><code>&gt;= 6.0</code></td>
-<td style="text-align: left;">YAML test suite file parsing</td>
-</tr>
 </tbody>
 </table>
+<p>Two runtime dependencies, both for the engine itself. NSE has no web framework,
+no ASGI server and no JavaScript toolchain: the web interface was archived in
+2.1.0.</p>
 <hr />
-<h2 id="web-development-dependencies-cli-dev">Web &amp; Development Dependencies (<code>[cli]</code>, <code>dev</code>)</h2>
+<h2 id="optional-extras">Optional extras</h2>
+<h3 id="cli-the-yaml-suite-runner"><code>[cli]</code> — the YAML suite runner</h3>
 <table>
 <thead>
 <tr>
@@ -1312,16 +1367,27 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><code>fastapi</code></td>
-<td style="text-align: left;">Web server REST API framework</td>
+<td style="text-align: left;"><code>pyyaml</code></td>
+<td style="text-align: left;">YAML test suite file parsing</td>
 </tr>
+</tbody>
+</table>
+<h3 id="dev-contributing"><code>[dev]</code> — contributing</h3>
+<table>
+<thead>
 <tr>
-<td style="text-align: left;"><code>uvicorn</code></td>
-<td style="text-align: left;">ASGI web server</td>
+<th style="text-align: left;">Package</th>
+<th style="text-align: left;">Purpose</th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td style="text-align: left;"><code>pytest</code>, <code>pytest-asyncio</code></td>
 <td style="text-align: left;">Unit &amp; integration test runners</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>pytest-cov</code></td>
+<td style="text-align: left;">Coverage measurement and the <code>make test-cov</code> ratchet</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>ruff</code></td>
@@ -1349,8 +1415,15 @@
 <h2 id="system-requirements">System Requirements</h2>
 <ul>
 <li><strong>Linux Kernel</strong>: 5.4+ (with network namespace and <code>nftables</code> support)</li>
-<li><strong>Utilities</strong>: <code>nft</code> (nftables), <code>ip</code> (iproute2), <code>nsenter</code> (optional fallback inside containers)</li>
+<li><strong>Root privileges</strong>: required for <code>ip netns</code> and kernel trace operations</li>
+<li><strong>Utilities</strong>: <code>nft</code> (nftables), <code>ip</code> (iproute2), <code>conntrack</code>, and <code>nsenter</code>
+  (used automatically inside containers, where <code>ip netns exec</code> cannot mount
+  <code>/sys</code>)</li>
 </ul>
+<p>The nftables version matters: the trace output format has changed across
+releases before. NSE's CI runs its privileged suite on more than one image for
+that reason, and the Dockerfile exists so you can pin the version your rules are
+tested against.</p>
 
 
 

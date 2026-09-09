@@ -1074,6 +1074,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../verification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zero-Leak Verification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../security-assessment/" class="md-nav__link">
         
   
@@ -1562,9 +1590,11 @@
 <h2 id="3-stateless-dns-overlay-subsystem">3. Stateless DNS Overlay Subsystem</h2>
 <p>System DNS resolution is isolated through a dual-mechanism approach:</p>
 <h3 id="vfs-bind-mount-overlay">VFS Bind-Mount Overlay</h3>
-<p>TTP creates a temporary RAM-backed <code>resolv.conf</code> file containing <code>nameserver 127.0.0.1</code> and overlays <code>/etc/resolv.conf</code> using a VFS kernel bind-mount (<code>mount --bind</code>).
-* <strong>Disk Integrity</strong>: The physical <code>/etc/resolv.conf</code> file on host storage is untouched.
-* <strong>Teardown</strong>: Upon session termination, <code>umount -l /etc/resolv.conf</code> unmounts the overlay instantly.</p>
+<p>TTP creates a temporary RAM-backed <code>resolv.conf</code> file containing <code>nameserver 127.0.0.1</code> and overlays <code>/etc/resolv.conf</code> using a VFS kernel bind-mount (<code>mount --bind</code>).</p>
+<ul>
+<li><strong>Disk Integrity</strong>: The physical <code>/etc/resolv.conf</code> file on host storage is untouched.</li>
+<li><strong>Teardown</strong>: Upon session termination, <code>umount -l /etc/resolv.conf</code> unmounts the overlay instantly.</li>
+</ul>
 <h3 id="systemd-resolved-volatile-integration"><code>systemd-resolved</code> Volatile Integration</h3>
 <p>If <code>systemd-resolved</code> is active, TTP writes a volatile drop-in configuration at <code>/run/systemd/resolved.conf.d/ttp.conf</code> setting <code>DNS=127.0.0.1:5353</code> and <code>Domains=~.</code> before issuing a reload signal. This prevents <code>systemd-resolved</code> from querying upstream ISP resolvers.</p>
 <hr />

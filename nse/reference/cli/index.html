@@ -12,7 +12,7 @@
         <meta name="author" content="onyks-os">
       
       
-        <link rel="canonical" href="https://onyks-os.github.io/NetworkSandboxEngine/reference/cli/">
+        <link rel="canonical" href="https://onyks-os.github.io/nse/reference/cli/">
       
       
         <link rel="prev" href="../../explanation/namespace-lifecycle/">
@@ -657,7 +657,7 @@
   <span class="md-ellipsis">
     
   
-    In-Process GUI Integration
+    Embedding NSE in Python
   
 
     
@@ -800,7 +800,7 @@
   <span class="md-ellipsis">
     
   
-    Architecture & In-Process Model
+    Architecture & Privilege Model
   
 
     
@@ -828,7 +828,7 @@
   <span class="md-ellipsis">
     
   
-    Deterministic Oracle
+    The Verdict Oracle
   
 
     
@@ -1001,15 +1001,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#nseclirunner-headless-test-suite-runner" class="md-nav__link">
+  <a href="#nse-runner-headless-test-suite-runner" class="md-nav__link">
     <span class="md-ellipsis">
       
-        nse.cli.runner (Headless Test Suite Runner)
+        nse-runner (Headless Test Suite Runner)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="nse.cli.runner (Headless Test Suite Runner)">
+    <nav class="md-nav" aria-label="nse-runner (Headless Test Suite Runner)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1023,36 +1023,30 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#exit-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exit codes
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#guiserver-web-application-server" class="md-nav__link">
+  <a href="#environment-variables" class="md-nav__link">
     <span class="md-ellipsis">
       
-        gui.server (Web Application Server)
+        Environment variables
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="gui.server (Web Application Server)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#options_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Options
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1242,15 +1236,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#nseclirunner-headless-test-suite-runner" class="md-nav__link">
+  <a href="#nse-runner-headless-test-suite-runner" class="md-nav__link">
     <span class="md-ellipsis">
       
-        nse.cli.runner (Headless Test Suite Runner)
+        nse-runner (Headless Test Suite Runner)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="nse.cli.runner (Headless Test Suite Runner)">
+    <nav class="md-nav" aria-label="nse-runner (Headless Test Suite Runner)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1264,36 +1258,30 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#exit-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exit codes
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#guiserver-web-application-server" class="md-nav__link">
+  <a href="#environment-variables" class="md-nav__link">
     <span class="md-ellipsis">
       
-        gui.server (Web Application Server)
+        Environment variables
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="gui.server (Web Application Server)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#options_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Options
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1318,12 +1306,13 @@
 
 
 <h1 id="reference-cli-command-line-options">Reference: CLI Command Line Options</h1>
-<p>NSE provides command-line entry points for executing test suites and running web servers.</p>
 <hr />
-<h2 id="nseclirunner-headless-test-suite-runner"><code>nse.cli.runner</code> (Headless Test Suite Runner)</h2>
-<p>Execute YAML test suite files from the command line:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>.venv/bin/python<span class="w"> </span>-m<span class="w"> </span>nse.cli.runner<span class="w"> </span>--file<span class="w"> </span>&lt;path-to-yaml-file&gt;
+<h2 id="nse-runner-headless-test-suite-runner"><code>nse-runner</code> (Headless Test Suite Runner)</h2>
+<p>Execute YAML or JSON test suite files from the command line:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>nse-runner<span class="w"> </span>--file<span class="w"> </span>&lt;path-to-suite&gt;
 </span></code></pre></div>
+<p>Equivalent to <code>sudo -E .venv/bin/python -m nse.cli.runner --file &lt;path&gt;</code> when
+running from a source checkout.</p>
 <h3 id="options">Options</h3>
 <table>
 <thead>
@@ -1335,14 +1324,14 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><code>--file</code>, <code>-f</code></td>
+<td style="text-align: left;"><code>--file</code></td>
 <td style="text-align: left;">Path (required)</td>
-<td style="text-align: left;">Path to the test suite YAML file</td>
+<td style="text-align: left;">Path to the test suite YAML or JSON file</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>--verbose</code>, <code>-v</code></td>
 <td style="text-align: left;">Flag</td>
-<td style="text-align: left;">Enable debug logging output</td>
+<td style="text-align: left;">Enable debug logging from the engine</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>--help</code></td>
@@ -1351,51 +1340,73 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="guiserver-web-application-server"><code>gui.server</code> (Web Application Server)</h2>
-<p>Launch the FastAPI web application server:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>-E<span class="w"> </span>.venv/bin/python<span class="w"> </span>-m<span class="w"> </span>gui.server<span class="w"> </span>serve<span class="w"> </span><span class="o">[</span>--port<span class="w"> </span><span class="m">8000</span><span class="o">]</span><span class="w"> </span><span class="o">[</span>--dev<span class="o">]</span><span class="w"> </span><span class="o">[</span>--reload<span class="o">]</span>
-</span></code></pre></div>
-<h3 id="options_1">Options</h3>
+<h3 id="exit-codes">Exit codes</h3>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Option</th>
-<th style="text-align: left;">Type</th>
-<th style="text-align: left;">Default</th>
-<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Code</th>
+<th style="text-align: left;">Meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><code>serve</code></td>
-<td style="text-align: left;">Subcommand</td>
-<td style="text-align: left;">-</td>
-<td style="text-align: left;">Start the web server</td>
+<td style="text-align: left;"><code>0</code></td>
+<td style="text-align: left;">Every packet's observed verdict matched its expectation.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>--host</code></td>
-<td style="text-align: left;">String</td>
-<td style="text-align: left;"><code>0.0.0.0</code></td>
-<td style="text-align: left;">Bind host address</td>
+<td style="text-align: left;"><code>1</code></td>
+<td style="text-align: left;">A verdict was wrong, the suite file was malformed, <strong>or</strong> the engine could not observe a verdict it needed.</td>
+</tr>
+</tbody>
+</table>
+<p>The summary distinguishes the last case:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Test Suite Summary: 1 passed, 1 failed.
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>1 of the failures are ORACLE errors: the engine could not observe what it
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>needed to. Treat these as a broken measurement, not as a firewall defect.
+</span></code></pre></div>
+<p>An oracle error means the instrument failed, not the ruleset. Investigate the
+environment — is <code>nft monitor trace</code> available inside the namespace, does this
+kernel emit a trace format the parser understands — before touching your rules.</p>
+<hr />
+<h2 id="environment-variables">Environment variables</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Default</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>NSE_TRACE_IDLE_TIMEOUT</code></td>
+<td style="text-align: left;"><code>5.0</code></td>
+<td style="text-align: left;">Seconds of trace inactivity tolerated before a timeout. Extended after every injection.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>--port</code></td>
-<td style="text-align: left;">Integer</td>
-<td style="text-align: left;"><code>8000</code></td>
-<td style="text-align: left;">Bind port</td>
+<td style="text-align: left;"><code>NSE_INJECT_SETTLE</code></td>
+<td style="text-align: left;"><code>0.15</code></td>
+<td style="text-align: left;">Delay between packet injections, so trace events keep packet order.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>--dev</code></td>
-<td style="text-align: left;">Flag</td>
-<td style="text-align: left;"><code>False</code></td>
-<td style="text-align: left;">Enable CORS middleware for Svelte dev server</td>
+<td style="text-align: left;"><code>NSE_DRAIN_DELAY</code></td>
+<td style="text-align: left;"><code>0.3</code></td>
+<td style="text-align: left;">Time given to the kernel to flush final verdicts.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>--reload</code></td>
-<td style="text-align: left;">Flag</td>
-<td style="text-align: left;"><code>False</code></td>
-<td style="text-align: left;">Enable Uvicorn auto-reload</td>
+<td style="text-align: left;"><code>NSE_CANARY_ATTEMPTS</code></td>
+<td style="text-align: left;"><code>25</code></td>
+<td style="text-align: left;">Canary re-injections before the oracle is declared blind.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>NSE_CANARY_INTERVAL</code></td>
+<td style="text-align: left;"><code>0.2</code></td>
+<td style="text-align: left;">Seconds to wait for each canary attempt.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>NSE_FORCE_BLIND</code></td>
+<td style="text-align: left;">unset</td>
+<td style="text-align: left;"><strong>Test hook.</strong> Makes the parser understand nothing, to prove a blind run fails. Never set this in a real run.</td>
 </tr>
 </tbody>
 </table>

@@ -6,19 +6,19 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Documentation for Network Sandbox Engine (NSE) - isolated Linux network namespace testing and kernel nftables trace evaluation.">
+        <meta name="description" content="Documentation for Transparent Tor Proxy (TTP) - a crash-safe Linux CLI tool to route all system traffic transparently through Tor using nftables.">
       
       
         <meta name="author" content="onyks-os">
       
       
-        <link rel="canonical" href="https://onyks-os.github.io/nse/tutorials/gateway-topology/">
+        <link rel="canonical" href="https://onyks-os.github.io/ttp/explanation/verification/">
       
       
-        <link rel="prev" href="../debugging-rulesets/">
+        <link rel="prev" href="../watchdog-fsm/">
       
       
-        <link rel="next" href="../../how-to/in-process-integration/">
+        <link rel="next" href="../security-assessment/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>Gateway Topology - Network Sandbox Engine (NSE)</title>
+        <title>Zero-Leak Verification - TTP - Transparent Tor Proxy</title>
       
     
     
@@ -84,7 +84,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#gateway-topology-testing" class="md-skip">
+        <a href="#explanation-how-the-zero-leak-claim-is-verified" class="md-skip">
           Skip to content
         </a>
       
@@ -100,7 +100,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Network Sandbox Engine (NSE)" class="md-header__button md-logo" aria-label="Network Sandbox Engine (NSE)" data-md-component="logo">
+    <a href="../.." title="TTP - Transparent Tor Proxy" class="md-header__button md-logo" aria-label="TTP - Transparent Tor Proxy" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -114,13 +114,13 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Network Sandbox Engine (NSE)
+            TTP - Transparent Tor Proxy
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Gateway Topology
+              Zero-Leak Verification
             
           </span>
         </div>
@@ -133,9 +133,9 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Passa a light mode"  type="radio" name="__palette" id="__palette_0">
     
-      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+      <label class="md-header__button md-icon" title="Passa a light mode" for="__palette_1" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
       </label>
     
@@ -143,9 +143,9 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Passa a dark mode"  type="radio" name="__palette" id="__palette_1">
     
-      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+      <label class="md-header__button md-icon" title="Passa a dark mode" for="__palette_0" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
       </label>
     
@@ -202,13 +202,13 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/onyks-os/NetworkSandboxEngine" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/onyks-os/TransparentTorProxy" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
-    onyks-os/NetworkSandboxEngine
+    onyks-os/TransparentTorProxy
   </div>
 </a>
       </div>
@@ -244,13 +244,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../quickstart/" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../tutorials/quickstart/" class="md-tabs__link">
           
   
   
@@ -270,7 +268,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../how-to/in-process-integration/" class="md-tabs__link">
+        <a href="../../how-to/user-bypass/" class="md-tabs__link">
           
   
   
@@ -286,11 +284,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../explanation/architecture/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../architecture/" class="md-tabs__link">
           
   
   
@@ -370,23 +370,23 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Network Sandbox Engine (NSE)" class="md-nav__button md-logo" aria-label="Network Sandbox Engine (NSE)" data-md-component="logo">
+    <a href="../.." title="TTP - Transparent Tor Proxy" class="md-nav__button md-logo" aria-label="TTP - Transparent Tor Proxy" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Network Sandbox Engine (NSE)
+    TTP - Transparent Tor Proxy
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/onyks-os/NetworkSandboxEngine" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/onyks-os/TransparentTorProxy" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
-    onyks-os/NetworkSandboxEngine
+    onyks-os/TransparentTorProxy
   </div>
 </a>
     </div>
@@ -424,31 +424,26 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
             
   
   
@@ -466,7 +461,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -484,7 +479,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../quickstart/" class="md-nav__link">
+      <a href="../../tutorials/quickstart/" class="md-nav__link">
         
   
   
@@ -512,14 +507,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../test-suites/" class="md-nav__link">
+      <a href="../../tutorials/bypass-basics/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Test Suite YAML
+    Bypass Modes
   
 
     
@@ -540,14 +535,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../debugging-rulesets/" class="md-nav__link">
+      <a href="../../tutorials/censorship-circumvention/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Ruleset Debugging
+    Censorship Circumvention
   
 
     
@@ -565,44 +560,17 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Gateway Topology
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../tutorials/automating-sessions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Gateway Topology
+    Automation & Scripts
   
 
     
@@ -611,59 +579,62 @@
   
 
       </a>
-      
-        
+    </li>
+  
 
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+              
+            
+              
+                
   
   
   
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/diagnosing-failures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
     
   
+    Diagnosing Failures
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#topology-architecture" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Topology Architecture
-      
-    </span>
-  </a>
+
+    
+  </span>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#yaml-gateway-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        YAML Gateway Example
-      
-    </span>
-  </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#programmatic-gateway-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Programmatic Gateway Usage
-      
-    </span>
-  </a>
+
+      </a>
+    </li>
   
-</li>
-      
-    </ul>
+
+              
+            
+              
+                
   
-</nav>
-      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/ipv6-policy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IPv6 Policies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -735,14 +706,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../how-to/in-process-integration/" class="md-nav__link">
+      <a href="../../how-to/user-bypass/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Embedding NSE in Python
+    User Bypass
   
 
     
@@ -763,14 +734,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../how-to/custom-packets/" class="md-nav__link">
+      <a href="../../how-to/bridges/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Custom Packet Specs
+    Bridges & Transports
   
 
     
@@ -791,14 +762,42 @@
   
   
     <li class="md-nav__item">
-      <a href="../../how-to/cicd-setup/" class="md-nav__link">
+      <a href="../../how-to/custom-nftables/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    CI/CD Automation
+    Custom Firewalls (UFW/firewalld)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/vm-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VM & Chaos Testing
   
 
     
@@ -823,26 +822,31 @@
       
   
   
+    
   
   
+  
     
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   
@@ -860,7 +864,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -878,14 +882,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../explanation/architecture/" class="md-nav__link">
+      <a href="../architecture/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Architecture & Privilege Model
+    Architecture & Flow
   
 
     
@@ -906,14 +910,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../explanation/deterministic-oracle/" class="md-nav__link">
+      <a href="../watchdog-fsm/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    The Verdict Oracle
+    Watchdog FSM
   
 
     
@@ -931,17 +935,158 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../explanation/namespace-lifecycle/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zero-Leak Verification
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
     
   
-    Namespace Lifecycle & Naming
+    Zero-Leak Verification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-problem-with-testing-for-an-absence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The problem with testing for an absence
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-suite-does-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the suite does now
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is covered
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-it-runs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where it runs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-dependency-and-why-it-is-pinned-hard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The dependency, and why it is pinned hard
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-rule-generalised" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The rule, generalised
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../security-assessment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security & Threat Model
   
 
     
@@ -1028,35 +1173,7 @@
   <span class="md-ellipsis">
     
   
-    CLI Commands
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/api/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Core API
+    CLI Options
   
 
     
@@ -1084,7 +1201,35 @@
   <span class="md-ellipsis">
     
   
-    Configuration & Dependencies
+    Dependencies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python API
   
 
     
@@ -1219,10 +1364,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#topology-architecture" class="md-nav__link">
+  <a href="#the-problem-with-testing-for-an-absence" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Topology Architecture
+        The problem with testing for an absence
       
     </span>
   </a>
@@ -1230,10 +1375,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#yaml-gateway-example" class="md-nav__link">
+  <a href="#what-the-suite-does-now" class="md-nav__link">
     <span class="md-ellipsis">
       
-        YAML Gateway Example
+        What the suite does now
       
     </span>
   </a>
@@ -1241,10 +1386,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#programmatic-gateway-usage" class="md-nav__link">
+  <a href="#what-is-covered" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Programmatic Gateway Usage
+        What is covered
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-it-runs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where it runs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-dependency-and-why-it-is-pinned-hard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The dependency, and why it is pinned hard
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-rule-generalised" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The rule, generalised
       
     </span>
   </a>
@@ -1271,64 +1449,138 @@
   
 
 
-<h1 id="gateway-topology-testing">Gateway Topology Testing</h1>
-<p>In addition to simple single-namespace testing, NSE supports <strong>Gateway Topologies</strong> for testing router, NAT, and forwarding firewall rulesets.</p>
+<!--
+Copyright (c) 2026 onyks-os
+SPDX-License-Identifier: MIT
+-->
+
+<h1 id="explanation-how-the-zero-leak-claim-is-verified">Explanation: How the zero-leak claim is verified</h1>
+<p>TTP's central claim is that no cleartext packet reaches the WAN. This page is
+about why you should believe it, and about the mistake that made an earlier
+version of that evidence worth nothing.</p>
 <hr />
-<h2 id="topology-architecture">Topology Architecture</h2>
-<p>A Gateway topology spawns two interconnected network namespaces:</p>
-<ol>
-<li><strong>Router Netns (<code>nse_router_&lt;id&gt;</code>)</strong>: Receives packets on <code>veth_router_host</code> and forwards them to <code>veth_router_server</code>.</li>
-<li><strong>Server Netns (<code>nse_server_&lt;id&gt;</code>)</strong>: Houses background mock listeners and target endpoints.</li>
-</ol>
+<h2 id="the-problem-with-testing-for-an-absence">The problem with testing for an absence</h2>
+<p>The obvious test is:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">captured</span> <span class="o">=</span> <span class="n">sniffer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">assert</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">captured</span> <span class="k">if</span> <span class="n">is_leak</span><span class="p">(</span><span class="n">p</span><span class="p">)]</span> <span class="o">==</span> <span class="p">[]</span>
+</span></code></pre></div>
+<p>That assertion is true when the firewall works. It is <em>also</em> true when the
+sniffer never started, when the interface name is wrong, when the BPF filter
+excludes the traffic, and when the stimulus never left the process. Four wrong
+reasons, one right one, and nothing in the output distinguishes them.</p>
+<p>For most of this project's life, that was the whole of the zero-leak suite - and
+it was worse than that, because nothing executed it: no make target, no CI job,
+no step in the release pipeline. A claim that nothing runs is not a measurement.</p>
+<h2 id="what-the-suite-does-now">What the suite does now</h2>
+<p>Every containment test runs its stimulus <strong>twice</strong>.</p>
 <pre class="mermaid"><code>graph LR
-    Host[Host / Scapy Injector] --&gt;|vhr-*| Router[Router Netns]
-    Router --&gt;|vrs-*| Server[Server Netns]</code></pre>
-<hr />
-<h2 id="yaml-gateway-example">YAML Gateway Example</h2>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">tests</span><span class="p">:</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Router</span><span class="nv"> </span><span class="s">Forwarding</span><span class="nv"> </span><span class="s">Allow</span><span class="nv"> </span><span class="s">Port</span><span class="nv"> </span><span class="s">53</span><span class="nv"> </span><span class="s">UDP&quot;</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">topology</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nt">rules</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">      </span><span class="no">table ip filter {</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">        </span><span class="no">chain forward {</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">          </span><span class="no">type filter hook forward priority 0; policy drop;</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">          </span><span class="no">udp dport 53 accept</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">        </span><span class="no">}</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">      </span><span class="no">}</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="nt">packets</span><span class="p">:</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">udp</span>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">        </span><span class="nt">src_ip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.1</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">        </span><span class="nt">dst_ip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.2.2</span>
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">        </span><span class="nt">dst_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">53</span>
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">        </span><span class="nt">expected_verdict</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ACCEPT</span>
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">udp</span>
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">        </span><span class="nt">src_ip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.1</span>
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">        </span><span class="nt">dst_ip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.2.2</span>
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">        </span><span class="nt">dst_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">54</span>
-</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">        </span><span class="nt">expected_verdict</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DROP</span>
+    A["Flush the ruleset"] --&gt; B["Send the packet"]
+    B --&gt; C{"Did the sniffer&lt;br/&gt;SEE the leak?"}
+    C --&gt;|no| X["FAIL:&lt;br/&gt;the instrument is broken"]
+    C --&gt;|yes| D["Load TTP's real ruleset"]
+    D --&gt; E["Send the same packet"]
+    E --&gt; F{"Did anything&lt;br/&gt;reach the wire?"}
+    F --&gt;|yes| Y["FAIL:&lt;br/&gt;the firewall leaks"]
+    F --&gt;|no| G["PASS"]</code></pre>
+<p>The first half is the <strong>positive control</strong>. It proves, on this machine, in this
+run, for this exact traffic, that the harness can detect a leak. Only then is the
+absence of one meaningful. If the control fails, the test fails there - it never
+reaches the assertion that would have passed for the wrong reason.</p>
+<h2 id="what-is-covered">What is covered</h2>
+<p>Each of these is a path by which a transparent proxy is known to leak:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Stimulus</th>
+<th style="text-align: left;">What it proves</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">UDP DNS to a public resolver</td>
+<td style="text-align: left;">plain DNS is redirected to Tor's DNSPort</td>
+</tr>
+<tr>
+<td style="text-align: left;">TCP DNS (port 53)</td>
+<td style="text-align: left;">the other DNS path, redirected separately</td>
+</tr>
+<tr>
+<td style="text-align: left;">TCP to a web port</td>
+<td style="text-align: left;">ordinary traffic reaches Tor's TransPort</td>
+</tr>
+<tr>
+<td style="text-align: left;">DoT (TCP 853)</td>
+<td style="text-align: left;">rejected outright rather than proxied</td>
+</tr>
+<tr>
+<td style="text-align: left;">QUIC DoH (UDP 443)</td>
+<td style="text-align: left;">the gap NAT cannot close - only the filter rule stops it</td>
+</tr>
+<tr>
+<td style="text-align: left;">ICMP</td>
+<td style="text-align: left;">Tor cannot carry it, so it must be rejected</td>
+</tr>
+<tr>
+<td style="text-align: left;">Arbitrary UDP</td>
+<td style="text-align: left;">the catch-all reject holds</td>
+</tr>
+<tr>
+<td style="text-align: left;">IPv6</td>
+<td style="text-align: left;">the classic leak path when a proxy only reasons about IPv4</td>
+</tr>
+</tbody>
+</table>
+<p>And one assertion in the other direction:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Stimulus</th>
+<th style="text-align: left;">What it proves</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">UDP from a bypassed UID to the LAN</td>
+<td style="text-align: left;">TTP is a proxy, not a brick</td>
+</tr>
+</tbody>
+</table>
+<p>That last row matters more than it looks. A firewall that dropped every packet
+would pass all eight containment tests. Without a test that something is <em>still
+allowed</em>, "zero leaks" and "zero connectivity" are indistinguishable.</p>
+<h2 id="where-it-runs">Where it runs</h2>
+<p>The rules are loaded into an ephemeral Linux network namespace built by the
+<a href="https://github.com/onyks-os/NetworkSandboxEngine">Network Sandbox Engine</a>, with
+a Scapy sniffer on the boundary <code>veth</code>. The ruleset under test is the <strong>real
+generated one</strong>, captured from TTP's own builder rather than written by hand for
+the test - so a change to rule generation is visible here.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>nftables<span class="w"> </span>iproute2<span class="w"> </span>conntrack<span class="w"> </span>libpcap0.8<span class="w"> </span>libpcap-dev
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[nse]&quot;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>make<span class="w"> </span>test-nse
 </span></code></pre></div>
-<hr />
-<h2 id="programmatic-gateway-usage">Programmatic Gateway Usage</h2>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">nse.models.test_request</span><span class="w"> </span><span class="kn">import</span> <span class="n">TestRequest</span><span class="p">,</span> <span class="n">TopologyType</span><span class="p">,</span> <span class="n">PacketSpec</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">nse.core.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_test_pipeline</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">request</span> <span class="o">=</span> <span class="n">TestRequest</span><span class="p">(</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="n">topology</span><span class="o">=</span><span class="n">TopologyType</span><span class="o">.</span><span class="n">GATEWAY</span><span class="p">,</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="n">rules</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="s2">    table ip filter {</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="s2">        chain forward {</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="s2">            type filter hook forward priority 0; policy drop;</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="s2">            ip daddr 10.0.2.2 udp dport 53 accept</span>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="s2">        }</span>
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="s2">    }</span>
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="s2">    &quot;&quot;&quot;</span><span class="p">,</span>
-</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    <span class="n">packets</span><span class="o">=</span><span class="p">[</span>
-</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>        <span class="n">PacketSpec</span><span class="p">(</span><span class="n">protocol</span><span class="o">=</span><span class="s2">&quot;udp&quot;</span><span class="p">,</span> <span class="n">src_ip</span><span class="o">=</span><span class="s2">&quot;10.0.1.1&quot;</span><span class="p">,</span> <span class="n">dst_ip</span><span class="o">=</span><span class="s2">&quot;10.0.2.2&quot;</span><span class="p">,</span> <span class="n">dst_port</span><span class="o">=</span><span class="mi">53</span><span class="p">)</span>
-</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    <span class="p">]</span>
-</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="p">)</span>
-</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
-</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="n">events</span> <span class="o">=</span> <span class="k">await</span> <span class="n">run_test_pipeline</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">)</span>
-</span></code></pre></div>
+<p><code>make test-nse</code> sets <code>TTP_REQUIRE_NSE=1</code>, which turns a missing, shadowed or
+too-old engine into a hard error instead of a skip. A gate that can skip itself
+is not a gate, and <code>nse</code> is a short import name that an unrelated PyPI package
+can shadow - which looks exactly like "not installed".</p>
+<p>The suite runs in CI on every push, and as a step in <code>scripts/verify.sh</code> before
+a release.</p>
+<h2 id="the-dependency-and-why-it-is-pinned-hard">The dependency, and why it is pinned hard</h2>
+<p><code>network-sandbox-engine&gt;=2.1.0,&lt;3</code>. The floor is not a preference.</p>
+<p>Before 2.1.0 the engine's own test runner reported PASSED when its oracle had
+observed nothing, and its kernel trace monitor could stop reading mid-run without
+saying so. A green result from such an engine would not have been evidence of
+anything - the same defect as the one described at the top of this page, one
+layer down. TTP refuses to run this suite against an older engine rather than
+produce a reassuring number.</p>
+<p>See <a href="https://github.com/onyks-os/TransparentTorProxy/blob/main/docs/decisions/0007-ruleset-testing-with-nse.md">ADR 0007</a>
+for the decision record and its amendment.</p>
+<h2 id="the-rule-generalised">The rule, generalised</h2>
+<blockquote>
+<p>A test that asserts an absence must first demonstrate it can detect a presence.</p>
+</blockquote>
+<p>It applies well beyond firewalls. Any check for the non-occurrence of something -
+no error logged, no file written, no request sent - has the same failure mode,
+and needs the same paired control.</p>
 
 
 
