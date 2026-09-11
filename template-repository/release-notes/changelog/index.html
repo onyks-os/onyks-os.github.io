@@ -865,15 +865,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#unreleased" class="md-nav__link">
+  <a href="#010-2026-09-11" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Unreleased
+        0.1.0 - 2026-09-11
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Unreleased">
+    <nav class="md-nav" aria-label="0.1.0 - 2026-09-11">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -985,15 +985,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#unreleased" class="md-nav__link">
+  <a href="#010-2026-09-11" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Unreleased
+        0.1.0 - 2026-09-11
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Unreleased">
+    <nav class="md-nav" aria-label="0.1.0 - 2026-09-11">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1090,7 +1090,7 @@ to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
 one generated before it</em>. A generated repository is a copy taken at a point in time; to pull a later
 fix into one you already have, re-run <code>make new TARGET=&lt;that-repo&gt;</code> — existing files are never
 overwritten.</p>
-<h2 id="unreleased"><a href="https://github.com/onyks-os/TemplateRepository/compare/v0.1.0...HEAD">Unreleased</a></h2>
+<h2 id="010-2026-09-11"><a href="https://github.com/onyks-os/TemplateRepository/releases/tag/v0.1.0">0.1.0</a> - 2026-09-11</h2>
 <h3 id="added">Added</h3>
 <ul>
 <li><strong>A published documentation site</strong> (<code>mkdocs.yml</code>, <code>docs/index.md</code>, <code>make docs-build</code>). The
@@ -1101,6 +1101,9 @@ overwritten.</p>
 <li><strong>A <code>Documentation</code> workflow.</strong> The site is published from a separate repository holding built
   output, where nothing fails when a link rots; <code>mkdocs build --strict</code> and a <code>docs-sync</code> diff now
   gate that here, in the repository that owns the sources.</li>
+<li><strong>A <code>Publish Documentation</code> workflow.</strong> The built site is pushed to
+  <code>onyks-os.github.io/template-repository</code> when a release is published, from the
+  released tag, so what is published is by construction a released version.</li>
 <li><strong>Workflow-safety checks in <code>scripts/openssf-audit.sh</code>.</strong> The audit now reads workflows instead of
   only checking that they exist: it reports Dangerous-Workflow (<code>pull_request_target</code> combined with a
   checkout of the pull request's own code), script injection of untrusted context into <code>run:</code> blocks,

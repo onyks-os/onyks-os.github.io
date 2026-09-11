@@ -1142,6 +1142,34 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#unreleased" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [Unreleased]
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[Unreleased]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#211-2026-09-10" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1215,7 +1243,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#added" class="md-nav__link">
+  <a href="#added_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Added
@@ -1265,7 +1293,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#added_1" class="md-nav__link">
+  <a href="#added_2" class="md-nav__link">
     <span class="md-ellipsis">
       
         Added
@@ -1293,7 +1321,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_2" class="md-nav__link">
+  <a href="#added_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         Added
@@ -1332,7 +1360,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_3" class="md-nav__link">
+  <a href="#added_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         Added
@@ -1382,7 +1410,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#added_4" class="md-nav__link">
+  <a href="#added_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         Added
@@ -1545,6 +1573,34 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#unreleased" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [Unreleased]
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[Unreleased]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#211-2026-09-10" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1618,7 +1674,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#added" class="md-nav__link">
+  <a href="#added_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Added
@@ -1668,7 +1724,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#added_1" class="md-nav__link">
+  <a href="#added_2" class="md-nav__link">
     <span class="md-ellipsis">
       
         Added
@@ -1696,7 +1752,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_2" class="md-nav__link">
+  <a href="#added_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         Added
@@ -1735,7 +1791,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_3" class="md-nav__link">
+  <a href="#added_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         Added
@@ -1785,7 +1841,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#added_4" class="md-nav__link">
+  <a href="#added_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         Added
@@ -1929,6 +1985,15 @@
 <p>All notable changes to the Network Sandbox Engine (NSE) project are documented in this file.</p>
 <p>The format follows <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>. This project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
 <hr />
+<h2 id="unreleased">[Unreleased]</h2>
+<h3 id="added">Added</h3>
+<ul>
+<li><strong><code>publish-docs.yml</code></strong> — the documentation site is rebuilt and pushed to
+  <code>onyks-os.github.io/nse</code> when a release is published, from the released tag.
+  Publication was a manual step: 2.1.1 shipped on 2026-09-09 and the published
+  site still did not mention it two days later.</li>
+</ul>
+<hr />
 <h2 id="211-2026-09-10">[2.1.1] - 2026-09-10</h2>
 <p>Security: the engine no longer resolves a root-executed binary through <code>$PATH</code>.</p>
 <h3 id="security">Security</h3>
@@ -2020,7 +2085,7 @@ result compatible with a blind instrument.</p>
 <li><strong><code>PacketSpec</code> validation errors escaped as tracebacks</strong> instead of being
   reported as a failed test case.</li>
 </ul>
-<h3 id="added">Added</h3>
+<h3 id="added_1">Added</h3>
 <ul>
 <li><strong>Canary probes as a permanent positive control</strong> (<code>nse/core/pipeline.py</code>). A
   probe packet is injected before the test packets and again after them; the run
@@ -2077,7 +2142,7 @@ result compatible with a blind instrument.</p>
 <li><strong>Target Orchestrator Signature</strong>: Rewrote <code>run_test_pipeline</code> signature to target standard request-driven API returning <code>list[TraceEvent]</code>.</li>
 <li><strong>Purged Controller State</strong>: Removed <code>enqueue_test</code>, <code>release_test</code>, <code>has_test</code>, <code>get_status</code>, <code>get_event_queue</code>, and <code>_tests</code> tracking methods from <code>NetnsController</code>.</li>
 </ul>
-<h3 id="added_1">Added</h3>
+<h3 id="added_2">Added</h3>
 <ul>
 <li><strong>Trace Harvester Readiness Probe</strong>: Added <code>wait_ready()</code> in <code>TraceHarvester</code> using <code>asyncio.Event</code> readiness signal, eliminating hardcoded warm-up delay sleeps.</li>
 <li><strong>Uniform Naming &amp; Startup Sweep</strong>: Created <code>nse.core.naming</code> helper with <code>derive_names()</code> and automated orphan netns/veth startup sweep in <code>NetnsController</code>.</li>
@@ -2089,7 +2154,7 @@ result compatible with a blind instrument.</p>
 <hr />
 <h2 id="111-2026-08-05"><a href="https://github.com/onyks-os/NetworkSandboxEngine/releases/tag/v1.1.1">1.1.1</a> - 2026-08-05</h2>
 <p>Kernel tracing initialization fix, background noise filtering in YAML test runner, and Makefile dynamic binary resolution.</p>
-<h3 id="added_2">Added</h3>
+<h3 id="added_3">Added</h3>
 <ul>
 <li><strong>Automatic Kernel Tracing Prepending</strong>: Automatically inject a high-priority <code>table inet nse_trace</code> prerouting chain (<code>meta nftrace set 1</code>) in <code>RuleEngine.load()</code> to guarantee <code>nft monitor trace</code> captures trace events for all test packets.</li>
 </ul>
@@ -2103,7 +2168,7 @@ result compatible with a blind instrument.</p>
 <hr />
 <h2 id="110-2026-06-19"><a href="https://github.com/onyks-os/NetworkSandboxEngine/releases/tag/v1.1.0">1.1.0</a> - 2026-06-19</h2>
 <p>Introducing native container environments support and a Zero-Trust Privilege Separation architecture for the web server.</p>
-<h3 id="added_3">Added</h3>
+<h3 id="added_4">Added</h3>
 <ul>
 <li><strong>Native Container Support (<code>nsenter</code> fallback)</strong>: Added robust container detection in <code>nse/core/utils.py</code> (checking <code>container</code> env, <code>/.dockerenv</code>, <code>/proc/1/environ</code>, and <code>cgroup</code> format). Dynamic fallback from <code>ip netns exec</code> to <code>nsenter --net</code> namespace switching prevents remount errors in container runtimes.</li>
 <li><strong>Zero-Trust Privilege Separation</strong>:</li>
@@ -2121,7 +2186,7 @@ result compatible with a blind instrument.</p>
 <h3 id="summary">Summary</h3>
 <p>NSE v1.0.0 is published as a headless Python library (<code>network-sandbox-engine</code> on PyPI) with an optional GUI layer that lives in-repository. The core engine depends only on <code>scapy</code>; CLI tooling requires <code>pydantic</code> and <code>pyyaml</code> via the <code>[cli]</code> extra. The GUI daemon (FastAPI and Svelte) is excluded from the wheel by design and is run from a repository clone.</p>
 <hr />
-<h3 id="added_4">Added</h3>
+<h3 id="added_5">Added</h3>
 <h4 id="core-headless-engine-nse">Core Headless Engine (<code>nse/</code>)</h4>
 <ul>
 <li><code>NetnsController</code>: async context manager for ephemeral Linux network namespace lifecycle (create, configure, teardown). Supports <code>simple</code> (host to sandbox) and <code>gateway</code> (host to router to server) topologies.</li>
