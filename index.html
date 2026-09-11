@@ -170,11 +170,13 @@
 
         grid.innerHTML = repos.map(repo => {
           // Routing logico: se esiste una pagina dedicata, usa quella. Altrimenti GitHub.
+          // Only projects whose built documentation actually lives in this
+          // repository belong here; anything else must fall through to GitHub.
+          // 'App-Tesoreria' pointed at /tesoreria, which was never published.
           const internalPages = {
             'TransparentTorProxy': '/ttp',
             'NetworkSandboxEngine': '/nse',
             'TemplateRepository': '/template-repository',
-            'App-Tesoreria': '/tesoreria',
           };
           const isInternal = !!internalPages[repo.name];
           const targetLink = isInternal ? internalPages[repo.name] : repo.html_url;
