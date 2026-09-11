@@ -1142,6 +1142,45 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#211-2026-09-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [2.1.1] - 2026-09-10
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[2.1.1] - 2026-09-10">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#210-2026-09-08" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1187,7 +1226,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed" class="md-nav__link">
+  <a href="#changed_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Changed
@@ -1304,7 +1343,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_1" class="md-nav__link">
+  <a href="#changed_2" class="md-nav__link">
     <span class="md-ellipsis">
       
         Changed
@@ -1437,7 +1476,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_2" class="md-nav__link">
+  <a href="#changed_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         Changed
@@ -1506,6 +1545,45 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#211-2026-09-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [2.1.1] - 2026-09-10
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[2.1.1] - 2026-09-10">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#210-2026-09-08" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1551,7 +1629,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed" class="md-nav__link">
+  <a href="#changed_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Changed
@@ -1668,7 +1746,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_1" class="md-nav__link">
+  <a href="#changed_2" class="md-nav__link">
     <span class="md-ellipsis">
       
         Changed
@@ -1801,7 +1879,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed_2" class="md-nav__link">
+  <a href="#changed_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         Changed
@@ -1850,6 +1928,38 @@
 <h1 id="release-notes-changelog">Release Notes &amp; Changelog</h1>
 <p>All notable changes to the Network Sandbox Engine (NSE) project are documented in this file.</p>
 <p>The format follows <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>. This project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
+<hr />
+<h2 id="211-2026-09-10">[2.1.1] - 2026-09-10</h2>
+<p>Security: the engine no longer resolves a root-executed binary through <code>$PATH</code>.</p>
+<h3 id="security">Security</h3>
+<ul>
+<li><strong>PATH hijacking closed.</strong> NSE creates network namespaces and reads kernel
+  trace events, so it runs as root - and it invoked <code>ip</code>, <code>nft</code> and <code>nsenter</code>
+  <strong>by bare name</strong>, leaving the kernel to resolve them through <code>$PATH</code>. Anyone
+  able to influence the environment of the <code>sudo</code> invocation could place their
+  own <code>ip</code> earlier in the search order and have it executed with full
+  privileges.</li>
+</ul>
+<p>This is the same defect that TTP closed in its 0.4.8 cycle, and it mattered
+  more here than it looks: NSE is the instrument TTP's zero-leak claim rests on.
+  A verification engine with a privilege-escalation path is a strange thing to
+  trust about a firewall.</p>
+<p>New <code>nse/core/paths.py</code> resolves every binary against a fixed list of
+  root-owned system directories, never <code>$PATH</code>, and refuses one that is group-
+  or world-writable, or that sits in a writable directory - write access there
+  is enough to replace the file by rename. <code>BinaryNotFoundError</code> is a
+  <code>FileNotFoundError</code>, so callers that already handled a missing tool keep
+  working unchanged.</p>
+<p>66 call sites migrated. The deliverable is
+  <code>test_a_hostile_nft_on_path_is_not_executed</code> and
+  <code>test_the_engine_really_invokes_the_trusted_binary</code>, which plant a hostile
+  binary first on <code>$PATH</code> and assert the argv handed to <code>subprocess</code> still names
+  the trusted absolute path - the second catches a call site the migration
+  missed, which asserting on <code>resolve()</code> alone would not.</p>
+<h3 id="changed">Changed</h3>
+<ul>
+<li>Test coverage 98.45% → 98.09% across a larger surface: 239 → 259 tests.</li>
+</ul>
 <hr />
 <h2 id="210-2026-09-08">[2.1.0] - 2026-09-08</h2>
 <p>Trustworthy oracle, archived web interface, and a test suite that can fail.</p>
@@ -1943,7 +2053,7 @@ result compatible with a blind instrument.</p>
 <li><strong>Container runner image</strong>: the Dockerfile now builds a CLI image for running a
   suite against a pinned nftables version.</li>
 </ul>
-<h3 id="changed">Changed</h3>
+<h3 id="changed_1">Changed</h3>
 <ul>
 <li><strong>Test coverage: 51% → 98%</strong> across <code>nse/</code>, 21 tests → 232. The three modules
   that carry correctness were the three least covered: <code>runner.py</code> 0% → 98%,
@@ -2001,7 +2111,7 @@ result compatible with a blind instrument.</p>
 <li><code>RootdClient</code> client proxy allowing unprivileged web server instances (<code>nse-web</code> / <code>gui/server.py</code>) to delegate low-level sandbox execution without running as root.</li>
 <li><strong>Dedicated RPC Unit Tests</strong>: Added asynchronous mocking test <code>test_rootd_rpc_communication</code> to verify JSON-RPC protocol between client and daemon.</li>
 </ul>
-<h3 id="changed_1">Changed</h3>
+<h3 id="changed_2">Changed</h3>
 <ul>
 <li><strong>Makefile and dev-setup</strong>: Restructured commands (<code>make run-rootd</code>, <code>make run-web</code>, <code>make backend</code>, and <code>make dev</code>) and updated startup instructions to reflect the decoupled daemon architecture.</li>
 </ul>
@@ -2111,7 +2221,7 @@ result compatible with a blind instrument.</p>
 </tbody>
 </table>
 <hr />
-<h3 id="changed_2">Changed</h3>
+<h3 id="changed_3">Changed</h3>
 <ul>
 <li>Repository restructured from a monolithic <code>backend/nse/</code> layout to a root-level separation:</li>
 <li><code>nse/</code> is the headless PyPI package (replaces <code>backend/nse/</code>).</li>
