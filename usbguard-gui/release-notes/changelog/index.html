@@ -1118,7 +1118,18 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Unreleased">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#010-2026-09-27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.1.0 - 2026-09-27
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.1.0 - 2026-09-27">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1137,50 +1148,6 @@
     <span class="md-ellipsis">
       
         Changed
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#deprecated" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Deprecated
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#removed" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Removed
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#fixed" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Fixed
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#security" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Security
       
     </span>
   </a>
@@ -1243,7 +1210,18 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Unreleased">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#010-2026-09-27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.1.0 - 2026-09-27
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.1.0 - 2026-09-27">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1262,50 +1240,6 @@
     <span class="md-ellipsis">
       
         Changed
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#deprecated" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Deprecated
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#removed" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Removed
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#fixed" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Fixed
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#security" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Security
       
     </span>
   </a>
@@ -1341,9 +1275,9 @@
 <p>All notable changes to this project will be documented in this file.</p>
 <p>The format is based on <a href="https://keepachangelog.com/en/1.1.0/">Keep a Changelog</a>,
 and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
-<h2 id="unreleased"><a href="https://github.com/onyks-os/USBGuardGUI/commits/main">Unreleased</a></h2>
-<p>Nothing is released yet. See
-<a href="https://github.com/onyks-os/USBGuardGUI/blob/main/ROADMAP.md">ROADMAP.md</a> for the phase order.</p>
+<h2 id="unreleased"><a href="https://github.com/onyks-os/USBGuardGUI/compare/v0.1.0...HEAD">Unreleased</a></h2>
+<h2 id="010-2026-09-27"><a href="https://github.com/onyks-os/USBGuardGUI/releases/tag/v0.1.0">0.1.0</a> - 2026-09-27</h2>
+<p>The first release.</p>
 <h3 id="added">Added</h3>
 <ul>
 <li>Rule-language parser and renderer (<code>src/rules/</code>): all targets, the nine attributes, the six set
@@ -1362,8 +1296,15 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <li>Notifications for newly inserted, unauthorized devices, with an "Allow for this session" quick
   action that re-checks the device's identity before acting; background mode; a status icon
   (<code>ksni</code>) where the desktop supports one; "Start at login".</li>
+<li>Italian translation, and the gettext pipeline for more (<code>po/</code>, <code>make i18n</code>, <code>docs/translating.md</code>).
+  The command-line output stays in English for bug reports.</li>
+<li><code>cargo run --example demo-bridge</code>: a stand-in for USBGuard with invented devices, for screenshots
+  and development; development builds reach it with <code>USBGUARD_GUI_BUS=session</code>.</li>
 <li>Packages: <code>.deb</code> and <code>.rpm</code> (<code>make package-deb</code>, <code>make package-rpm</code>), an Arch <code>PKGBUILD</code>, and a
   Flatpak manifest. No post-install scripts.</li>
+<li>Release pipeline: a <code>v*</code> tag builds the <code>.deb</code>, <code>.rpm</code>, Arch package, and Flatpak bundle, signs
+  every asset with Sigstore, publishes the GitHub Release, and publishes the crate to crates.io
+  (<code>docs/releasing.md</code>). Tags with a suffix are rehearsals: pre-releases, not published to crates.io.</li>
 <li>Read-only GTK 4 / libadwaita window: device list with filter, policy list in evaluation order,
   connection indicator, diagnostic dialog with per-distribution remedies.</li>
 <li>Phase 0 introspection results (<code>docs/dbus-introspection/</code>, <code>docs/architecture.md</code> §13.4) and an
@@ -1386,10 +1327,6 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <li><code>docs/architecture.md</code>: <code>listRules</code> takes a label filter, not a query — <code>""</code> lists every rule,
   <code>"match"</code> would have listed none. Found by introspection before any code depended on it.</li>
 </ul>
-<h3 id="deprecated">Deprecated</h3>
-<h3 id="removed">Removed</h3>
-<h3 id="fixed">Fixed</h3>
-<h3 id="security">Security</h3>
 
 
 
