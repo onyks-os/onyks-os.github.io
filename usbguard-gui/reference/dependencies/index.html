@@ -1311,11 +1311,16 @@ versions are pinned by the committed <code>Cargo.lock</code>.</p>
 <td style="text-align: left;">MIT OR Apache-2.0</td>
 <td style="text-align: left;">The error taxonomy that crosses layers.</td>
 </tr>
+<tr>
+<td style="text-align: left;"><code>gettext-rs</code></td>
+<td style="text-align: left;">0.8, feature <code>gettext-system</code></td>
+<td style="text-align: left;">MIT</td>
+<td style="text-align: left;">Translation catalogue lookup. Optional: <code>gui</code>.</td>
+</tr>
 </tbody>
 </table>
 <p>Desktop notifications use GIO's own <code>GNotification</code>, which already speaks both the session-bus
-protocol and the Flatpak notification portal, so no notification crate is needed. Translations
-(<code>gettext-rs</code>) are planned.</p>
+protocol and the Flatpak notification portal, so no notification crate is needed.</p>
 <p><code>cargo build --no-default-features</code> builds the headless commands (<code>--diagnose</code>, <code>--list-devices</code>,
 <code>--list-rules</code>) without GTK.</p>
 <h2 id="2-development-dependencies">2. Development Dependencies</h2>
@@ -1394,6 +1399,11 @@ protocol and the Flatpak notification portal, so no notification crate is needed
 <td style="text-align: left;">GLib</td>
 <td style="text-align: left;">Matching GTK</td>
 <td style="text-align: left;">Main loop, GSettings. <code>glib-compile-schemas</code> compiles the settings schema at build time.</td>
+</tr>
+<tr>
+<td style="text-align: left;">GNU gettext</td>
+<td style="text-align: left;">any</td>
+<td style="text-align: left;">Build time only: <code>msgfmt</code> compiles the translations. Without it the build is English only.</td>
 </tr>
 <tr>
 <td style="text-align: left;">A C toolchain, <code>pkg-config</code></td>

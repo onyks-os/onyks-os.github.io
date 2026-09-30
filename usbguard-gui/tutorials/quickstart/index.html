@@ -1334,30 +1334,46 @@ Follow it in order.</p>
 prompts), a USB stick you can plug and unplug freely, and about 15 minutes.</p>
 <hr />
 <h2 id="1-install">1. Install</h2>
-<p>No release has been published yet, so build from source.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Fedora / RHEL</label><label for="__tabbed_1_2">Debian / Ubuntu</label><label for="__tabbed_1_3">Arch</label></div>
+<p>Download the package for your distribution from the
+<a href="https://github.com/onyks-os/USBGuardGUI/releases/latest">latest release</a> and install it. The
+package pulls in USBGuard and its D-Bus bridge.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Fedora / RHEL</label><label for="__tabbed_1_2">Debian / Ubuntu</label><label for="__tabbed_1_3">Arch</label><label for="__tabbed_1_4">Flatpak</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>usbguard<span class="w"> </span>usbguard-dbus<span class="w"> </span>gtk4-devel<span class="w"> </span>libadwaita-devel<span class="w"> </span>gcc
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>./usbguard-gui-0.1.1-1.x86_64.rpm
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>usbguard<span class="w"> </span>libgtk-4-dev<span class="w"> </span>libadwaita-1-dev<span class="w"> </span>build-essential
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>./usbguard-gui_0.1.1-1_amd64.deb
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>pacman<span class="w"> </span>-S<span class="w"> </span>usbguard<span class="w"> </span>gtk4<span class="w"> </span>libadwaita<span class="w"> </span>base-devel
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>pacman<span class="w"> </span>-U<span class="w"> </span>./usbguard-gui-0.1.1-1-x86_64.pkg.tar.zst
 </span></code></pre></div>
 </div>
-</div>
-</div>
-<p>Then, with a <a href="https://rustup.rs/">Rust toolchain</a> (1.85 or newer):</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/onyks-os/USBGuardGUI.git
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">cd</span><span class="w"> </span>USBGuardGUI
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>cargo<span class="w"> </span>build<span class="w"> </span>--release
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>flatpak<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>./usbguard-gui-0.1.1.flatpak
 </span></code></pre></div>
-<p>The program is <code>target/release/usbguard-gui</code>. To install it as a package instead, run
-<code>make package-deb</code> or <code>make package-rpm</code> and install the file from <code>dist/</code>.</p>
+<p>The Flatpak does not contain USBGuard: install <code>usbguard</code> (and, on Fedora, <code>usbguard-dbus</code>)
+from your distribution as well.</p>
+</div>
+</div>
+</div>
+<p>To check a download before installing it, see the
+<a href="https://github.com/onyks-os/USBGuardGUI/blob/main/docs/verification.md">verification guide</a>.</p>
+<details class="note">
+<summary>Building from source instead</summary>
+<p>With a <a href="https://rustup.rs/">Rust toolchain</a> (1.85 or newer) and the build dependencies:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>usbguard<span class="w"> </span>usbguard-dbus<span class="w"> </span>gtk4-devel<span class="w"> </span>libadwaita-devel<span class="w"> </span>gcc<span class="w"> </span>gettext<span class="w">   </span><span class="c1"># Fedora</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>usbguard<span class="w"> </span>libgtk-4-dev<span class="w"> </span>libadwaita-1-dev<span class="w"> </span>build-essential<span class="w"> </span>gettext<span class="w">   </span><span class="c1"># Debian / Ubuntu</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>sudo<span class="w"> </span>pacman<span class="w"> </span>-S<span class="w"> </span>usbguard<span class="w"> </span>gtk4<span class="w"> </span>libadwaita<span class="w"> </span>base-devel<span class="w"> </span>gettext<span class="w">                        </span><span class="c1"># Arch</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/onyks-os/USBGuardGUI.git
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="nb">cd</span><span class="w"> </span>USBGuardGUI
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>cargo<span class="w"> </span>build<span class="w"> </span>--release
+</span></code></pre></div>
+<p>The program is <code>target/release/usbguard-gui</code>. <code>cargo install usbguard-gui</code> works too.</p>
+</details>
 <h2 id="2-start-usbguard-safely">2. Start USBGuard safely</h2>
 <div class="admonition danger">
 <p class="admonition-title">An empty policy blocks your keyboard</p>
@@ -1366,23 +1382,24 @@ mouse. Always generate a policy that allows what is connected right now first.</
 </div>
 <p>Debian and Ubuntu already did this, and started the services, when the package was installed. On
 Fedora and Arch:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;umask 077; usbguard generate-policy &gt; /etc/usbguard/rules.conf&#39;</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>usbguard.service<span class="w"> </span>usbguard-dbus.service
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;umask 077; usbguard generate-policy &gt; /etc/usbguard/rules.conf&#39;</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>usbguard.service<span class="w"> </span>usbguard-dbus.service
 </span></code></pre></div>
 <p>The <code>umask 077</code> matters: the daemon refuses a rule file that other users can read.</p>
 <h2 id="3-check-that-you-can-reach-the-daemon">3. Check that you can reach the daemon</h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>target/release/usbguard-gui<span class="w"> </span>--diagnose
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>usbguard-gui<span class="w"> </span>--diagnose
 </span></code></pre></div>
+<p>(From a source build: <code>target/release/usbguard-gui --diagnose</code>. From the Flatpak:
+<code>flatpak run io.github.onyks_os.UsbguardGui --diagnose</code>.)</p>
 <p><strong>What just happened:</strong> the program checked, in order, that there is a system bus, that USBGuard's
 D-Bus bridge is installed and running, and that you are allowed to read from the daemon. The last
 line should be:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Result: connected
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Result: connected
 </span></code></pre></div>
 <p>If it is anything else, the lines below it name the cause and the command that fixes it. See
 <a href="../../how-to/diagnose/">Read a diagnostic result</a> for what each state means.</p>
 <h2 id="4-open-the-window">4. Open the window</h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>target/release/usbguard-gui
-</span></code></pre></div>
+<p>Start <strong>USBGuardGUI</strong> from your application menu, or run <code>usbguard-gui</code>.</p>
 <p>You should see your USB devices, each with its state — <em>Allowed</em> or <em>Blocked</em> — shown by an icon
 <strong>and</strong> a word, never by colour alone.</p>
 <h2 id="5-allow-a-device-for-this-session">5. Allow a device for this session</h2>
