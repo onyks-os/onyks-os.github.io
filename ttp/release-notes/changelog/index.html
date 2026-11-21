@@ -1540,7 +1540,18 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="[Unreleased]">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#051-2026-11-21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [0.5.1] - 2026-11-21
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[0.5.1] - 2026-11-21">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2326,7 +2337,18 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="[Unreleased]">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#051-2026-11-21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [0.5.1] - 2026-11-21
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[0.5.1] - 2026-11-21">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3086,6 +3108,16 @@
 <p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>,
 and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
 <h2 id="unreleased">[Unreleased]</h2>
+<h2 id="051-2026-11-21">[0.5.1] - 2026-11-21</h2>
+<p>Maintenance. Missing Tor or a missing pluggable transport is now a failure
+(exit <code>1</code>) instead of a success, commands run without <code>sudo</code> ask for it instead
+of crashing or reporting an unreadable session as inactive, and the
+documentation catches up with 0.5.0: every command and option, and exit codes
+<code>0</code> to <code>10</code>. The zero-leak suite's round-trip test no longer trips on the host's
+own firewall.</p>
+<p>Upgrade notes: a script that treated exit <code>0</code> from <code>ttp start</code> or
+<code>ttp restart</code> as "nothing to do" when Tor was absent now sees <code>1</code>. No network
+change was ever made in that case, and none is made now.</p>
 <h3 id="added">Added</h3>
 <ul>
 <li>Estimate real release downloads without telemetry: <code>scripts/release_stats.py</code>
