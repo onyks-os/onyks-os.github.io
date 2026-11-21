@@ -24,8 +24,8 @@
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <link rel="icon" href="../../assets/mark.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -33,10 +33,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -102,8 +102,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="TTP - Transparent Tor Proxy" class="md-header__button md-logo" aria-label="TTP - Transparent Tor Proxy" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../assets/mark.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -270,7 +269,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../how-to/user-bypass/" class="md-tabs__link">
+        <a href="../../how-to/" class="md-tabs__link">
           
   
   
@@ -372,8 +371,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="TTP - Transparent Tor Proxy" class="md-nav__button md-logo" aria-label="TTP - Transparent Tor Proxy" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../assets/mark.svg" alt="logo">
 
     </a>
     TTP - Transparent Tor Proxy
@@ -689,10 +687,93 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-emergency-state-purge-sudo-ttp-purge" class="md-nav__link">
+  <a href="#4-restoring-the-network-after-a-crash" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Emergency State Purge (sudo ttp purge)
+        4. Restoring the Network After a Crash
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-diagnose-a-hardened-host-without-weakening-its-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Diagnose a hardened host without weakening its policy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Diagnose a hardened host without weakening its policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-record-the-baseline-before-starting-a-session" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A. Record the baseline before starting a session
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-reproduce-once-and-preserve-the-exit-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B. Reproduce once and preserve the exit status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-capture-the-failing-state-before-stopping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C. Capture the failing state before stopping
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d-separate-the-layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        D. Separate the layers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-restore-deliberately-then-report-a-minimal-reproduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        E. Restore deliberately, then report a minimal reproduction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-read-the-session-evidence-before-changing-protections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Read the session evidence before changing protections
       
     </span>
   </a>
@@ -802,6 +883,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../how-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../how-to/user-bypass/" class="md-nav__link">
         
   
@@ -894,6 +1003,258 @@
     
   
     VM & Chaos Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/apps-with-own-dns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Applications with Their Own DNS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/leak-evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DNS and UDP Test Evidence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/onion-addresses/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Onion Addresses and LAN Bypass
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/continuous-fault-evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Continuous Fault Evidence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/dnssec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DNSSEC Policy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/session-observations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Supervision and Notifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/vpn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VPN before Tor (Requirements and Recovery)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/apparmor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tor AppArmor Confinement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/security-quality/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security and Quality Findings
   
 
     
@@ -1008,7 +1369,7 @@
   <span class="md-ellipsis">
     
   
-    Watchdog FSM
+    Session Watchdog
   
 
     
@@ -1375,10 +1736,93 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-emergency-state-purge-sudo-ttp-purge" class="md-nav__link">
+  <a href="#4-restoring-the-network-after-a-crash" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Emergency State Purge (sudo ttp purge)
+        4. Restoring the Network After a Crash
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-diagnose-a-hardened-host-without-weakening-its-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Diagnose a hardened host without weakening its policy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Diagnose a hardened host without weakening its policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-record-the-baseline-before-starting-a-session" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A. Record the baseline before starting a session
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-reproduce-once-and-preserve-the-exit-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B. Reproduce once and preserve the exit status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-capture-the-failing-state-before-stopping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C. Capture the failing state before stopping
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d-separate-the-layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        D. Separate the layers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-restore-deliberately-then-report-a-minimal-reproduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        E. Restore deliberately, then report a minimal reproduction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-read-the-session-evidence-before-changing-protections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Read the session evidence before changing protections
       
     </span>
   </a>
@@ -1419,14 +1863,14 @@
 <li><strong>Torrc Configuration</strong>: Active volatile configuration in <code>/run/tor/ttp/torrc</code>.</li>
 <li><strong>nftables Ruleset</strong>: Active <code>inet ttp</code> redirection rules and chain counters.</li>
 <li><strong>DNS Configuration</strong>: <code>/etc/resolv.conf</code> mount overlay and <code>systemd-resolved</code> drop-ins.</li>
-<li><strong>Tor Control Interface</strong>: Connection status on control socket <code>/run/tor/ttp/control</code>.</li>
+<li><strong>Tor Control Interface</strong>: Connection status on the control socket <code>/run/tor/ttp/control.sock</code>.</li>
 <li><strong>TTP Internal State</strong>: Session lock content and volatile RAM file state in <code>/run/ttp</code>.</li>
 </ol>
 <hr />
 <h2 id="2-inspecting-volatile-logs-ttp-logs">2. Inspecting Volatile Logs (<code>ttp logs</code>)</h2>
 <p>View recent session logs stored in <code>/run/ttp/ttp.log</code>:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Display full volatile session log</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>ttp<span class="w"> </span>logs
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo<span class="w"> </span>ttp<span class="w"> </span>logs
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Combine with systemd journal for Tor daemon logs</span>
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>sudo<span class="w"> </span>journalctl<span class="w"> </span>-u<span class="w"> </span>ttp-tor.service<span class="w"> </span>-n<span class="w"> </span><span class="m">50</span><span class="w"> </span>--no-pager
@@ -1434,22 +1878,204 @@
 <p>Log entries capture preflight check events, <code>nftables</code> rule applications, DNS mount operations, and watchdog state transitions.</p>
 <hr />
 <h2 id="3-resolving-port-conflicts">3. Resolving Port Conflicts</h2>
-<p>TTP requires dedicated TCP and UDP ports for Tor TransPort (<code>9040</code>), DNSPort (<code>5353</code>), and ControlPort (<code>9051</code>).</p>
+<p>TTP's Tor needs two local ports: the TransPort (<code>9041</code> by default, <code>--transport-port</code>) and the DNSPort (<code>9054</code> by default, <code>--dns-port</code>). They are deliberately not Tor's usual <code>9040</code> and <code>5353</code>, so a system Tor can keep running; the control interface is a Unix socket, not a port.</p>
 <p>If another process occupies these ports, preflight checks report a port conflict:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Check if Tor TransPort (9040) is occupied by another process</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>ss<span class="w"> </span>-tulpn<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="m">9040</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Check if the TransPort (9041) is occupied by another process</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>ss<span class="w"> </span>-tulpn<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="m">9041</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Check DNS port (5353) listener</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>sudo<span class="w"> </span>ss<span class="w"> </span>-tulpn<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="m">5353</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Check the DNSPort (9054) listener</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>sudo<span class="w"> </span>ss<span class="w"> </span>-tulpn<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="m">9054</span>
 </span></code></pre></div>
-<p>If another Tor instance or local resolver occupies these ports, stop the conflicting daemon or allow TTP to manage its dedicated <code>ttp-tor.service</code> instance.</p>
+<p>If another process holds one of them, stop it or pick other ports with <code>--transport-port</code> / <code>--dns-port</code>.</p>
 <hr />
-<h2 id="4-emergency-state-purge-sudo-ttp-purge">4. Emergency State Purge (<code>sudo ttp purge</code>)</h2>
-<p>If a session crashes abruptly or leaves stale lock files, SELinux policy modules, or invalid <code>/run/ttp</code> files, run <code>sudo ttp purge</code>:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Clean up temporary state, locks, and SELinux modules</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sudo<span class="w"> </span>ttp<span class="w"> </span>purge
+<h2 id="4-restoring-the-network-after-a-crash">4. Restoring the Network After a Crash</h2>
+<p>If a session crashed, or a lock file outlived its session, force a teardown:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Remove TTP's table, restore DNS and delete the lock, even with no session running</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sudo<span class="w"> </span>ttp<span class="w"> </span>stop<span class="w"> </span>--restore-only
 </span></code></pre></div>
-<p><code>sudo ttp purge</code> stops active sessions, flushes stale <code>nftables</code> rules, unmounts temporary <code>/etc/resolv.conf</code> overlays, removes temporary files from <code>/run/ttp</code>, and unloads SELinux policy modules.</p>
+<p>If <code>ttp</code> itself cannot run, the repository ships a standalone script that does the
+same with plain <code>nft</code> and <code>umount</code>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>./scripts/restore-network.sh
+</span></code></pre></div>
+<p>A <code>kill -9</code> or a power cut needs neither: the lock lives in <code>tmpfs</code>, and the next
+<code>ttp start</code> detects an orphaned one and recovers before starting.</p>
+<p>To remove TTP from the system entirely - stopping any session, unloading the
+SELinux module and removing its markers - use <code>sudo ttp uninstall</code>, then remove the
+package or run <code>scripts/uninstall.sh</code>.</p>
+<hr />
+<h2 id="5-diagnose-a-hardened-host-without-weakening-its-policy">5. Diagnose a hardened host without weakening its policy</h2>
+<p>A failed TTP session is not evidence that the host configuration is wrong. Locate
+which layer failed before changing Quad9, firewall rules or hardening settings.
+The 0.5.0 work adds automatic restrictive-umask compatibility and a specific
+<a href="../../how-to/dnssec/">DNSSEC policy contract</a>. An explicit per-interface requirement
+refuses startup with code <code>4</code>; inherited global DNSSEC is temporarily disabled.
+The following procedure is manual: it does not disable defenses, change DNS or
+apply diagnostic firewall rules. Run locally, with a terminal available for
+recovery; do not experiment over your only remote management connection.</p>
+<h3 id="a-record-the-baseline-before-starting-a-session">A. Record the baseline before starting a session</h3>
+<p>Run these while TTP is inactive. If it is already active, capture section C first:
+otherwise teardown would discard useful evidence. Replace example ports below
+if your command uses non-default values.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">command</span><span class="w"> </span>-v<span class="w"> </span>ttp
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>ttp<span class="w"> </span>--help
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>cat<span class="w"> </span>/etc/os-release
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>uname<span class="w"> </span>-r
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>nft<span class="w"> </span>--version
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>systemctl<span class="w"> </span>is-active<span class="w"> </span>systemd-resolved<span class="w"> </span>NetworkManager<span class="w"> </span>firewalld<span class="w"> </span>nftables
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>readlink<span class="w"> </span>-f<span class="w"> </span>/etc/resolv.conf
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>findmnt<span class="w"> </span>-T<span class="w"> </span>/etc/resolv.conf
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>resolvectl<span class="w"> </span>status
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>ip<span class="w"> </span>-4<span class="w"> </span>rule<span class="w"> </span>show
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>ip<span class="w"> </span>-4<span class="w"> </span>route<span class="w"> </span>show<span class="w"> </span>table<span class="w"> </span>all
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>ip<span class="w"> </span>-6<span class="w"> </span>rule<span class="w"> </span>show
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>ip<span class="w"> </span>-6<span class="w"> </span>route<span class="w"> </span>show<span class="w"> </span>table<span class="w"> </span>all
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>sudo<span class="w"> </span>ss<span class="w"> </span>-lntup
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>sudo<span class="w"> </span>nft<span class="w"> </span>-a<span class="w"> </span>list<span class="w"> </span>ruleset
+</span></code></pre></div>
+<p>Record the installed package version using your installation method (for example
+<code>rpm -q transparent-tor-proxy</code>, <code>dpkg-query -W transparent-tor-proxy</code>, or the
+package metadata in the pip/pipx environment used to install TTP). TTP has no
+<code>ttp --version</code> option.</p>
+<p>An inactive service is useful information, not automatically an error. If
+<code>resolvectl</code> is unavailable, record that and inspect <code>/etc/resolv.conf</code> locally.
+If iptables-based tooling is installed, also inspect <code>sudo iptables-save</code> and
+<code>sudo ip6tables-save</code>: the nftables listing alone does not establish that no other
+filtering exists. Do not flush any rules.</p>
+<p>Describe how Quad9 is configured: plain DNS (53), DNS-over-TLS (853), browser
+DNS-over-HTTPS, a local proxy such as Stubby/Unbound, or a combination. Note whether
+a VPN, container network, UID-based egress policy or application sandbox is active.
+Record whether normal browsing and name resolution work before TTP starts.
+Record nftables' version too: syntax support is distinct from firewall hardening.
+For example, nftables 1.0.6 rejects the <code>destroy table</code> operation used by
+the teardown of TTP 0.4.11 and earlier; 0.5.0 uses <code>delete table</code> and handles an
+absent table explicitly. If that exact error appears on an older release,
+preserve it as a compatibility issue; do not loosen firewall policy.</p>
+<h3 id="b-reproduce-once-and-preserve-the-exit-status">B. Reproduce once and preserve the exit status</h3>
+<p>Use the exact command and options that previously failed; record them locally,
+including whether this is managed or <code>--external-daemon</code> mode. For example:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>ttp<span class="w"> </span>start<span class="w"> </span>--watchdog
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nv">start_rc</span><span class="o">=</span><span class="nv">$?</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nb">printf</span><span class="w"> </span><span class="s1">'ttp start exit code: %s\n'</span><span class="w"> </span><span class="s2">"</span><span class="nv">$start_rc</span><span class="s2">"</span>
+</span></code></pre></div>
+<p>This starts a real TTP session and changes its firewall/DNS state; it is the
+intentional reproduction step, not a read-only diagnostic. Do not add bypasses or
+<code>--allow-root</code> merely to make the check pass.</p>
+<p>Code <code>0</code> means the session is active and Tor was confirmed, <code>3</code> an established
+session whose Tor check was inconclusive, <code>1</code> an unsuccessful start (the network
+is restored, in cleartext), <code>5</code> a requested watchdog that did not become ready,
+and <code>7</code>/<code>8</code> emergency containment verified or unconfirmed. The
+<a href="../../reference/cli/#4-cli-exit-codes">exit code table</a> lists them all. A failed
+external check is not by itself proof of a leak or proof that no traffic reaches
+Tor.</p>
+<h3 id="c-capture-the-failing-state-before-stopping">C. Capture the failing state before stopping</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>ttp<span class="w"> </span>status
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sudo<span class="w"> </span>ttp<span class="w"> </span>diagnose
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>ttp-tor.service<span class="w"> </span>ttp-watchdog.service<span class="w"> </span>--no-pager
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>sudo<span class="w"> </span>journalctl<span class="w"> </span>-b<span class="w"> </span>-u<span class="w"> </span>ttp-tor.service<span class="w"> </span>-u<span class="w"> </span>ttp-watchdog.service<span class="w"> </span>-n<span class="w"> </span><span class="m">150</span><span class="w"> </span>--no-pager
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>sudo<span class="w"> </span>ss<span class="w"> </span>-lntup
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>sudo<span class="w"> </span>nft<span class="w"> </span>-a<span class="w"> </span>list<span class="w"> </span>table<span class="w"> </span>inet<span class="w"> </span>ttp
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>resolvectl<span class="w"> </span>status
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>findmnt<span class="w"> </span>-T<span class="w"> </span>/etc/resolv.conf
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>sudo<span class="w"> </span>journalctl<span class="w"> </span>-b<span class="w"> </span>-k<span class="w"> </span>-n<span class="w"> </span><span class="m">150</span><span class="w"> </span>--no-pager
+</span></code></pre></div>
+<p>Inspect output locally. Reports can contain bridge addresses, public IPs, user
+names, paths and internal DNS domains. Redact those before sharing; never send
+bridge secrets or complete logs without review. In external-daemon mode inspect
+the actual external Tor unit as well: <code>ttp-tor.service</code> may correctly be absent.
+For SELinux/AppArmor hosts, look for relevant denial messages; if available,
+<code>sudo ausearch -m AVC,USER_AVC -ts recent</code> supplies SELinux evidence. Absence of a
+logged denial does not prove that filtering is absent.</p>
+<h3 id="d-separate-the-layers">D. Separate the layers</h3>
+<p>If <code>cat /etc/resolv.conf</code> fails as the ordinary user but succeeds as root, inspect
+the generated file's permissions before investigating DNS transport. A field
+diagnosis found mode <code>0640</code> under a restrictive root umask: the DNSPort worked,
+but applications could not read the overlay. Another independent problem was an
+inaccessible <code>/opt/ttp/venv</code>, preventing the <code>nobody</code> verification child from
+starting. The 0.5.0 fixes address both; reinstall to repair the installed venv.
+DNSSEC rejection by resolved is a separate resolver-policy failure, covered by
+the linked DNSSEC guide. A successful HTTPS request with curl's <code>--resolve</code> and
+<code>IsTor: true</code> can establish Tor transport while ordinary name resolution fails.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Observation</th>
+<th style="text-align: left;">Next evidence to inspect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Tor unit fails before bootstrap</td>
+<td style="text-align: left;">Journal: config parsing, port conflicts, permissions, SELinux/AppArmor or systemd sandbox errors</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tor runs but cannot finish bootstrap</td>
+<td style="text-align: left;">Guard/bridge connectivity, routing and existing egress rules for Tor's actual UID; another firewall may drop traffic TTP accepts</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tor bootstraps but DNS fails</td>
+<td style="text-align: left;">Local DNSPort, resolver overlay/drop-in, per-link DNS, DNSSEC/DoT requirements and local DNS proxies</td>
+</tr>
+<tr>
+<td style="text-align: left;">System DNS works but one browser fails</td>
+<td style="text-align: left;">Browser DoH mode, proxy settings, sandbox and the selected resolver hostname</td>
+</tr>
+<tr>
+<td style="text-align: left;">Browsing works but <code>ttp check</code> fails</td>
+<td style="text-align: left;">Verification endpoint availability, TLS trust/time, probe-child errors and the UID policy applied to the probe</td>
+</tr>
+<tr>
+<td style="text-align: left;">Network becomes blocked after a short delay</td>
+<td style="text-align: left;">Watchdog journal and reason for emergency containment; capture before clearing it</td>
+</tr>
+</tbody>
+</table>
+<p>If <code>dig</code> is already installed, compare the following as your ordinary,
+non-bypassed user (not through <code>sudo</code>, not through <code>ttp bypass</code>):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>dig<span class="w"> </span>+time<span class="o">=</span><span class="m">2</span><span class="w"> </span>+tries<span class="o">=</span><span class="m">1</span><span class="w"> </span>@127.0.0.1<span class="w"> </span>-p<span class="w"> </span><span class="m">9054</span><span class="w"> </span>example.com<span class="w"> </span>A
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>getent<span class="w"> </span>ahostsv4<span class="w"> </span>example.com
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>curl<span class="w"> </span>--max-time<span class="w"> </span><span class="m">30</span><span class="w"> </span>https://check.torproject.org/api/ip
+</span></code></pre></div>
+<p>The first tests the local UDP DNSPort, the second the application's system
+resolver path, and the third adds HTTPS and external Tor verification. They make
+real DNS/HTTPS requests. A successful direct DNSPort query with a failed <code>getent</code>
+query points to a difference in resolver paths, not automatically to Quad9.
+These checks do not test DNS-over-TCP support: a firewall redirect is not evidence
+that a TCP DNS service is listening at the destination.</p>
+<p>Quad9 as the ordinary system resolver is not inherently incompatible with TTP.
+During a session, port-53 requests should be redirected to Tor, so even a query
+addressed to Quad9 is not proof that Quad9 answered. A local proxy insisting on
+DoT, or a browser insisting on DoH, follows a different path. Managed mode maps
+<code>dns.quad9.net</code> to <code>0.0.0.0</code>; a browser configured to require that DoH hostname can
+therefore fail while the system resolver works. See
+<a href="../../how-to/apps-with-own-dns/">applications with their own DNS</a>.</p>
+<p>For restrictive firewalls, inspect the complete output-hook chain order and Tor's
+service identity. An <code>accept</code> in TTP does not override a <code>drop</code> in another base
+chain. Do not disable firewalld, flush nftables, change global DNS or turn off
+SELinux/AppArmor as a first diagnostic step. Any later experiment should change
+one identified variable, with an explicit expected result and rollback plan.</p>
+<h3 id="e-restore-deliberately-then-report-a-minimal-reproduction">E. Restore deliberately, then report a minimal reproduction</h3>
+<p>After collecting evidence, <code>sudo ttp stop</code> ends protection and restores direct
+network access. <code>sudo ttp stop --restore-only</code> is the recovery path if ordinary
+teardown is unavailable. Reboot also ends a volatile TTP session; it does not
+restore protection automatically.</p>
+<p>For the next diagnostic round provide: version/install method, distribution,
+exact start options with secrets removed, exit code, bootstrap result, whether the
+watchdog stayed active, Quad9 configuration method, active firewall/VPN tooling,
+and which of the three section-D probes failed. Include only the relevant redacted
+journal excerpt. This is sufficient to choose a focused next check; a complete
+host configuration dump is not required.</p>
+<h2 id="6-read-the-session-evidence-before-changing-protections">6. Read the session evidence before changing protections</h2>
+<p>From 0.5.0, capture <code>sudo ttp status --json</code>,
+<code>sudo ttp config --session</code> and
+<code>sudo journalctl -b -u ttp-watchdog.service -u ttp-notify.service</code>.
+See <a href="../../how-to/session-observations/">session observations</a> for reason identifiers
+and exit codes. A failed external check is inconclusive; code 7 means the expected
+emergency rules were verified, whereas code 8 means containment is unconfirmed.
+Keep the diagnostics for every concurrent cause, including notification failures.</p>
+<p>Close sensitive applications before explicit stop: they may reconnect outside
+Tor when protection is removed. Do not disable firewalld, SELinux or DNSSEC
+blindly; the evidence and the <a href="../../how-to/dnssec/">DNSSEC policy</a> guide the next
+step. No result here diagnoses every failure as a host-hardening problem.</p>
 
 
 
@@ -1505,10 +2131,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
       
