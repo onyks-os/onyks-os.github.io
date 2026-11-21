@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://onyks-os.github.io/nse/how-to/in-process-integration/">
       
       
-        <link rel="prev" href="../../tutorials/gateway-topology/">
+        <link rel="prev" href="../../tutorials/examples/">
       
       
         <link rel="next" href="../custom-packets/">
@@ -24,8 +24,8 @@
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <link rel="icon" href="../../assets/mark.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -33,10 +33,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -102,8 +102,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Network Sandbox Engine (NSE)" class="md-header__button md-logo" aria-label="Network Sandbox Engine (NSE)" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../assets/mark.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -372,8 +371,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Network Sandbox Engine (NSE)" class="md-nav__button md-logo" aria-label="Network Sandbox Engine (NSE)" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../assets/mark.svg" alt="logo">
 
     </a>
     Network Sandbox Engine (NSE)
@@ -584,6 +582,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worked Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -737,6 +763,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#the-experiment-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The experiment report
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The experiment report">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linking-captures-and-positive-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linking captures and positive controls
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#in-pytest" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -766,6 +820,117 @@
       
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-programs-inside-the-namespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running programs inside the namespace
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running programs inside the namespace">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#managed-processes-identity-timeouts-process-trees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Managed processes: identity, timeouts, process trees
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-host-endpoint-and-the-hosts-firewall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The host endpoint and the host's firewall
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#asserting-that-nothing-left-the-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asserting that nothing left the interface
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Asserting that nothing left the interface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#readiness-and-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Readiness and failures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-capture-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The capture report
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#long-captures-with-bounded-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Long captures with bounded memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#always-pair-it-with-a-positive-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Always pair it with a positive control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-default-filter-and-when-to-replace-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The default filter, and when to replace it
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1120,6 +1285,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/benchmarks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmarks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1207,6 +1400,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release-notes/upgrading-to-2.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrading to 2.2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1263,6 +1484,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#the-experiment-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The experiment report
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The experiment report">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linking-captures-and-positive-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linking captures and positive controls
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#in-pytest" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1292,6 +1541,117 @@
       
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-programs-inside-the-namespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running programs inside the namespace
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running programs inside the namespace">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#managed-processes-identity-timeouts-process-trees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Managed processes: identity, timeouts, process trees
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-host-endpoint-and-the-hosts-firewall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The host endpoint and the host's firewall
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#asserting-that-nothing-left-the-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asserting that nothing left the interface
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Asserting that nothing left the interface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#readiness-and-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Readiness and failures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-capture-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The capture report
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#long-captures-with-bounded-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Long captures with bounded memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#always-pair-it-with-a-positive-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Always pair it with a positive control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-default-filter-and-when-to-replace-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The default filter, and when to replace it
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1336,28 +1696,26 @@ cannot express.</p>
 </span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="s2">}</span>
 </span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="s2">"""</span>
 </span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="n">request</span> <span class="o">=</span> <span class="n">TestRequest</span><span class="p">(</span>
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>        <span class="n">rules</span><span class="o">=</span><span class="n">RULES</span><span class="p">,</span>
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        <span class="n">packets</span><span class="o">=</span><span class="p">[</span>
-</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>            <span class="n">PacketSpec</span><span class="p">(</span><span class="n">protocol</span><span class="o">=</span><span class="s2">"tcp"</span><span class="p">,</span> <span class="n">dst_port</span><span class="o">=</span><span class="mi">80</span><span class="p">),</span>
-</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>            <span class="n">PacketSpec</span><span class="p">(</span><span class="n">protocol</span><span class="o">=</span><span class="s2">"tcp"</span><span class="p">,</span> <span class="n">dst_port</span><span class="o">=</span><span class="mi">22</span><span class="p">),</span>
-</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>        <span class="p">],</span>
-</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    <span class="p">)</span>
-</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    <span class="n">events</span> <span class="o">=</span> <span class="k">await</span> <span class="n">run_test_pipeline</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="n">NetnsController</span><span class="p">())</span>
-</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>
-</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="c1"># ALWAYS check for oracle errors before reading verdicts.</span>
-</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    <span class="n">errors</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">raw_message</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">events</span> <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">"error"</span><span class="p">]</span>
-</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>    <span class="k">if</span> <span class="n">errors</span><span class="p">:</span>
-</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"the measurement failed, not the firewall: </span><span class="si">{</span><span class="n">errors</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>
-</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>    <span class="k">for</span> <span class="n">evt</span> <span class="ow">in</span> <span class="n">events</span><span class="p">:</span>
-</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>        <span class="k">if</span> <span class="n">evt</span><span class="o">.</span><span class="n">verdict</span> <span class="ow">and</span> <span class="n">evt</span><span class="o">.</span><span class="n">table</span> <span class="o">!=</span> <span class="s2">"nse_trace"</span><span class="p">:</span>
-</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[</span><span class="si">{</span><span class="n">evt</span><span class="o">.</span><span class="n">chain</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">evt</span><span class="o">.</span><span class="n">verdict</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>
-</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>
-</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="n">request</span> <span class="o">=</span> <span class="n">TestRequest</span><span class="p">(</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        <span class="n">rules</span><span class="o">=</span><span class="n">RULES</span><span class="p">,</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>        <span class="n">packets</span><span class="o">=</span><span class="p">[</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>            <span class="n">PacketSpec</span><span class="p">(</span><span class="n">protocol</span><span class="o">=</span><span class="s2">"tcp"</span><span class="p">,</span> <span class="n">dst_port</span><span class="o">=</span><span class="mi">80</span><span class="p">),</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>            <span class="n">PacketSpec</span><span class="p">(</span><span class="n">protocol</span><span class="o">=</span><span class="s2">"tcp"</span><span class="p">,</span> <span class="n">dst_port</span><span class="o">=</span><span class="mi">22</span><span class="p">),</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>        <span class="p">],</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    <span class="p">)</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    <span class="n">events</span> <span class="o">=</span> <span class="k">await</span> <span class="n">run_test_pipeline</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="n">NetnsController</span><span class="p">())</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="c1"># ALWAYS check for oracle errors before reading verdicts.</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="n">errors</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">raw_message</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">events</span> <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">"error"</span><span class="p">]</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    <span class="k">if</span> <span class="n">errors</span><span class="p">:</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"the measurement failed, not the firewall: </span><span class="si">{</span><span class="n">errors</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>    <span class="k">for</span> <span class="n">evt</span> <span class="ow">in</span> <span class="n">events</span><span class="p">:</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>        <span class="k">if</span> <span class="n">evt</span><span class="o">.</span><span class="n">verdict</span> <span class="ow">and</span> <span class="n">evt</span><span class="o">.</span><span class="n">table</span> <span class="o">!=</span> <span class="s2">"nse_trace"</span><span class="p">:</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[</span><span class="si">{</span><span class="n">evt</span><span class="o">.</span><span class="n">chain</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">evt</span><span class="o">.</span><span class="n">verdict</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 </span></code></pre></div>
 <div class="admonition danger">
 <p class="admonition-title">Check for <code>error</code> events first</p>
@@ -1381,45 +1739,116 @@ exists to prevent. Reuse <code>nse.cli.runner.collect_oracle_errors</code> if yo
 scaffolding, and resolves each packet to a single verdict with <code>DROP</code>/<code>REJECT</code>
 taking precedence over <code>ACCEPT</code>.</p>
 <hr />
-<h2 id="in-pytest">In pytest</h2>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<h2 id="the-experiment-report">The experiment report</h2>
+<p><code>run_test_pipeline_report()</code> runs the same experiment as <code>run_test_pipeline()</code>.
+Instead of the event list it returns an <code>ExperimentReport</code>, from which a CI
+artifact alone is enough to reconstruct the run:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">nse.core.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_test_pipeline_report</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">report</span> <span class="o">=</span> <span class="k">await</span> <span class="n">run_test_pipeline_report</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="n">controller</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">nse.cli.runner</span><span class="w"> </span><span class="kn">import</span> <span class="n">collect_oracle_errors</span><span class="p">,</span> <span class="n">reduce_verdicts</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">nse.core.netns_controller</span><span class="w"> </span><span class="kn">import</span> <span class="n">NetnsController</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">nse.core.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_test_pipeline</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="kn">from</span><span class="w"> </span><span class="nn">nse.models.test_request</span><span class="w"> </span><span class="kn">import</span> <span class="n">PacketSpec</span><span class="p">,</span> <span class="n">TestRequest</span>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="n">pytestmark</span> <span class="o">=</span> <span class="p">[</span>
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">asyncio</span><span class="p">,</span>
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skipif</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">geteuid</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="s2">"NSE needs root for netns and kernel tracing"</span><span class="p">),</span>
-</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="p">]</span>
-</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
-</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>
-</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">test_ssh_is_blocked</span><span class="p">(</span><span class="n">my_ruleset</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>    <span class="n">request</span> <span class="o">=</span> <span class="n">TestRequest</span><span class="p">(</span>
-</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>        <span class="n">rules</span><span class="o">=</span><span class="n">my_ruleset</span><span class="p">,</span>
-</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>        <span class="n">packets</span><span class="o">=</span><span class="p">[</span><span class="n">PacketSpec</span><span class="p">(</span><span class="n">protocol</span><span class="o">=</span><span class="s2">"tcp"</span><span class="p">,</span> <span class="n">dst_port</span><span class="o">=</span><span class="mi">22</span><span class="p">)],</span>
-</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>    <span class="p">)</span>
-</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>    <span class="n">events</span> <span class="o">=</span> <span class="k">await</span> <span class="n">run_test_pipeline</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="n">NetnsController</span><span class="p">())</span>
-</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>
-</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>    <span class="k">assert</span> <span class="ow">not</span> <span class="n">collect_oracle_errors</span><span class="p">(</span><span class="n">events</span><span class="p">)</span>
-</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>    <span class="k">assert</span> <span class="n">reduce_verdicts</span><span class="p">(</span><span class="n">events</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="s2">"DROP"</span><span class="p">]</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">report</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">outcome</span>            <span class="c1"># "completed", "rules_invalid", "setup_failure",</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>                                 <span class="c1"># "instrument_failure", "execution_failure", "timeout"</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">report</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">verdicts</span>           <span class="c1"># ["ACCEPT", "DROP"] - what reduce_verdicts() returns</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">report</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">oracle</span>             <span class="c1"># readiness / liveness canary: observed, missed, not_reached</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">report</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">teardown_complete</span>  <span class="c1"># False if teardown failed or left resources behind</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="n">report</span><span class="o">.</span><span class="n">measurement_valid</span>         <span class="c1"># completed, cleaned up, every control and capture sound</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="n">report</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"artefacts/experiment.json"</span><span class="p">)</span>  <span class="c1"># atomic, sorted keys</span>
+</span></code></pre></div>
+<p>It never raises for a failed run. Rule, setup, oracle, execution and teardown
+errors are recorded with the stage they happened in, so a broken instrument, a
+timeout and an incomplete cleanup each have their own outcome. Cancellation
+still propagates.</p>
+<p>The sections separate what is reproducible from what is specific to one run:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Section</th>
+<th style="text-align: left;">Contents</th>
+<th style="text-align: left;">Same on a re-run?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>input</code></td>
+<td style="text-align: left;">The request, with SHA-256 of the ruleset and of the request</td>
+<td style="text-align: left;">Yes</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>environment</code></td>
+<td style="text-align: left;">NSE, Python, dependency, kernel and tool versions</td>
+<td style="text-align: left;">Yes, on the same host</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>result</code></td>
+<td style="text-align: left;">Outcome, oracle status, verdicts per stimulus, errors by stage, residual resources, positive controls</td>
+<td style="text-align: left;">Yes, for a deterministic ruleset</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>observations</code></td>
+<td style="text-align: left;">Trace and canary events, canary attempts, injection times, managed processes with verified identity, captures</td>
+<td style="text-align: left;">No: kernel trace ids differ</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>run</code></td>
+<td style="text-align: left;">Test and ownership ids, namespace and interface names, timestamps, seconds per stage</td>
+<td style="text-align: left;">No</td>
+</tr>
+</tbody>
+</table>
+<p>The report states what NSE measured, not what you expected: comparing the
+verdicts is your test's job, as the CLI does.</p>
+<h3 id="linking-captures-and-positive-controls">Linking captures and positive controls</h3>
+<p>Captures and positive controls happen around the pipeline, so attach them
+afterwards. <code>attach()</code> returns a copy, hashes the files the captures wrote into
+<code>report.artifacts</code>, and lets them count towards <code>measurement_valid</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">nse.models.experiment_report</span><span class="w"> </span><span class="kn">import</span> <span class="n">PositiveControl</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">report</span> <span class="o">=</span> <span class="n">report</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="n">captures</span><span class="o">=</span><span class="p">[</span><span class="k">await</span> <span class="n">asserter</span><span class="o">.</span><span class="n">stop_report</span><span class="p">()],</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="n">controls</span><span class="o">=</span><span class="p">[</span><span class="n">PositiveControl</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"probe seen with the ruleset flushed"</span><span class="p">,</span> <span class="n">passed</span><span class="o">=</span><span class="n">probe_seen</span><span class="p">)],</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="p">)</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="k">assert</span> <span class="n">report</span><span class="o">.</span><span class="n">measurement_valid</span><span class="p">,</span> <span class="n">report</span><span class="o">.</span><span class="n">result</span>
+</span></code></pre></div>
+<hr />
+<h2 id="in-pytest">In pytest</h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">nse.cli.runner</span><span class="w"> </span><span class="kn">import</span> <span class="n">collect_oracle_errors</span><span class="p">,</span> <span class="n">reduce_verdicts</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">nse.core.netns_controller</span><span class="w"> </span><span class="kn">import</span> <span class="n">NetnsController</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">nse.core.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_test_pipeline</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="kn">from</span><span class="w"> </span><span class="nn">nse.models.test_request</span><span class="w"> </span><span class="kn">import</span> <span class="n">PacketSpec</span><span class="p">,</span> <span class="n">TestRequest</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="n">pytestmark</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">asyncio</span><span class="p">,</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    <span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skipif</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">geteuid</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="s2">"NSE needs root for netns and kernel tracing"</span><span class="p">),</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="p">]</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">test_ssh_is_blocked</span><span class="p">(</span><span class="n">my_ruleset</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>    <span class="n">request</span> <span class="o">=</span> <span class="n">TestRequest</span><span class="p">(</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>        <span class="n">rules</span><span class="o">=</span><span class="n">my_ruleset</span><span class="p">,</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>        <span class="n">packets</span><span class="o">=</span><span class="p">[</span><span class="n">PacketSpec</span><span class="p">(</span><span class="n">protocol</span><span class="o">=</span><span class="s2">"tcp"</span><span class="p">,</span> <span class="n">dst_port</span><span class="o">=</span><span class="mi">22</span><span class="p">)],</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>    <span class="p">)</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>    <span class="n">events</span> <span class="o">=</span> <span class="k">await</span> <span class="n">run_test_pipeline</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="n">NetnsController</span><span class="p">())</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>    <span class="k">assert</span> <span class="ow">not</span> <span class="n">collect_oracle_errors</span><span class="p">(</span><span class="n">events</span><span class="p">)</span>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>    <span class="k">assert</span> <span class="n">reduce_verdicts</span><span class="p">(</span><span class="n">events</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="s2">"DROP"</span><span class="p">]</span>
 </span></code></pre></div>
 <hr />
 <h2 id="streaming-events-as-they-arrive">Streaming events as they arrive</h2>
 <p>Pass a queue to consume events live — useful for progress output on a long suite:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">queue</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Queue</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">run_test_pipeline</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">queue</span><span class="o">=</span><span class="n">queue</span><span class="p">))</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="n">evt</span> <span class="o">=</span> <span class="k">await</span> <span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="k">if</span> <span class="n">evt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># sentinel: monitoring ended</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>        <span class="k">break</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">evt</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">evt</span><span class="o">.</span><span class="n">trace_id</span><span class="p">,</span> <span class="n">evt</span><span class="o">.</span><span class="n">verdict</span><span class="p">)</span>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="n">events</span> <span class="o">=</span> <span class="k">await</span> <span class="n">task</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">queue</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Queue</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">run_test_pipeline</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">queue</span><span class="o">=</span><span class="n">queue</span><span class="p">))</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="n">evt</span> <span class="o">=</span> <span class="k">await</span> <span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="k">if</span> <span class="n">evt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># sentinel: monitoring ended</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>        <span class="k">break</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">evt</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">evt</span><span class="o">.</span><span class="n">trace_id</span><span class="p">,</span> <span class="n">evt</span><span class="o">.</span><span class="n">verdict</span><span class="p">)</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="n">events</span> <span class="o">=</span> <span class="k">await</span> <span class="n">task</span>
 </span></code></pre></div>
 <p>The queue receives canary events too, since it is a raw feed; the list returned
 by the coroutine is the filtered one.</p>
@@ -1449,6 +1878,294 @@ matter most for slow machines and CI runners:</p>
 <p>Do <strong>not</strong> work around a failing canary by ignoring the error. A canary that
 never arrives means the engine could not see the kernel; whatever it would have
 reported about your ruleset would have been fiction.</p>
+<hr />
+<h2 id="running-programs-inside-the-namespace">Running programs inside the namespace</h2>
+<p><code>NetnsController.create_namespace()</code> yields a sandbox whose <code>exec_argv()</code> runs a
+program inside the namespace with <strong>exactly</strong> the arguments you pass:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">async</span> <span class="k">with</span> <span class="n">controller</span><span class="o">.</span><span class="n">create_namespace</span><span class="p">(</span><span class="s2">"nse_app"</span><span class="p">)</span> <span class="k">as</span> <span class="n">ns</span><span class="p">:</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">ns</span><span class="o">.</span><span class="n">exec_argv</span><span class="p">([</span><span class="s2">"python3"</span><span class="p">,</span> <span class="s2">"-c"</span><span class="p">,</span> <span class="s2">"print('ciao mondo')"</span><span class="p">])</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">stdout</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">"ciao mondo</span><span class="se">\n</span><span class="s2">"</span>
+</span></code></pre></div>
+<p>Each list element reaches the process as one argument: spaces, quotes, empty
+strings, Unicode and shell metacharacters such as <code>$HOME</code>, <code>*</code> or <code>;</code> are passed
+literally, because no shell and no splitting is involved. A bare string, a
+non-<code>str</code> element, an empty program name or an argument containing NUL is
+rejected with <code>TypeError</code>/<code>ValueError</code> before anything starts.</p>
+<p>The older <code>exec(command)</code> is kept unchanged for existing callers. It splits the
+string on whitespace with <code>str.split()</code> and does <strong>not</strong> use a shell, so
+<code>exec('python3 -c "print(1)"')</code> passes the quote characters to Python and
+fails. Prefer <code>exec_argv()</code> for anything but the simplest commands.</p>
+<p>Both methods return <code>subprocess.CompletedProcess[bytes]</code> whose <code>args</code> include
+the namespace prefix, and raise <code>subprocess.CalledProcessError</code>, with stdout and
+stderr attached, on a non-zero exit. Cancelling the call kills and reaps the
+process it started. The process runs with NSE's privileges: entering a network
+namespace changes the visible network, not the user. For a different identity,
+a timeout or a long-running program, use the managed processes below.</p>
+<h3 id="managed-processes-identity-timeouts-process-trees">Managed processes: identity, timeouts, process trees</h3>
+<p><code>start_process()</code> starts a program and returns a handle; <code>run_process()</code> runs
+one to completion:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">nse</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProcessIdentity</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">nobody</span> <span class="o">=</span> <span class="n">ProcessIdentity</span><span class="p">(</span><span class="n">uid</span><span class="o">=</span><span class="mi">65534</span><span class="p">,</span> <span class="n">gid</span><span class="o">=</span><span class="mi">65534</span><span class="p">,</span> <span class="n">capabilities</span><span class="o">=</span><span class="p">{</span><span class="s2">"net_bind_service"</span><span class="p">})</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="k">async</span> <span class="k">with</span> <span class="n">controller</span><span class="o">.</span><span class="n">create_namespace</span><span class="p">(</span><span class="s2">"nse_app"</span><span class="p">)</span> <span class="k">as</span> <span class="n">ns</span><span class="p">:</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    <span class="c1"># A server that must bind port 80 without being root.</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    <span class="n">server</span> <span class="o">=</span> <span class="k">await</span> <span class="n">ns</span><span class="o">.</span><span class="n">start_process</span><span class="p">([</span><span class="s2">"/usr/sbin/my-server"</span><span class="p">,</span> <span class="s2">"--port"</span><span class="p">,</span> <span class="s2">"80"</span><span class="p">],</span> <span class="n">identity</span><span class="o">=</span><span class="n">nobody</span><span class="p">)</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>    <span class="k">await</span> <span class="n">server</span><span class="o">.</span><span class="n">wait_for_output</span><span class="p">(</span><span class="sa">b</span><span class="s2">"listening"</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># explicit readiness</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    <span class="k">assert</span> <span class="n">server</span><span class="o">.</span><span class="n">identity</span><span class="o">.</span><span class="n">uids</span> <span class="o">==</span> <span class="p">(</span><span class="mi">65534</span><span class="p">,</span> <span class="mi">65534</span><span class="p">,</span> <span class="mi">65534</span><span class="p">,</span> <span class="mi">65534</span><span class="p">)</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>    <span class="c1"># A client with a deadline: on timeout it is stopped and the result says so.</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">ns</span><span class="o">.</span><span class="n">run_process</span><span class="p">([</span><span class="s2">"curl"</span><span class="p">,</span> <span class="s2">"-sf"</span><span class="p">,</span> <span class="s2">"http://[fd00:1::2]/"</span><span class="p">],</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">ok</span><span class="p">,</span> <span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">termination</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="c1"># Leaving the block stops the server, its children and anything else still in the namespace.</span>
+</span></code></pre></div>
+<p><strong>Identity.</strong> <code>ProcessIdentity</code> sets the UID, GID, supplementary groups and
+capabilities. Every field defaults to "unchanged", so without it the program
+runs as NSE does. A non-root <code>uid</code> requires an explicit <code>gid</code>, and changing
+either clears the supplementary groups unless you list them. <code>capabilities</code>
+is exactly the set the process keeps (effective, permitted, ambient and
+bounding); it also works for root, for example to run root with <code>net_raw</code> only.</p>
+<p>NSE enters the namespace with its own privileges and applies the identity
+afterwards with <code>setpriv</code>. Before the program starts, it reads the identity the
+kernel reports for that very process (same PID) and compares it with the
+request:</p>
+<ul>
+<li>If anything differs, <code>IdentityError</code> is raised and <strong>the program never
+  runs</strong>; there is no fallback to root.</li>
+<li>If <code>setpriv</code> itself refuses, for example a capability the kernel does not
+  know, the start fails with <code>ProcessStartError</code>.</li>
+</ul>
+<p>The verified identity is in <code>process.identity</code> and in the result.</p>
+<p><strong>Output.</strong> stdin is <code>/dev/null</code>. stdout and stderr are captured by default, up
+to <code>max_output_bytes</code> each (1 MiB); the rest is counted in <code>stdout_dropped</code> /
+<code>stderr_dropped</code>, not kept. Pass <code>"discard"</code>, or a path to write a new file
+instead: it is created with mode 0600, since output may hold secrets, and an
+existing file is never overwritten.</p>
+<p><strong>Ending a process.</strong></p>
+<ul>
+<li><code>wait(timeout)</code> returns a <code>ProcessResult</code> with <code>termination</code> set to
+  <code>"exited"</code>, <code>"timeout"</code>, <code>"cancelled"</code> or <code>"terminated"</code>, plus the exit status
+  (negative for a signal), the output and the identity.</li>
+<li>On a timeout, on cancellation, or when you call <code>terminate(grace)</code>, the
+  process and its whole process group get SIGTERM, then SIGKILL after <code>grace</code>
+  seconds.</li>
+<li><code>result.check()</code> raises <code>CalledProcessError</code> unless the process exited with 0.</li>
+</ul>
+<p><strong>The boundary.</strong> Each managed process leads its own process group. A
+descendant that leaves the group (<code>setsid</code>, a daemon that double-forks) is
+still in the network namespace. That namespace is the boundary NSE enforces:
+before it is deleted, at the end of the block or by crash recovery, every
+process in it is stopped, managed or not.</p>
+<p>Processes are identified by namespace membership through a pidfd, so a recycled
+PID is never signalled, and recovery needs no record of PIDs. The one thing
+outside the boundary is a process that moves itself to another network
+namespace, which needs <code>CAP_SYS_ADMIN</code>. A dropped identity rules that out.</p>
+<h3 id="the-host-endpoint-and-the-hosts-firewall">The host endpoint and the host's firewall</h3>
+<p>By default the host end of the veth pair, <code>ext_iface</code> with <code>host_ip</code>, is in the
+namespace NSE runs in. Traffic from the sandbox to <code>host_ip</code> is then local input
+for that namespace and crosses its firewall. On Fedora, for example, firewalld
+puts the new <code>vhr-*</code> interface in the default zone, which accepts almost
+nothing. A server listening on <code>host_ip</code> never receives the request, and a test
+reads the silence as the rules under test blocking it.</p>
+<p>NSE reads the host's nftables ruleset once per process and logs a warning when
+an <code>input</code> hook may filter that traffic: a <code>drop</code> policy, or a <code>drop</code>/<code>reject</code>
+reached unconditionally. It cannot tell which port a test uses, so it only
+warns. Rules loaded with <code>iptables-legacy</code> are not visible to it.</p>
+<p>To take the host's firewall out of the path, pass <code>isolated_host=True</code>. The
+host end then goes into a namespace of its own, <code>nsh_&lt;name&gt;</code>, created and
+removed with the sandbox:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">nse</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCAPAsserter</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="k">async</span> <span class="k">with</span> <span class="n">controller</span><span class="o">.</span><span class="n">create_namespace</span><span class="p">(</span><span class="s2">"nse_app"</span><span class="p">,</span> <span class="n">isolated_host</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">ns</span><span class="p">:</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="c1"># The host endpoint is a sandbox too: run the server where host_ip lives.</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="n">server</span> <span class="o">=</span> <span class="k">await</span> <span class="n">ns</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">start_process</span><span class="p">([</span><span class="s2">"python3"</span><span class="p">,</span> <span class="s2">"echo_server.py"</span><span class="p">,</span> <span class="s2">"10.0.1.1"</span><span class="p">,</span> <span class="s2">"9999"</span><span class="p">])</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    <span class="k">await</span> <span class="n">server</span><span class="o">.</span><span class="n">wait_for_output</span><span class="p">(</span><span class="sa">b</span><span class="s2">"bound"</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>    <span class="c1"># Capture on the host end, in its namespace.</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>    <span class="n">asserter</span> <span class="o">=</span> <span class="n">PCAPAsserter</span><span class="p">(</span><span class="n">iface</span><span class="o">=</span><span class="n">ns</span><span class="o">.</span><span class="n">ext_iface</span><span class="p">,</span> <span class="n">netns</span><span class="o">=</span><span class="n">ns</span><span class="o">.</span><span class="n">ext_netns</span><span class="p">)</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>    <span class="k">await</span> <span class="n">asserter</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">ns</span><span class="o">.</span><span class="n">run_process</span><span class="p">([</span><span class="s2">"python3"</span><span class="p">,</span> <span class="s2">"client.py"</span><span class="p">,</span> <span class="s2">"10.0.1.1"</span><span class="p">,</span> <span class="s2">"9999"</span><span class="p">],</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>    <span class="n">report</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asserter</span><span class="o">.</span><span class="n">stop_report</span><span class="p">()</span>
+</span></code></pre></div>
+<ul>
+<li><code>ns.ext_netns</code> is the namespace holding <code>ext_iface</code>: <code>None</code> by default,
+  <code>nsh_&lt;name&gt;</code> when isolated.</li>
+<li><code>ns.host</code> is the host end as a sandbox. It has the same <code>exec_argv()</code>,
+  <code>start_process()</code>, <code>run_process()</code> and <code>inject_packet()</code>. Its <code>ext_iface</code> is
+  the sandbox's <code>peer_iface</code>, and the reverse, so <code>ns.host.inject_packet()</code> sends
+  from the sandbox towards the host end.</li>
+<li><code>ns.inject_packet()</code> sends from inside <code>nsh_&lt;name&gt;</code>.</li>
+<li>No host route is involved, so <code>host_ip</code> may overlap a subnet the host already
+  routes. The preflight check for overlapping routes is skipped.</li>
+<li>Processes on both ends are stopped when the block exits.</li>
+</ul>
+<hr />
+<h2 id="asserting-that-nothing-left-the-interface">Asserting that nothing left the interface</h2>
+<p>The trace oracle answers <em>what did the ruleset decide</em>. It cannot answer <em>what
+reached the wire</em>, which is the question behind a zero-leak claim: a packet that
+matches no rule at all produces no verdict to inspect. <code>PCAPAsserter</code> covers
+that half.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">nse</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCAPAsserter</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">asserter</span> <span class="o">=</span> <span class="n">PCAPAsserter</span><span class="p">(</span><span class="n">iface</span><span class="o">=</span><span class="s2">"veth-host"</span><span class="p">)</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="k">await</span> <span class="n">asserter</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>  <span class="c1"># returns once the kernel socket is filtering and bound</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1"># ... drive the stimulus: no sleep needed before it ...</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="n">leaked</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asserter</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="k">assert</span> <span class="ow">not</span> <span class="n">leaked</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">leaked</span><span class="p">)</span><span class="si">}</span><span class="s2"> frame(s) escaped: </span><span class="si">{</span><span class="n">leaked</span><span class="si">}</span><span class="s2">"</span>
+</span></code></pre></div>
+<p>The interface is looked up in the namespace NSE runs in. For one in another
+namespace, pass <code>netns=</code>, for example
+<code>PCAPAsserter(iface=ns.ext_iface, netns=ns.ext_netns)</code>. Only the capture thread
+enters that namespace; the rest of the process stays where it is, and the report
+records it in <code>netns</code>.</p>
+<h3 id="readiness-and-failures">Readiness and failures</h3>
+<p><code>await start()</code> returns only when the packet socket exists, carries its BPF
+filter and is bound to the interface. From that moment every matching packet is
+queued for the capture, so the stimulus may follow immediately; the
+<code>asyncio.sleep()</code> that older code put after <code>start()</code> is no longer needed.
+<code>stop()</code> drains whatever the kernel has already queued before closing, so a
+packet that reached the interface before <code>stop()</code> is not lost. A packet still in
+flight (for example, queued in another namespace) is not yet on the interface:
+wait for an observable effect of the stimulus, such as its arrival at a
+receiver, rather than a fixed delay.</p>
+<p><code>start()</code> raises <code>CaptureStartError</code> when the capture cannot be armed. Its
+<code>reason</code> is <code>interface_missing</code>, <code>filter_invalid</code>, <code>permission_denied</code>,
+<code>backend_unavailable</code> (libpcap missing), <code>backend_error</code>, <code>timeout</code> (see the
+optional <code>timeout</code> argument) or <code>cancelled</code>, and no thread or socket is left
+behind. A filter that does not compile is always an error. Scapy before 2.6
+would log it and capture <strong>unfiltered</strong>; NSE compiles the filter itself first.</p>
+<p><code>stop()</code> still returns <code>list[Packet]</code>, but raises <code>CaptureError</code> when the
+instrument was not healthy: the backend crashed (for example, the interface
+was deleted), the loop did not stop in time, or start had failed. An empty list
+now only ever means <em>a working capture saw nothing</em>. Calling <code>stop()</code> before
+<code>start()</code>, or <code>start()</code> twice, raises <code>CaptureStateError</code>. A capture is single
+use; <code>stop()</code> and <code>stop_report()</code> may be called repeatedly and in any order.</p>
+<h3 id="the-capture-report">The capture report</h3>
+<p><code>stop_report()</code> stops the capture (once) and returns a <code>CaptureReport</code> instead
+of raising:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">report</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asserter</span><span class="o">.</span><span class="n">stop_report</span><span class="p">()</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">report</span><span class="o">.</span><span class="n">instrument_healthy</span>   <span class="c1"># armed, ran until asked to stop, no backend error</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">report</span><span class="o">.</span><span class="n">window_complete</span>      <span class="c1"># True / False / None (unknown: counters unavailable)</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="n">report</span><span class="o">.</span><span class="n">termination</span>          <span class="c1"># "stopped", "limit_reached", "start_failed", ...</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="n">report</span><span class="o">.</span><span class="n">kernel_drops</span>         <span class="c1"># PACKET_STATISTICS drops, or None - never a guessed 0</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="n">report</span><span class="o">.</span><span class="n">effective_filter</span>     <span class="c1"># the BPF expression actually attached</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="n">report</span><span class="o">.</span><span class="n">model_dump_json</span><span class="p">()</span>    <span class="c1"># for CI artefacts</span>
+</span></code></pre></div>
+<p>The report separates three questions. <strong>Instrument health</strong> says whether the
+capture worked. <strong>Window completeness</strong> says whether every matching packet
+between readiness and stop was read: the kernel's drop counter is zero and
+nothing remained unread. When the counters are unavailable this is <code>None</code>, not
+<code>True</code>. <strong>Evidence sufficiency</strong> is not in the report at all. A healthy, complete
+capture of an empty interface still does not prove that your stimulus took that
+path, which is why the positive control below is still required.</p>
+<h3 id="long-captures-with-bounded-memory">Long captures with bounded memory</h3>
+<p>By default every captured packet is kept in memory and returned by <code>stop()</code>,
+exactly as before. For a capture that runs for minutes or sees heavy traffic,
+write it to a file instead and keep only counters in memory:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">nse</span><span class="w"> </span><span class="kn">import</span> <span class="n">CaptureLimits</span><span class="p">,</span> <span class="n">PCAPAsserter</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">asserter</span> <span class="o">=</span> <span class="n">PCAPAsserter</span><span class="p">(</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>    <span class="n">iface</span><span class="o">=</span><span class="s2">"veth-host"</span><span class="p">,</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>    <span class="n">output</span><span class="o">=</span><span class="s2">"artefacts/leak-check.pcap"</span><span class="p">,</span>  <span class="c1"># a new file: an existing one is never overwritten</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    <span class="n">limits</span><span class="o">=</span><span class="n">CaptureLimits</span><span class="p">(</span><span class="n">max_duration</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">max_file_bytes</span><span class="o">=</span><span class="mi">200_000_000</span><span class="p">),</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="p">)</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="k">await</span> <span class="n">asserter</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="c1"># ... a long stimulus ...</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="n">report</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asserter</span><span class="o">.</span><span class="n">stop_report</span><span class="p">()</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="k">assert</span> <span class="n">report</span><span class="o">.</span><span class="n">instrument_healthy</span><span class="p">,</span> <span class="n">report</span><span class="o">.</span><span class="n">errors</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="k">assert</span> <span class="n">report</span><span class="o">.</span><span class="n">window_complete</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">,</span> <span class="n">report</span>       <span class="c1"># nothing dropped, nothing cut off</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="k">assert</span> <span class="n">report</span><span class="o">.</span><span class="n">packets_observed</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">report</span><span class="o">.</span><span class="n">artifacts</span>  <span class="c1"># the leak assertion: on the counter</span>
+</span></code></pre></div>
+<p>With <code>output=</code> the capture thread writes each packet to the PCAP file as it
+reads it. The file header is on disk once <code>start()</code> returns, the file is
+flushed whenever the capture is idle for a second, and it stays readable by
+tcpdump, Wireshark or <code>scapy.utils.rdpcap</code> even when it is cut short. Memory
+holds only a sample, which is <strong>empty unless you declare one</strong> with
+<code>max_stored_packets</code> or <code>max_stored_bytes</code>. <code>stop()</code> then returns that sample,
+so in file mode <strong>assert on the report, never on the list</strong>: <code>assert not await
+asserter.stop()</code> would pass even if packets leaked.</p>
+<p>Every limit is optional, and reaching one is listed in <code>report.limits_reached</code>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Limit</th>
+<th style="text-align: left;">When it is reached</th>
+<th style="text-align: left;"><code>window_complete</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>max_packets</code></td>
+<td style="text-align: left;">The capture ends itself after reading that many packets; later ones are not read. <code>termination</code> is <code>limit_reached</code>.</td>
+<td style="text-align: left;"><code>False</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_duration</code></td>
+<td style="text-align: left;">The capture ends itself that many seconds after readiness, after draining what was already queued. <code>termination</code> is <code>limit_reached</code>.</td>
+<td style="text-align: left;"><code>False</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_file_bytes</code></td>
+<td style="text-align: left;">File mode only. The first packet that would grow the file past the size, and every packet after it, is counted but not written: the file is a prefix of the capture. <code>artifact_complete</code> is <code>False</code>.</td>
+<td style="text-align: left;"><code>False</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_stored_packets</code></td>
+<td style="text-align: left;">Later packets are counted (and written, in file mode) but not kept in memory.</td>
+<td style="text-align: left;"><code>False</code> in memory mode; unaffected in file mode, where the file is the record</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_stored_bytes</code></td>
+<td style="text-align: left;">Same, counted in bytes of packet data.</td>
+<td style="text-align: left;">As above</td>
+</tr>
+</tbody>
+</table>
+<p>A capture ended by a limit is still a healthy instrument: <code>stop()</code> does not
+raise, but it logs a warning and the report says the window is incomplete. A
+file that cannot be written is a different matter. A full disk, or a write,
+flush or close error, appears in <code>report.errors</code>, makes the instrument
+unhealthy, and <code>stop()</code> raises <code>CaptureError</code>. The packets keep being counted,
+and the partial file is listed in <code>report.artifacts</code> with
+<code>artifact_complete=False</code>.</p>
+<p>There is no queue between the socket and the file: the thread that reads the
+socket also writes the file. A writer that cannot keep up therefore fills the
+kernel socket buffer, and the kernel counts what it then drops (<code>kernel_drops</code>,
+<code>window_complete=False</code>). A writer that hangs (for example on a stalled network
+filesystem) makes <code>stop()</code> end with <code>termination="stop_timeout"</code>. Neither case
+grows memory, and neither can produce a report that claims a complete capture.</p>
+<p>The counters come from two places. <code>packets_observed</code> and <code>bytes_observed</code> are
+what NSE read from the socket. <code>kernel_packets</code> and <code>kernel_drops</code> are the
+kernel's <code>PACKET_STATISTICS</code> since readiness: every packet that passed the BPF
+filter, and the ones dropped because the buffer was full. <code>packets_written</code> and
+<code>bytes_written</code> describe the file. If the file is incomplete, it may hold fewer
+packets than were handed to it.</p>
+<h3 id="always-pair-it-with-a-positive-control">Always pair it with a positive control</h3>
+<p>A sniffer that never attached and a firewall that blocks everything both return
+an empty list. The assertion above distinguishes them only if you have shown,
+in the same run, that the instrument can see the packet you are looking for:
+flush the ruleset, send the same stimulus, and require it to be <strong>captured</strong>
+before you trust the empty capture that follows. Without that, the test passes
+hardest when it is most broken.</p>
+<h3 id="the-default-filter-and-when-to-replace-it">The default filter, and when to replace it</h3>
+<p><code>DEFAULT_FILTER</code> excludes ARP and ICMPv6 types 133-137 - Neighbour Discovery,
+whose hop limit of 255 means it cannot reach a remote observer. Everything else
+is captured, <strong>including ICMPv6 echo to a globally routable address</strong>.</p>
+<p>A <code>filter</code> argument is combined with the default. Pass
+<code>replace_default_filter=True</code> to use yours alone:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Combined: DEFAULT_FILTER and your expression.</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">PCAPAsserter</span><span class="p">(</span><span class="n">iface</span><span class="o">=</span><span class="s2">"veth-host"</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s2">"ip6"</span><span class="p">)</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># Yours alone - you are now responsible for the noise.</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="n">PCAPAsserter</span><span class="p">(</span><span class="n">iface</span><span class="o">=</span><span class="s2">"veth-host"</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s2">"ip6"</span><span class="p">,</span> <span class="n">replace_default_filter</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></code></pre></div>
+<p>The escape hatch exists because the filter is compiled into BPF and evaluated in
+the kernel. A packet it excludes never reaches userspace, so a caller cannot
+compensate downstream by filtering the returned list - there is nothing in it to
+filter. Until 2.1.2 the default read <code>not arp and not icmp6</code> and silently
+discarded routable ICMPv6 for exactly that reason; see
+<a href="https://github.com/onyks-os/NetworkSandboxEngine/issues/14">issue #14</a>.</p>
 
 
 
@@ -1504,10 +2221,10 @@ reported about your ruleset would have been fiction.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
       

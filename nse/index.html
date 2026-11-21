@@ -22,8 +22,8 @@
         
       
       
-      <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <link rel="icon" href="assets/mark.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -31,10 +31,10 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#network-sandbox-engine-nse-v200" class="md-skip">
+        <a href="#network-sandbox-engine-nse" class="md-skip">
           Skip to content
         </a>
       
@@ -100,8 +100,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="." title="Network Sandbox Engine (NSE)" class="md-header__button md-logo" aria-label="Network Sandbox Engine (NSE)" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="assets/mark.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -370,8 +369,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="." title="Network Sandbox Engine (NSE)" class="md-nav__button md-logo" aria-label="Network Sandbox Engine (NSE)" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="assets/mark.svg" alt="logo">
 
     </a>
     Network Sandbox Engine (NSE)
@@ -660,6 +658,34 @@
     
   
     Gateway Topology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorials/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worked Examples
   
 
     
@@ -1102,6 +1128,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reference/benchmarks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmarks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1176,6 +1230,34 @@
     
   
     Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="release-notes/upgrading-to-2.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrading to 2.2
   
 
     
@@ -1286,12 +1368,12 @@
   
 
 
-<h1 id="network-sandbox-engine-nse-v200">Network Sandbox Engine (NSE) v2.0.0</h1>
+<h1 id="network-sandbox-engine-nse">Network Sandbox Engine (NSE)</h1>
 <p><strong>Deterministic Linux network namespace isolation and kernel <code>nftables</code> trace evaluation engine.</strong></p>
 <hr />
 <h2 id="what-is-nse">What is NSE?</h2>
-<p>Network Sandbox Engine (NSE) is a Python library and CLI tool designed for testing, verifying, and debugging Linux <code>nftables</code> firewall rulesets inside ephemeral, zero-leak network namespaces (<code>netns</code>).</p>
-<p>NSE allows security engineers, TTP developers, and CI/CD pipelines to validate complex network filtering rulesets <strong>without mutating host firewall state or requiring dedicated VMs</strong>.</p>
+<p>Network Sandbox Engine (NSE) is a Python library and CLI tool designed for testing, verifying, and debugging Linux <code>nftables</code> firewall rulesets inside ephemeral network namespaces (<code>netns</code>).</p>
+<p>NSE allows security engineers, tool developers, and CI/CD pipelines to validate complex network filtering rulesets <strong>without touching the host firewall or requiring dedicated VMs</strong>. The ruleset under test is loaded only inside the sandbox namespaces. A run does create temporary namespaces, the host end of its veth links with their addresses (or, with <code>isolated_host=True</code>, a namespace of its own for that end), gateway routes to the sandbox subnets, and ownership records under <code>/run/nse</code>. Each is journalled before it is created and removed at teardown, or by recovery after a crash.</p>
 <pre class="mermaid"><code>graph TD
     subgraph Step1["1. Test Specification"]
         Req["&lt;b&gt;TestRequest&lt;/b&gt;&lt;br/&gt;ruleset + packets + topology"]
@@ -1324,9 +1406,13 @@
 <ul>
 <li><strong>Library and CLI only</strong>: no server, no socket, no daemon. Root privileges are held for the duration of a run and nothing listens.</li>
 <li><strong>Self-verifying Oracle</strong>: canary packets before and after every run prove the kernel trace was actually being observed, so a blind engine fails instead of reporting a clean result.</li>
+<li><strong>Wire-level Leak Assertions</strong>: <code>PCAPAsserter</code> captures on a named interface, so a test can assert a stimulus produced no frame at all - the question <code>nft monitor trace</code> cannot answer.</li>
 <li><strong>Isolated Topologies</strong>: Supports <strong>Simple</strong> (single sandbox netns) and <strong>Gateway</strong> (router + server netns chain) topologies.</li>
 <li><strong>Scapy Packet Injection</strong>: Forge arbitrary TCP, UDP, and ICMP packets across IPv4 and IPv6 protocols.</li>
-<li><strong>Robust Netns Lifecycle</strong>: Automated startup sweeps of orphan namespaces and veth pairs with exponential backoff teardowns.</li>
+<li><strong>Ownership-aware Lifecycle</strong>: every namespace, link and route is journalled before it is created. Teardown and crash recovery remove only what a run can prove it owns, and stop every process still in a sandbox namespace.</li>
+<li><strong>Managed Processes</strong>: real servers and clients in the sandbox, with a verified UID, GID and capabilities, timeouts, and output limits.</li>
+<li><strong>Reproducible Reports</strong>: an experiment report and a SHA-256 manifest that let a CI artifact reconstruct a run.</li>
+<li><strong>Worked Examples, run in CI</strong>: workstation, IPv6, coexisting tables, NAT gateway, a real application, and two experiments that must fail; see <a href="tutorials/examples/">Worked Examples</a>.</li>
 <li><strong>Full Type Safety &amp; Strict Lints</strong>: Built with Pydantic v2, <code>mypy --strict</code>, <code>import-linter</code>, and <code>ruff</code>.</li>
 </ul>
 <hr />
@@ -1367,6 +1453,7 @@
 <ul>
 <li><strong><a href="tutorials/quickstart/">Quickstart Guide</a></strong>: Get up and running in 5 minutes.</li>
 <li><strong><a href="tutorials/test-suites/">Test Suite YAML</a></strong>: Define declarative YAML test suites for CLI execution.</li>
+<li><strong><a href="tutorials/examples/">Worked Examples</a></strong>: complete experiments with their expected output, including two that must fail.</li>
 <li><strong><a href="how-to/in-process-integration/">Embedding NSE</a></strong>: call the engine directly from your own Python test suite.</li>
 <li><strong><a href="explanation/architecture/">Architecture &amp; Flow</a></strong>: In-depth breakdown of in-process netns execution.</li>
 <li><strong><a href="reference/api/">Python API Reference</a></strong>: Complete auto-generated Python API documentation.</li>
@@ -1426,10 +1513,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
       

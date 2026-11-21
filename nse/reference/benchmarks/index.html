@@ -1,0 +1,2001 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for Network Sandbox Engine (NSE) - isolated Linux network namespace testing and kernel nftables trace evaluation.">
+      
+      
+        <meta name="author" content="onyks-os">
+      
+      
+        <link rel="canonical" href="https://onyks-os.github.io/nse/reference/benchmarks/">
+      
+      
+        <link rel="prev" href="../dependencies/">
+      
+      
+        <link rel="next" href="../../release-notes/changelog/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/mark.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
+    
+    
+      
+        <title>Benchmarks - Network Sandbox Engine (NSE)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#benchmarks" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Network Sandbox Engine (NSE)" class="md-header__button md-logo" aria-label="Network Sandbox Engine (NSE)" data-md-component="logo">
+      
+  <img src="../../assets/mark.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Network Sandbox Engine (NSE)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Benchmarks
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/onyks-os/NetworkSandboxEngine" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    onyks-os/NetworkSandboxEngine
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../tutorials/quickstart/" class="md-tabs__link">
+          
+  
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../how-to/in-process-integration/" class="md-tabs__link">
+          
+  
+  
+  How-To Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../explanation/architecture/" class="md-tabs__link">
+          
+  
+  
+  Explanation
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../cli/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../release-notes/changelog/" class="md-tabs__link">
+          
+  
+  
+  Release Notes
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Network Sandbox Engine (NSE)" class="md-nav__button md-logo" aria-label="Network Sandbox Engine (NSE)" data-md-component="logo">
+      
+  <img src="../../assets/mark.svg" alt="logo">
+
+    </a>
+    Network Sandbox Engine (NSE)
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/onyks-os/NetworkSandboxEngine" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    onyks-os/NetworkSandboxEngine
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/test-suites/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test Suite YAML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/debugging-rulesets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ruleset Debugging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/gateway-topology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gateway Topology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worked Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-To Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How-To Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/in-process-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedding NSE in Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/custom-packets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom Packet Specs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/cicd-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CI/CD Automation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Explanation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Explanation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture & Privilege Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/deterministic-oracle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Verdict Oracle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/namespace-lifecycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Namespace Lifecycle & Naming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dependencies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration & Dependencies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmarks
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmarks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capture-readiness-race" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capture readiness race
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Capture readiness race">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-measured" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is measured
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-the-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading the results
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consumer-qualification-transparenttorproxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consumer qualification: TransparentTorProxy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Consumer qualification: TransparentTorProxy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-measured_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is measured
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#results_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-the-results_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading the results
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concurrency-and-host-residue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Concurrency and host residue
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Concurrency and host residue">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-measured_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is measured
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#results_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reproducing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reproducing
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Notes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Release Notes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release-notes/changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release-notes/upgrading-to-2.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrading to 2.2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capture-readiness-race" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capture readiness race
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Capture readiness race">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-measured" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is measured
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-the-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading the results
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consumer-qualification-transparenttorproxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consumer qualification: TransparentTorProxy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Consumer qualification: TransparentTorProxy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-measured_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is measured
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#results_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-the-results_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading the results
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concurrency-and-host-residue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Concurrency and host residue
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Concurrency and host residue">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-measured_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is measured
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#results_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reproducing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reproducing
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="benchmarks">Benchmarks</h1>
+<p>Measurements taken to qualify 2.2.0 against 2.1.2. They answer three
+questions: does removing the fixed wait after <code>PCAPAsserter.start()</code> lose
+captures, does a real consumer's suite behave the same on both versions, and do
+the concurrency and crash-recovery paths leave anything behind on the host.</p>
+<p>All numbers come from one machine. They show the relative behaviour of the two
+versions under the same conditions; they are not absolute performance figures
+for other hosts.</p>
+<hr />
+<h2 id="environment">Environment</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Component</th>
+<th style="text-align: left;">Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Host kernel</td>
+<td style="text-align: left;">7.3.4-300.fc45.x86_64</td>
+</tr>
+<tr>
+<td style="text-align: left;">Container</td>
+<td style="text-align: left;">Debian 12, privileged podman, <code>--network pasta</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">nftables</td>
+<td style="text-align: left;">1.0.6</td>
+</tr>
+<tr>
+<td style="text-align: left;">iproute2</td>
+<td style="text-align: left;">6.1.0</td>
+</tr>
+<tr>
+<td style="text-align: left;">Python</td>
+<td style="text-align: left;">3.12.16 (consumer suite), 3.11.2 (capture race, concurrency)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Scapy</td>
+<td style="text-align: left;">2.8.0</td>
+</tr>
+<tr>
+<td style="text-align: left;">NSE</td>
+<td style="text-align: left;">2.1.2 from PyPI, 2.2.0 from the release branch</td>
+</tr>
+</tbody>
+</table>
+<p>Every run started from a clean container. Only NSE was swapped between rows;
+the test code, Scapy and the rest of the environment were identical.</p>
+<hr />
+<h2 id="capture-readiness-race">Capture readiness race</h2>
+<h3 id="what-is-measured">What is measured</h3>
+<p>The cycle is the one TransparentTorProxy uses in its zero-leak suite: start a
+capture, send a stimulus from a new process inside the namespace, let it settle
+for 50 ms, stop the capture. A <em>miss</em> is a cycle in which the stimulus left the
+namespace but is absent from the capture.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">asserter</span> <span class="o">=</span> <span class="n">PCAPAsserter</span><span class="p">(</span><span class="n">iface</span><span class="o">=</span><span class="n">ns</span><span class="o">.</span><span class="n">ext_iface</span><span class="p">)</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">await</span> <span class="n">asserter</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">if</span> <span class="n">pre_sleep</span><span class="p">:</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">pre_sleep</span><span class="p">)</span>          <span class="c1"># 0.2 s in TTP's suite</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">"nsenter"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"--net=/var/run/netns/</span><span class="si">{</span><span class="n">ns</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                <span class="s2">"python3"</span><span class="p">,</span> <span class="s2">"-c"</span><span class="p">,</span> <span class="n">send_udp_datagram</span><span class="p">],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">packets</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asserter</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">missed</span> <span class="o">=</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">UDP</span> <span class="ow">in</span> <span class="n">p</span> <span class="ow">and</span> <span class="n">p</span><span class="p">[</span><span class="n">UDP</span><span class="p">]</span><span class="o">.</span><span class="n">dport</span> <span class="o">==</span> <span class="mi">9999</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">packets</span><span class="p">)</span>
+</span></code></pre></div>
+<p>The namespace (<code>10.9.0.1/24</code> on the host side, <code>10.9.0.2/24</code> inside) is created
+once with <code>NetnsController(use_nsenter=True).create_namespace()</code>. One uncaptured
+datagram is sent first so that neighbour resolution is not part of any cycle.
+Each row is 300 consecutive cycles in one process. The <em>busy</em> rows run one
+<code>while True: pass</code> process per CPU for the whole measurement.</p>
+<h3 id="results">Results</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">NSE</th>
+<th style="text-align: left;">Load</th>
+<th style="text-align: left;">Sleep after <code>start()</code></th>
+<th style="text-align: left;">Misses / 300</th>
+<th style="text-align: left;"><code>start()</code> median</th>
+<th style="text-align: left;">First <code>start()</code></th>
+<th style="text-align: left;"><code>start()</code> p95 / max (rest)</th>
+<th style="text-align: left;">Cycle median</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">2.1.2</td>
+<td style="text-align: left;">idle</td>
+<td style="text-align: left;">0.2 s</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0.4 ms</td>
+<td style="text-align: left;">9.5 ms</td>
+<td style="text-align: left;">0.9 / 7.7 ms</td>
+<td style="text-align: left;">280.9 ms</td>
+</tr>
+<tr>
+<td style="text-align: left;">2.1.2</td>
+<td style="text-align: left;">idle</td>
+<td style="text-align: left;">none</td>
+<td style="text-align: left;"><strong>13 (4.3%)</strong></td>
+<td style="text-align: left;">0.4 ms</td>
+<td style="text-align: left;">0.4 ms</td>
+<td style="text-align: left;">0.9 / 1.6 ms</td>
+<td style="text-align: left;">79.6 ms</td>
+</tr>
+<tr>
+<td style="text-align: left;">2.1.2</td>
+<td style="text-align: left;">busy</td>
+<td style="text-align: left;">0.2 s</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1.7 ms</td>
+<td style="text-align: left;">6.6 ms</td>
+<td style="text-align: left;">3.0 / 3.9 ms</td>
+<td style="text-align: left;">299.9 ms</td>
+</tr>
+<tr>
+<td style="text-align: left;">2.1.2</td>
+<td style="text-align: left;">busy</td>
+<td style="text-align: left;">none</td>
+<td style="text-align: left;"><strong>1 (0.3%)</strong></td>
+<td style="text-align: left;">1.8 ms</td>
+<td style="text-align: left;">7.5 ms</td>
+<td style="text-align: left;">3.0 / 4.5 ms</td>
+<td style="text-align: left;">102.0 ms</td>
+</tr>
+<tr>
+<td style="text-align: left;">2.2.0</td>
+<td style="text-align: left;">idle</td>
+<td style="text-align: left;">none</td>
+<td style="text-align: left;"><strong>0</strong></td>
+<td style="text-align: left;">11.6 ms</td>
+<td style="text-align: left;">269.5 ms</td>
+<td style="text-align: left;">16.9 / 19.5 ms</td>
+<td style="text-align: left;">92.0 ms</td>
+</tr>
+<tr>
+<td style="text-align: left;">2.2.0</td>
+<td style="text-align: left;">busy</td>
+<td style="text-align: left;">none</td>
+<td style="text-align: left;"><strong>0</strong></td>
+<td style="text-align: left;">10.8 ms</td>
+<td style="text-align: left;">742.0 ms</td>
+<td style="text-align: left;">13.9 / 17.3 ms</td>
+<td style="text-align: left;">110.1 ms</td>
+</tr>
+</tbody>
+</table>
+<p>"First <code>start()</code>" is the first cycle of the process; "p95 / max (rest)" covers
+the remaining 299.</p>
+<h3 id="reading-the-results">Reading the results</h3>
+<ul>
+<li><strong>2.1.2's <code>start()</code> returns before the capture is listening.</strong> It takes under
+  2 ms because it only schedules the sniffer thread. Without a wait after it,
+  about one stimulus in 25 is sent before the socket exists. Under load the
+  miss rate drops, because the stimulus process itself starts more slowly; it
+  does not reach zero.</li>
+<li><strong>2.2.0's <code>start()</code> returns once the kernel socket is bound with its filter.</strong>
+  That wait has a median of 11 ms and stayed under 20 ms in every cycle after
+  the first. No stimulus was missed, idle or busy.</li>
+<li><strong>The first <code>start()</code> of a process imports Scapy.</strong> 2.1.x paid that cost in
+  the <code>PCAPAsserter</code> constructor; 2.2.0 pays it in the first <code>start()</code>
+  (270 ms idle, 740 ms busy here). It is paid once per process.</li>
+<li><strong>Net effect on a capture cycle:</strong> with the 0.2 s sleep that 2.1.2 needs,
+  a cycle takes 281 ms idle and 300 ms busy; 2.2.0 without the sleep takes
+  92 ms and 110 ms, about three times shorter, with no misses.</li>
+</ul>
+<hr />
+<h2 id="consumer-qualification-transparenttorproxy">Consumer qualification: TransparentTorProxy</h2>
+<h3 id="what-is-measured_1">What is measured</h3>
+<p>TransparentTorProxy's zero-leak suite (<code>tests/test_nse_rules.py -m nse</code>,
+TTP 0.4.11, commit <code>2c0e39e</code>) was installed exactly as TTP's CI installs it
+(<code>scripts/install_locked.sh</code>, which pins NSE 2.1.2 and Scapy 2.8.0) and run with
+<code>TTP_REQUIRE_NSE=1</code>, so that a missing NSE fails instead of skipping. Three
+variants of the suite were run, three times each:</p>
+<ul>
+<li><strong>unchanged</strong>: TTP as released, with its <code>sleep(0.2)</code> after every
+  <code>PCAPAsserter.start()</code>;</li>
+<li><strong>without the sleep</strong>: the same suite with that sleep removed;</li>
+<li><strong>adapted</strong>: without the sleep and asserting <code>stop_report().window_complete</code>
+  (2.2.0 only, since the API is new).</li>
+</ul>
+<h3 id="results_1">Results</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">TTP suite</th>
+<th style="text-align: left;">NSE</th>
+<th style="text-align: left;">Run 1</th>
+<th style="text-align: left;">Run 2</th>
+<th style="text-align: left;">Run 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">unchanged</td>
+<td style="text-align: left;">2.1.2</td>
+<td style="text-align: left;">47 passed, 1 skipped, 147.2 s</td>
+<td style="text-align: left;">47 passed, 1 skipped, 146.7 s</td>
+<td style="text-align: left;">47 passed, 1 skipped, 146.8 s</td>
+</tr>
+<tr>
+<td style="text-align: left;">unchanged</td>
+<td style="text-align: left;">2.2.0</td>
+<td style="text-align: left;">47 passed, 1 skipped, 149.1 s</td>
+<td style="text-align: left;">47 passed, 1 skipped, 147.5 s</td>
+<td style="text-align: left;">47 passed, 1 skipped, 149.1 s</td>
+</tr>
+<tr>
+<td style="text-align: left;">without the sleep</td>
+<td style="text-align: left;">2.1.2</td>
+<td style="text-align: left;"><strong>4 failed</strong>, 43 passed, 1 skipped, 123.6 s</td>
+<td style="text-align: left;"><strong>4 failed</strong>, 43 passed, 1 skipped, 127.3 s</td>
+<td style="text-align: left;">47 passed, 1 skipped, 137.9 s</td>
+</tr>
+<tr>
+<td style="text-align: left;">without the sleep</td>
+<td style="text-align: left;">2.2.0</td>
+<td style="text-align: left;">47 passed, 1 skipped, 140.8 s</td>
+<td style="text-align: left;">47 passed, 1 skipped, 141.0 s</td>
+<td style="text-align: left;">47 passed, 1 skipped, 140.9 s</td>
+</tr>
+<tr>
+<td style="text-align: left;">adapted</td>
+<td style="text-align: left;">2.2.0</td>
+<td style="text-align: left;">47 passed, 1 skipped, 141.0 s</td>
+<td style="text-align: left;">47 passed, 1 skipped, 140.8 s</td>
+<td style="text-align: left;">47 passed, 1 skipped, 140.5 s</td>
+</tr>
+</tbody>
+</table>
+<p>The skipped test requires nftables 1.1.6; it is skipped by TTP's own policy and
+identically on both versions.</p>
+<h3 id="reading-the-results_1">Reading the results</h3>
+<ul>
+<li><strong>TTP needs no change to run on 2.2.0.</strong> The unchanged suite passes on both
+  versions, within 2 s of each other.</li>
+<li><strong>On 2.1.2 the sleep is load-bearing.</strong> Without it the suite failed in 2 of 3
+  runs, each time on 4 of TTP's own positive controls detecting a capture that
+  missed its stimulus: the race measured above.</li>
+<li><strong>On 2.2.0 the sleep can be removed.</strong> All runs pass, and the suite is about
+  7 s faster than the unchanged one. Asserting <code>window_complete</code> costs nothing
+  measurable.</li>
+<li>No network namespace was left on the host after any run.</li>
+</ul>
+<hr />
+<h2 id="concurrency-and-host-residue">Concurrency and host residue</h2>
+<h3 id="what-is-measured_2">What is measured</h3>
+<p>The integration tests for concurrent topologies, resource lifecycle and crash
+recovery, and process supervision (<code>tests/test_topology_concurrency.py</code>,
+<code>tests/test_resource_lifecycle.py</code>, <code>tests/test_process_integration.py</code>,
+<code>-m integration</code>) were run five times in a row on 2.2.0. Before and after each
+repetition the host's network namespaces, links, and IPv4 and IPv6 routes (all
+tables) were recorded and compared. The ownership records under <code>/run/nse</code>
+were listed separately, since their lock files persist by design.</p>
+<h3 id="results_2">Results</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Repetition</th>
+<th style="text-align: left;">Result</th>
+<th style="text-align: left;">Duration</th>
+<th style="text-align: left;">Host state before vs after</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">24 passed, 1 skipped</td>
+<td style="text-align: left;">56.0 s</td>
+<td style="text-align: left;">identical (see note)</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">24 passed, 1 skipped</td>
+<td style="text-align: left;">54.4 s</td>
+<td style="text-align: left;">identical</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">24 passed, 1 skipped</td>
+<td style="text-align: left;">55.5 s</td>
+<td style="text-align: left;">identical</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">24 passed, 1 skipped</td>
+<td style="text-align: left;">53.5 s</td>
+<td style="text-align: left;">identical</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">24 passed, 1 skipped</td>
+<td style="text-align: left;">55.4 s</td>
+<td style="text-align: left;">identical</td>
+</tr>
+</tbody>
+</table>
+<p>Note: the raw comparison for the first repetition differed only because
+<code>ip -j netns list</code> prints nothing when <code>/var/run/netns</code> does not exist yet and
+<code>[]</code> once it does. No namespace, link or route was left behind.</p>
+<hr />
+<h2 id="reproducing">Reproducing</h2>
+<p>The measurements need root (or a privileged container) and a kernel with
+network namespaces and nftables.</p>
+<ol>
+<li>Build a privileged container with nftables, iproute2 and Python, and mount
+   the NSE checkout read-only.</li>
+<li>For the capture race, write the cycle above into a script that creates the
+   namespace, runs it N times with and without a pre-sleep, and counts misses.
+   Run it once with <code>pip install network-sandbox-engine==2.1.2</code> and once with
+   the 2.2.0 checkout installed. For the busy rows, start one busy-loop process
+   per CPU before the run and stop them after.</li>
+<li>For the consumer suite, install TransparentTorProxy with its
+   <code>scripts/install_locked.sh &lt;python&gt; ci</code>, then
+   <code>pip install network-sandbox-engine==&lt;version&gt;</code> and run
+   <code>TTP_REQUIRE_NSE=1 pytest tests/test_nse_rules.py -m nse</code>.</li>
+<li>For the concurrency checks, run the three integration test files above with
+   <code>-m integration</code> and compare <code>ip -j netns list</code>, <code>ip -j link show</code> and
+   <code>ip -j route show table all</code> (IPv4 and IPv6) before and after.</li>
+<li>After every run, <code>ip netns list</code> must be empty.</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../../javascripts/mermaid_init.js"></script>
+      
+    
+  </body>
+</html>

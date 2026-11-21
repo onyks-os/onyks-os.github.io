@@ -24,8 +24,8 @@
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <link rel="icon" href="../../assets/mark.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -33,10 +33,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -102,8 +102,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Network Sandbox Engine (NSE)" class="md-header__button md-logo" aria-label="Network Sandbox Engine (NSE)" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../assets/mark.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -372,8 +371,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Network Sandbox Engine (NSE)" class="md-nav__button md-logo" aria-label="Network Sandbox Engine (NSE)" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../assets/mark.svg" alt="logo">
 
     </a>
     Network Sandbox Engine (NSE)
@@ -571,6 +569,34 @@
     
   
     Gateway Topology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worked Examples
   
 
     
@@ -919,6 +945,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#what-the-contract-proves-and-what-it-does-not" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the contract proves, and what it does not
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#proving-the-contract-holds" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1109,6 +1146,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/benchmarks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmarks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1196,6 +1261,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release-notes/upgrading-to-2.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrading to 2.2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1256,6 +1349,17 @@
     <span class="md-ellipsis">
       
         Verdict reduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-contract-proves-and-what-it-does-not" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the contract proves, and what it does not
       
     </span>
   </a>
@@ -1344,7 +1448,9 @@ blocked everything.</p>
    unexpected EOF, a timeout or a crash — and its count of unparsed trace lines
    must be zero.</li>
 <li><strong>Reporting</strong>: canary trace ids are removed from the results, so probes never
-   appear in your verdict stream.</li>
+   appear in your verdict stream. A canary counts as observed only when a trace
+   <strong>matching the canary's packet tuple</strong> arrives, so unrelated traffic in the
+   namespace cannot vouch for the oracle.</li>
 </ol>
 <p>Any failure in steps 2, 4 or 5 emits an <code>error</code> event. The CLI runner fails on
 error events, and reports them as <strong>oracle errors</strong>, kept separate from firewall
@@ -1358,6 +1464,17 @@ problems and want different fixes.</p>
   stack shares an id across chains;</li>
 <li>events from the <code>nse_trace</code> scaffolding table are excluded, since they exist
   only to switch tracing on;</li>
+<li>only <strong>stimulus</strong> traces are counted. The pipeline attributes each trace from
+  the addresses, protocol and ports of its first hook, which runs before any
+  user NAT chain, and records them on every event as <code>packet_src_ip</code>,
+  <code>packet_dst_ip</code>, <code>packet_protocol</code>, <code>packet_src_port</code>, <code>packet_dst_port</code> and
+  <code>packet_role</code> (<code>stimulus</code>, <code>response</code> or <code>background</code>). Later hooks inherit
+  the first role, so translated addresses cannot change it. A server reply, such
+  as the gateway listener's UDP answer being dropped on the way back, is a
+  <code>response</code>; spontaneous traffic, such as IPv6 neighbour discovery, is
+  <code>background</code>. Both stay in the event stream for diagnosis, but neither adds a
+  verdict. The exact count check is unchanged, so a missing or duplicated
+  stimulus is still an oracle error;</li>
 <li><code>DROP</code> and <code>REJECT</code> beat <code>ACCEPT</code>, because a packet accepted by one chain and
   dropped by another did not get through;</li>
 <li>a trace id that reached the user ruleset but produced <strong>no</strong> verdict is
@@ -1366,6 +1483,56 @@ problems and want different fixes.</p>
 </ul>
 <p><code>REJECT</code> is indistinguishable from <code>DROP</code> in the reduced stream, so an
 expectation of <code>REJECT</code> is compared as <code>DROP</code>.</p>
+<hr />
+<h2 id="what-the-contract-proves-and-what-it-does-not">What the contract proves, and what it does not</h2>
+<p>The canary, parser and liveness checks are NSE's strongest guarantee, and the
+reason a clean result can be trusted. Each is a positive control on the
+instrument itself:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Check</th>
+<th style="text-align: left;">Proves</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Readiness canary</td>
+<td style="text-align: left;">The monitor delivers kernel events for packets on the injection path <em>before</em> the stimuli.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Liveness canary</td>
+<td style="text-align: left;">It still delivers them <em>after</em> the last stimulus: the stream is not truncated.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Parser health</td>
+<td style="text-align: left;">Every trace line was understood: a format change cannot hide verdicts.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Read-loop health</td>
+<td style="text-align: left;">The monitor ended cleanly, not by EOF, timeout or crash.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Count check (CLI)</td>
+<td style="text-align: left;">One verdict per expected stimulus, no more and no fewer.</td>
+</tr>
+</tbody>
+</table>
+<p>They prove that the <strong>trace oracle</strong> observed the path the canaries took. They
+say nothing about a <strong>capture</strong>. <code>PCAPAsserter</code> readiness means its socket is
+armed and filtering on one interface. It does not mean that the traffic you
+care about crosses that interface.</p>
+<p>An empty capture is evidence of "nothing left" only next to a positive control
+that shows the same capture seeing the stimulus. Without one, it is no
+evidence at all. <code>examples/broken_observer.py</code> runs both failure modes, a blind
+oracle and a capture on the wrong interface, and shows each being caught for
+its own reason. The experiment report keeps these questions apart:</p>
+<ul>
+<li><code>result.oracle</code> and <code>outcome</code> describe the trace oracle;</li>
+<li>each attached <code>CaptureReport</code> describes a capture;</li>
+<li>caller-declared <code>PositiveControl</code> entries describe the evidence for the
+  assertion.</li>
+</ul>
 <hr />
 <h2 id="proving-the-contract-holds">Proving the contract holds</h2>
 <p>The guarantee above is itself tested. Setting <code>NSE_FORCE_BLIND=1</code> makes the
@@ -1431,10 +1598,10 @@ silently blinding the oracle.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
       

@@ -18,14 +18,14 @@
         <link rel="prev" href="../api/">
       
       
-        <link rel="next" href="../../release-notes/changelog/">
+        <link rel="next" href="../benchmarks/">
       
       
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <link rel="icon" href="../../assets/mark.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -33,10 +33,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -102,8 +102,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Network Sandbox Engine (NSE)" class="md-header__button md-logo" aria-label="Network Sandbox Engine (NSE)" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../assets/mark.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -372,8 +371,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Network Sandbox Engine (NSE)" class="md-nav__button md-logo" aria-label="Network Sandbox Engine (NSE)" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../assets/mark.svg" alt="logo">
 
     </a>
     Network Sandbox Engine (NSE)
@@ -571,6 +569,34 @@
     
   
     Gateway Topology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worked Examples
   
 
     
@@ -1065,6 +1091,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Core Python Dependencies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#runtime-pins-and-compatibility-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runtime pins and compatibility checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1121,6 +1164,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../benchmarks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmarks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1213,6 +1284,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release-notes/upgrading-to-2.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrading to 2.2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1254,6 +1353,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Core Python Dependencies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#runtime-pins-and-compatibility-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runtime pins and compatibility checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1355,6 +1471,24 @@
 <p>Two runtime dependencies, both for the engine itself. NSE has no web framework,
 no ASGI server and no JavaScript toolchain: the web interface was archived in
 2.1.0.</p>
+<h3 id="runtime-pins-and-compatibility-checks">Runtime pins and compatibility checks</h3>
+<p><code>pyproject.toml</code> declares the library's supported dependency ranges.
+<code>requirements.txt</code> records a concrete runtime dependency set for development
+and verification; it does not replace those ranges in the published package.
+To install that set with the development tools in a fresh virtual environment:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt<span class="w"> </span>-e<span class="w"> </span><span class="s2">".[dev]"</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>check
+</span></code></pre></div>
+<p>Pydantic requires an exact matching <code>pydantic-core</code> version. Update them together
+using the resolver, rather than editing their pins independently:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip-compile<span class="w"> </span>--upgrade-package<span class="w"> </span>pydantic<span class="w"> </span>--upgrade-package<span class="w"> </span>pydantic-core<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span>--output-file<span class="o">=</span>requirements.txt<span class="w"> </span>pyproject.toml
+</span></code></pre></div>
+<p><code>pip-compile</code> is provided by the separate <code>pip-tools</code> maintenance tool.
+Dependabot groups these two packages. In addition to the Python 3.10–3.13 unit
+matrix using the declared ranges, CI installs the runtime pins on Python 3.10
+and 3.11 and exercises the minimum Scapy 2.5.0 on Python 3.10. Each compatibility
+job checks the installed dependency metadata and runs the coverage gate.</p>
 <hr />
 <h2 id="optional-extras">Optional extras</h2>
 <h3 id="cli-the-yaml-suite-runner"><code>[cli]</code> — the YAML suite runner</h3>
@@ -1387,7 +1521,7 @@ no ASGI server and no JavaScript toolchain: the web interface was archived in
 </tr>
 <tr>
 <td style="text-align: left;"><code>pytest-cov</code></td>
-<td style="text-align: left;">Coverage measurement and the <code>make test-cov</code> ratchet</td>
+<td style="text-align: left;">Coverage measurement and the <code>make coverage</code> ratchet</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>ruff</code></td>
@@ -1479,10 +1613,10 @@ tested against.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
       

@@ -24,8 +24,8 @@
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <link rel="icon" href="../../assets/mark.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -33,10 +33,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -102,8 +102,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Network Sandbox Engine (NSE)" class="md-header__button md-logo" aria-label="Network Sandbox Engine (NSE)" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../assets/mark.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -372,8 +371,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Network Sandbox Engine (NSE)" class="md-nav__button md-logo" aria-label="Network Sandbox Engine (NSE)" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../assets/mark.svg" alt="logo">
 
     </a>
     Network Sandbox Engine (NSE)
@@ -571,6 +569,34 @@
     
   
     Gateway Topology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worked Examples
   
 
     
@@ -1034,6 +1060,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#the-json-report-report-dir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The JSON report (--report-dir)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1102,6 +1139,34 @@
     
   
     Configuration & Dependencies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../benchmarks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmarks
   
 
     
@@ -1202,6 +1267,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release-notes/upgrading-to-2.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrading to 2.2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1263,6 +1356,17 @@
     <span class="md-ellipsis">
       
         Exit codes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-json-report-report-dir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The JSON report (--report-dir)
       
     </span>
   </a>
@@ -1334,6 +1438,16 @@ running from a source checkout.</p>
 <td style="text-align: left;">Enable debug logging from the engine</td>
 </tr>
 <tr>
+<td style="text-align: left;"><code>--report-dir</code></td>
+<td style="text-align: left;">Directory</td>
+<td style="text-align: left;">Write <code>report.json</code> and <code>manifest.json</code> there (see below), also when the run fails</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--timeout</code></td>
+<td style="text-align: left;">Seconds</td>
+<td style="text-align: left;">Stop and fail any case that runs longer (default: no limit)</td>
+</tr>
+<tr>
 <td style="text-align: left;"><code>--help</code></td>
 <td style="text-align: left;">Flag</td>
 <td style="text-align: left;">Display CLI help message</td>
@@ -1351,14 +1465,21 @@ running from a source checkout.</p>
 <tbody>
 <tr>
 <td style="text-align: left;"><code>0</code></td>
-<td style="text-align: left;">Every packet's observed verdict matched its expectation.</td>
+<td style="text-align: left;">Every packet's observed verdict matched its expectation, and every case cleaned up.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>1</code></td>
-<td style="text-align: left;">A verdict was wrong, the suite file was malformed, <strong>or</strong> the engine could not observe a verdict it needed.</td>
+<td style="text-align: left;">A verdict was wrong, the suite file was malformed, the engine could not observe a verdict it needed, a case timed out, a case did not clean up completely, <strong>or</strong> a requested report could not be written.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>2</code></td>
+<td style="text-align: left;">Invalid command line (for example <code>--timeout 0</code>).</td>
 </tr>
 </tbody>
 </table>
+<p>A case whose verdicts are right but whose teardown failed, or left resources of
+the run on the host, prints <code>[TEARDOWN ERROR]</code> lines and fails: an incomplete
+cleanup is never a pass.</p>
 <p>The summary distinguishes the last case:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Test Suite Summary: 1 passed, 1 failed.
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>1 of the failures are ORACLE errors: the engine could not observe what it
@@ -1367,6 +1488,70 @@ running from a source checkout.</p>
 <p>An oracle error means the instrument failed, not the ruleset. Investigate the
 environment — is <code>nft monitor trace</code> available inside the namespace, does this
 kernel emit a trace format the parser understands — before touching your rules.</p>
+<h3 id="the-json-report-report-dir">The JSON report (<code>--report-dir</code>)</h3>
+<p><code>report.json</code> records the suite file (path and SHA-256), the summary with the
+exit code, and one entry per case:</p>
+<ul>
+<li><code>status</code>: one of the values below.</li>
+<li><code>expected</code> and <code>observed</code>: the verdicts.</li>
+<li><code>teardown_complete</code>.</li>
+<li><code>lines</code>: the text the case printed.</li>
+<li><code>experiment</code>: the full experiment report of that run, from
+  <a href="../../how-to/in-process-integration/#the-experiment-report"><code>run_test_pipeline_report()</code></a>.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><code>status</code></th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>passed</code></td>
+<td style="text-align: left;">Verdicts as expected, cleaned up.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>failed</code></td>
+<td style="text-align: left;">The ruleset gave other verdicts.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>instrument_error</code></td>
+<td style="text-align: left;">The oracle was blind, truncated or saw the wrong number of verdicts.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>rules_invalid</code></td>
+<td style="text-align: left;"><code>nft</code> rejected the ruleset.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setup_error</code></td>
+<td style="text-align: left;">Topology, a mock listener or the trace monitor could not be prepared.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>timeout</code></td>
+<td style="text-align: left;">The case exceeded <code>--timeout</code> and was stopped.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>teardown_incomplete</code></td>
+<td style="text-align: left;">Verdicts as expected, but the run did not clean up.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>invalid_case</code></td>
+<td style="text-align: left;">The suite entry is malformed.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>crashed</code></td>
+<td style="text-align: left;">The engine raised instead of reporting.</td>
+</tr>
+</tbody>
+</table>
+<p><code>manifest.json</code> lists <code>report.json</code> and every artifact the experiments
+recorded, each with its SHA-256 and size. Both files are written atomically.
+They are written even when the suite cannot be read (<code>error</code> explains why),
+and when the run is interrupted; in that case every case that finished is on
+record. They are world-readable (0644), so a CI upload step running as another
+user than root can collect them.</p>
+<p>The text output is unchanged, apart from the <code>[NSE] Report written to ...</code> line.</p>
 <hr />
 <h2 id="environment-variables">Environment variables</h2>
 <table>
@@ -1465,10 +1650,10 @@ kernel emit a trace format the parser understands — before touching your rules
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
       
