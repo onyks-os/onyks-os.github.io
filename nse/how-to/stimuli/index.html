@@ -836,6 +836,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#requirements-setpriv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements: setpriv
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#the-interpreter" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -898,6 +909,90 @@
     
   
     Observing a Stimulus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../streams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Streams Through a Window
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../beacons/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Capture Beacons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tracing-local-traffic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracing a Process's Own Traffic
   
 
     
@@ -1497,6 +1592,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#requirements-setpriv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements: setpriv
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#the-interpreter" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1704,6 +1810,15 @@ records the source address and port (<code>source</code>) the kernel chose, for 
 kind that has one.</p>
 <p>This is what lets a capture or a receiver say "this packet is that probe"
 rather than "a packet like it went by".</p>
+<hr />
+<h2 id="requirements-setpriv">Requirements: <code>setpriv</code></h2>
+<p>A stimulus with an <code>identity</code> is launched through <code>setpriv</code>, from util-linux.
+Like every binary NSE runs as root, it is looked up only in trusted system
+directories, never in <code>$PATH</code>. Minimal images may not have it: Fedora's
+<code>util-linux-core</code> has <code>nsenter</code> but not <code>setpriv</code>. Install <code>util-linux</code>.</p>
+<p>Without it, every stimulus run as another identity is <code>could_not_run</code> at
+<code>launch</code>, with the reason naming the package, and <code>StimulusStream.start()</code>
+raises <code>StreamStartError</code>. A stimulus without an identity does not need it.</p>
 <hr />
 <h2 id="the-interpreter">The interpreter</h2>
 <p>The programs need only the Python standard library. By default they run with

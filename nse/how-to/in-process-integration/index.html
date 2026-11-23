@@ -1034,6 +1034,90 @@
   
   
     <li class="md-nav__item">
+      <a href="../streams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Streams Through a Window
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../beacons/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Capture Beacons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tracing-local-traffic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracing a Process's Own Traffic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../custom-packets/" class="md-nav__link">
         
   
@@ -2010,7 +2094,8 @@ either clears the supplementary groups unless you list them. <code>capabilities<
 is exactly the set the process keeps (effective, permitted, ambient and
 bounding); it also works for root, for example to run root with <code>net_raw</code> only.</p>
 <p>NSE enters the namespace with its own privileges and applies the identity
-afterwards with <code>setpriv</code>. Before the program starts, it reads the identity the
+afterwards with <code>setpriv</code> (util-linux; minimal images such as Fedora's
+<code>util-linux-core</code> lack it, and the error then names the package). Before the program starts, it reads the identity the
 kernel reports for that very process (same PID) and compares it with the
 request:</p>
 <ul>
@@ -2142,6 +2227,10 @@ nothing remained unread. When the counters are unavailable this is <code>None</c
 <code>True</code>. <strong>Evidence sufficiency</strong> is not in the report at all. A healthy, complete
 capture of an empty interface still does not prove that your stimulus took that
 path, which is why the positive control below is still required.</p>
+<p><a href="../beacons/">Beacons</a> close part of that gap: <code>await asserter.mark("label")</code>
+sends a frame the capture must see, and a missing one makes the window
+incomplete. The report also gives the link type, the snaplen and, with
+<code>PCAPAsserter(required_bytes=...)</code>, whether the snaplen is sufficient.</p>
 <h3 id="long-captures-with-bounded-memory">Long captures with bounded memory</h3>
 <p>By default every captured packet is kept in memory and returned by <code>stop()</code>,
 exactly as before. For a capture that runs for minutes or sees heavy traffic,

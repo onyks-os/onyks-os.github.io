@@ -18,7 +18,7 @@
         <link rel="prev" href="../receivers/">
       
       
-        <link rel="next" href="../custom-packets/">
+        <link rel="next" href="../streams/">
       
       
         
@@ -847,10 +847,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#several-stimuli-in-one-capture" class="md-nav__link">
+  <a href="#a-canary-in-the-same-window" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Several stimuli in one capture
+        A canary in the same window
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#several-stimuli-in-one-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Several stimuli in one window
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#after-a-nat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        After a NAT
       
     </span>
   </a>
@@ -861,6 +883,90 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../streams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Streams Through a Window
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../beacons/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Capture Beacons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tracing-local-traffic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracing a Process's Own Traffic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1407,10 +1513,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#several-stimuli-in-one-capture" class="md-nav__link">
+  <a href="#a-canary-in-the-same-window" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Several stimuli in one capture
+        A canary in the same window
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#several-stimuli-in-one-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Several stimuli in one window
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#after-a-nat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        After a NAT
       
     </span>
   </a>
@@ -1546,30 +1674,84 @@ and <code>describe()</code> appends each as <code>CONTRADICTION: ...</code>:</p>
 <p>A refused <code>connect</code> or <code>receive</code> with the packet on the wire is not a
 contradiction: a TCP RST or an ICMP error follows a packet that did leave.</p>
 <p>A capture on the wrong interface is still a complete window that saw nothing,
-so on its own it reports <code>on_wire=False</code>. A receiver, or a control stimulus you
-know must be seen, is what exposes it. NSE's own tests run exactly that case
-with a filter that excludes the probe.</p>
+so on its own it reports <code>on_wire=False</code>. A receiver, or a canary that must be
+seen (below), is what exposes it. NSE's own tests run exactly that case with a
+filter that excludes the probe.</p>
 <hr />
-<h2 id="several-stimuli-in-one-capture">Several stimuli in one capture</h2>
-<p><code>observe()</code> runs one stimulus per capture. When one window must hold several,
-for instance the probe and then a control that proves the window was still open
-after it, drive the capture yourself and find each result's packets with
-<code>requests_in()</code> and <code>replies_in()</code>:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">nse</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCAPAsserter</span><span class="p">,</span> <span class="n">stimuli</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">asserter</span> <span class="o">=</span> <span class="n">PCAPAsserter</span><span class="p">(</span><span class="n">iface</span><span class="o">=</span><span class="n">ns</span><span class="o">.</span><span class="n">ext_iface</span><span class="p">,</span> <span class="n">netns</span><span class="o">=</span><span class="n">ns</span><span class="o">.</span><span class="n">ext_netns</span><span class="p">)</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="k">await</span> <span class="n">asserter</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">probe</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stimuli</span><span class="o">.</span><span class="n">udp</span><span class="p">(</span><span class="s2">"192.0.2.53"</span><span class="p">,</span> <span class="mi">53</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">identity</span><span class="o">=</span><span class="n">nobody</span><span class="p">)</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">control</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stimuli</span><span class="o">.</span><span class="n">udp</span><span class="p">(</span><span class="s2">"10.0.1.1"</span><span class="p">,</span> <span class="mi">9999</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">identity</span><span class="o">=</span><span class="n">allowed</span><span class="p">)</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">report</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asserter</span><span class="o">.</span><span class="n">stop_report</span><span class="p">()</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">packets</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asserter</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="k">assert</span> <span class="n">report</span><span class="o">.</span><span class="n">window_complete</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">,</span> <span class="n">report</span>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="k">assert</span> <span class="n">stimuli</span><span class="o">.</span><span class="n">requests_in</span><span class="p">(</span><span class="n">control</span><span class="p">,</span> <span class="n">packets</span><span class="p">),</span> <span class="s2">"the window was not open after the probe"</span>
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="k">assert</span> <span class="ow">not</span> <span class="n">stimuli</span><span class="o">.</span><span class="n">requests_in</span><span class="p">(</span><span class="n">probe</span><span class="p">,</span> <span class="n">packets</span><span class="p">),</span> <span class="s2">"the probe left"</span>
+<h2 id="a-canary-in-the-same-window">A canary in the same window</h2>
+<p>A positive control in its own capture proves the instrument worked a moment
+ago, not that it was still working during the stimulus. Pass <code>canary=</code>: a
+stimulus the rules under test let through, sent <strong>after</strong> the stimulus inside
+the <strong>same</strong> capture window.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">seen</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stimuli</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="n">ns</span><span class="p">,</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="n">stimuli</span><span class="o">.</span><span class="n">tcp_connect</span><span class="p">(</span><span class="s2">"10.0.1.1"</span><span class="p">,</span> <span class="mi">8080</span><span class="p">),</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">identity</span><span class="o">=</span><span class="n">nobody</span><span class="p">,</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="n">canary</span><span class="o">=</span><span class="n">stimuli</span><span class="o">.</span><span class="n">udp</span><span class="p">(</span><span class="s2">"10.0.1.1"</span><span class="p">,</span> <span class="mi">7777</span><span class="p">),</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="n">canary_identity</span><span class="o">=</span><span class="n">allowed</span><span class="p">,</span>          <span class="c1"># default: the stimulus's identity</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">)</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">assert</span> <span class="n">seen</span><span class="o">.</span><span class="n">canary</span><span class="o">.</span><span class="n">on_wire</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">,</span> <span class="n">seen</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="k">assert</span> <span class="n">seen</span><span class="o">.</span><span class="n">on_wire</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">,</span> <span class="n">seen</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </span></code></pre></div>
-<p>Each result is matched by its own probe ID (or, for a bare SYN, its source
-port), so the control never stands in for the probe or the other way round.</p>
+<p>Unless the canary was seen on the wire, no absence is <code>False</code>: <code>on_wire</code>,
+<code>reply_on_wire</code> and the other unseen facts become <code>None</code>, and <code>describe()</code>
+says <code>canary: NOT seen</code>. A capture that stopped reading, or never watched the
+traffic's link, cannot vouch for a silence it did not observe. The
+<a href="../beacons/">beacons</a> prove the same thing at the link level, and the two
+combine.</p>
+<hr />
+<h2 id="several-stimuli-in-one-window">Several stimuli in one window</h2>
+<p><code>observe_window()</code> runs several stimuli in order, then the optional canary,
+inside one capture, and gives each stimulus its own <code>Observation</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">window</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stimuli</span><span class="o">.</span><span class="n">observe_window</span><span class="p">(</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="n">ns</span><span class="p">,</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="p">[</span><span class="n">stimuli</span><span class="o">.</span><span class="n">udp</span><span class="p">(</span><span class="s2">"192.0.2.53"</span><span class="p">,</span> <span class="mi">53</span><span class="p">),</span> <span class="n">stimuli</span><span class="o">.</span><span class="n">tcp_connect</span><span class="p">(</span><span class="s2">"192.0.2.80"</span><span class="p">,</span> <span class="mi">80</span><span class="p">)],</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">identity</span><span class="o">=</span><span class="n">nobody</span><span class="p">,</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="n">canary</span><span class="o">=</span><span class="n">stimuli</span><span class="o">.</span><span class="n">udp</span><span class="p">(</span><span class="s2">"10.0.1.1"</span><span class="p">,</span> <span class="mi">7777</span><span class="p">),</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="n">canary_identity</span><span class="o">=</span><span class="n">allowed</span><span class="p">,</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="p">)</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="k">assert</span> <span class="n">window</span><span class="o">.</span><span class="n">conclusive</span><span class="p">,</span> <span class="n">window</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>   <span class="c1"># healthy, complete, canary seen, no contradiction</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">dns</span><span class="p">,</span> <span class="n">web</span> <span class="o">=</span> <span class="n">window</span>                              <span class="c1"># one Observation per stimulus, in order</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="k">assert</span> <span class="n">dns</span><span class="o">.</span><span class="n">on_wire</span> <span class="ow">is</span> <span class="kc">False</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="k">assert</span> <span class="n">web</span><span class="o">.</span><span class="n">on_wire</span> <span class="ow">is</span> <span class="kc">False</span>
+</span></code></pre></div>
+<p><code>window.vouched</code> is the capture's part (healthy, complete, canary seen),
+<code>window.contradictions()</code> gathers every observation's contradictions, and
+<code>window.packets</code> holds the whole capture. Each stimulus is matched by its own
+probe ID (or, for a bare SYN, its source port), so neither the canary nor
+another stimulus can stand in for it.</p>
+<p>To drive the capture yourself instead, find each result's packets with
+<code>requests_in()</code> and <code>replies_in()</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">asserter</span> <span class="o">=</span> <span class="n">PCAPAsserter</span><span class="p">(</span><span class="n">iface</span><span class="o">=</span><span class="n">ns</span><span class="o">.</span><span class="n">ext_iface</span><span class="p">,</span> <span class="n">netns</span><span class="o">=</span><span class="n">ns</span><span class="o">.</span><span class="n">ext_netns</span><span class="p">)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">await</span> <span class="n">asserter</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">probe</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stimuli</span><span class="o">.</span><span class="n">udp</span><span class="p">(</span><span class="s2">"192.0.2.53"</span><span class="p">,</span> <span class="mi">53</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">identity</span><span class="o">=</span><span class="n">nobody</span><span class="p">)</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">control</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stimuli</span><span class="o">.</span><span class="n">udp</span><span class="p">(</span><span class="s2">"10.0.1.1"</span><span class="p">,</span> <span class="mi">9999</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">identity</span><span class="o">=</span><span class="n">allowed</span><span class="p">)</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">report</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asserter</span><span class="o">.</span><span class="n">stop_report</span><span class="p">()</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">packets</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asserter</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="k">assert</span> <span class="n">report</span><span class="o">.</span><span class="n">window_complete</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">,</span> <span class="n">report</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="k">assert</span> <span class="n">stimuli</span><span class="o">.</span><span class="n">requests_in</span><span class="p">(</span><span class="n">control</span><span class="p">,</span> <span class="n">packets</span><span class="p">),</span> <span class="s2">"the window was not open after the probe"</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="k">assert</span> <span class="ow">not</span> <span class="n">stimuli</span><span class="o">.</span><span class="n">requests_in</span><span class="p">(</span><span class="n">probe</span><span class="p">,</span> <span class="n">packets</span><span class="p">),</span> <span class="s2">"the probe left"</span>
+</span></code></pre></div>
+<hr />
+<h2 id="after-a-nat">After a NAT</h2>
+<p>By default a request must go to the stimulus's own destination address and
+port. A DNAT or a redirect rewrites both, so the probe is no longer recognised.
+With a receiver at the new destination this shows up as a contradiction:
+received, but not on the wire.</p>
+<p>Pass <code>nat=True</code> to <code>observe()</code>, <code>observe_window()</code>, <code>requests_in()</code>,
+<code>replies_in()</code> or <code>correlate()</code>. The destination is then not compared: a
+request counts wherever it goes, as long as it leaves from the probe's own
+source and carries its probe ID (or, for a bare SYN, leaves from its bound
+port). A reply counts from whatever source answered, as long as it is addressed
+to the probe. Read where the probe really went from the packets:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">seen</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stimuli</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">stimuli</span><span class="o">.</span><span class="n">udp_round_trip</span><span class="p">(</span><span class="s2">"10.0.1.1"</span><span class="p">,</span> <span class="mi">5353</span><span class="p">),</span> <span class="n">identity</span><span class="o">=</span><span class="n">nobody</span><span class="p">,</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>                             <span class="n">receiver</span><span class="o">=</span><span class="n">echo_on_9999</span><span class="p">,</span> <span class="n">nat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">assert</span> <span class="n">seen</span><span class="o">.</span><span class="n">on_wire</span> <span class="ow">is</span> <span class="kc">True</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">assert</span> <span class="p">{</span><span class="n">pkt</span><span class="p">[</span><span class="n">UDP</span><span class="p">]</span><span class="o">.</span><span class="n">dport</span> <span class="k">for</span> <span class="n">pkt</span> <span class="ow">in</span> <span class="n">seen</span><span class="o">.</span><span class="n">requests</span><span class="p">}</span> <span class="o">==</span> <span class="p">{</span><span class="mi">9999</span><span class="p">}</span>   <span class="c1"># redirected</span>
+</span></code></pre></div>
+<p>A NAT that rewrites the <em>source</em> port of a bare SYN still hides it, since that
+port is the SYN's only identity.</p>
 
 
 
