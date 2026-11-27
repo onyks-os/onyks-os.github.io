@@ -1539,6 +1539,17 @@ ever appears in the trace.</p>
 DNAT (-100) and filter (0), so the trace flag is set before any of your chains
 sees the packet. By default it is off, and the trace is exactly what it was
 before.</p>
+<p>Every <code>load()</code> replaces the <code>nse_trace</code> table in the same transaction as your
+rules, so it never accumulates. Loading three times still traces each packet
+through one <code>meta nftrace set 1</code> per chain. A <code>load()</code> from an engine without
+<code>trace_output</code> removes the output chain an earlier <code>load()</code> added.</p>
+<div class="admonition warning">
+<p class="admonition-title"><code>flush ruleset</code> turns tracing off</p>
+<p>NSE's trace table is loaded in front of your rules. A ruleset that starts
+with <code>flush ruleset</code>, as many <code>nftables.conf</code> files do, deletes it again,
+and nothing is traced at all. Remove that line, and call
+<code>RuleEngine.flush(ns.name)</code> before <code>load()</code> if you need an empty ruleset.</p>
+</div>
 <hr />
 <h2 id="proving-the-monitor-is-attached">Proving the monitor is attached</h2>
 <p><code>TraceHarvester.wait_ready()</code> proves only that this process is reading the
@@ -1590,14 +1601,18 @@ including traces whose lines arrived after readiness was decided. Give the
 canary a destination that nothing else in the test uses.</p>
 <p>An attempt that <code>could_not_run</code> is not a canary: it is listed in
 <code>readiness.problems</code>, and it never counts as proof. If the monitor died, its
-health errors are listed too.</p>
+health errors are listed too. When readiness is not proven, the harvester also
+lists <code>nse_trace</code> in the namespace and says what is missing: the whole table
+(for example after a <code>flush ruleset</code>), the prerouting chain, or the output
+chain that <code>trace_output=True</code> adds.</p>
 <p>For a lower-level canary, call <code>harvester.prove_ready(send, predicate)</code> with
 your own <code>send</code> coroutine. It returns <code>None</code>, or the reason it could not send.</p>
 <hr />
 <h2 id="the-blind-case">The blind case</h2>
 <p>Without <code>trace_output=True</code>, a canary sent from inside the sandbox is never
 traced. <code>trace_ready()</code> then returns <code>ready=False</code> rather than an empty trace
-that looks like a pass. NSE's own tests run both cases.</p>
+that looks like a pass, and <code>problems</code> names the missing output chain. NSE's
+own tests run both cases, and a ruleset that starts with <code>flush ruleset</code>.</p>
 
 
 

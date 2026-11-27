@@ -2,98 +2,98 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://onyks-os.github.io/nse/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/explanation/architecture/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/explanation/deterministic-oracle/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/explanation/namespace-lifecycle/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/how-to/beacons/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/how-to/cicd-setup/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/how-to/custom-packets/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/how-to/in-process-integration/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/how-to/observing-a-stimulus/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/how-to/receivers/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/how-to/stimuli/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/how-to/streams/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/how-to/tracing-local-traffic/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/reference/api/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/reference/benchmarks/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/reference/cli/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/reference/dependencies/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/release-notes/changelog/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/release-notes/upgrading-to-2.2/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/tutorials/debugging-rulesets/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/tutorials/examples/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/tutorials/gateway-topology/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/tutorials/quickstart/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://onyks-os.github.io/nse/tutorials/test-suites/</loc>
-         <lastmod>2026-11-23</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
 </urlset>
