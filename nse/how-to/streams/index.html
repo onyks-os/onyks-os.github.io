@@ -898,6 +898,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#elsewhere-a-vm-over-ssh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Elsewhere: a VM, over ssh
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#nat" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -965,6 +976,34 @@
     
   
     Tracing a Process's Own Traffic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../observing-outside-the-sandbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Observing Outside the Sandbox
   
 
     
@@ -1542,6 +1581,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#elsewhere-a-vm-over-ssh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Elsewhere: a VM, over ssh
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#nat" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1732,6 +1782,12 @@ slice the stream did not cover from end to end is not conclusive either.</p>
 <p><code>stream.start()</code> raises <code>StreamStartError</code> if the program does not say it
 started within <code>ready_timeout</code> seconds. A stream whose attempts all fail has
 started; each failure is in its log.</p>
+<h3 id="elsewhere-a-vm-over-ssh">Elsewhere: a VM, over ssh</h3>
+<p><code>stream.command()</code> gives the agent's command line, to run on a machine NSE
+does not manage. <code>StreamLog.parse()</code> reads what it printed. Each log records
+its <code>boot_id</code> and both <code>CLOCK_MONOTONIC</code> and <code>CLOCK_BOOTTIME</code>, so a reboot
+makes it incomplete, and a suspend shows as a <code>Gap</code> with <code>suspended</code> set. See
+<a href="../observing-outside-the-sandbox/">Observing Outside the Sandbox</a>.</p>
 <h3 id="nat">NAT</h3>
 <p>When a DNAT or redirect rewrites the stream's destination, pass
 <code>correlate(..., nat=True)</code> to recognise each attempt by its probe ID wherever it

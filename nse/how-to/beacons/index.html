@@ -979,6 +979,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../observing-outside-the-sandbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Observing Outside the Sandbox
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../custom-packets/" class="md-nav__link">
         
   
@@ -1640,6 +1668,10 @@ label (up to 64 bytes of UTF-8). The token, not the label, identifies it.</p>
 <p>Sending needs <code>CAP_NET_RAW</code> in the sending namespace, as capturing does. The
 frame is sent from a thread created for the purpose, which enters that
 namespace and ends with it.</p>
+<p>Version 2 beacons also carry the sender's <code>boot_id</code> and clocks, and are
+followed by a <em>follow-up</em> frame. They map a sender's clock onto the capture's:
+see <a href="../observing-outside-the-sandbox/">Observing Outside the Sandbox</a>. A live
+capture recognises both versions.</p>
 <hr />
 <h2 id="filters-and-when-mark-refuses">Filters, and when mark() refuses</h2>
 <p>NSE's default capture filter admits beacons. A custom <code>filter=</code> may not, and
